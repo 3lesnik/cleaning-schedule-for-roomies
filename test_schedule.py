@@ -242,13 +242,25 @@ class TestCleaningSchedule(unittest.TestCase):
         self.assertEqual(len(res3_json["data"]["weeks"]), 26)
 
     def test_static_site_generation(self):
-        """Verify export_static creates docs/ structure."""
+        """Verify export_static creates docs/ structure and current week overview."""
         docs_dir = export_static.generate_docs(self.manager)
-        self.assertTrue(os.path.exists(os.path.join(docs_dir, "index.html")))
+        index_path = os.path.join(docs_dir, "index.html")
+        self.assertTrue(os.path.exists(index_path))
         self.assertTrue(os.path.exists(os.path.join(docs_dir, ".nojekyll")))
         for person in self.manager.data["people"]:
             self.assertTrue(os.path.exists(os.path.join(docs_dir, "calendars", f"{person}.ics")))
             self.assertTrue(os.path.exists(os.path.join(docs_dir, "c", f"{person}.html")))
+
+        with open(index_path, "r") as f:
+            content = f.read()
+            self.assertIn('id="weekly-overview"', content)
+            self.assertIn('id="hub-chores-grid"', content)
+            self.assertIn('id="hub-trash-container"', content)
+            self.assertIn('id="hub-week-select"', content)
+            self.assertIn('id="hub-schedule-data"', content)
+            self.assertIn('Cleaning Chores', content)
+            self.assertIn('Trash Duties This Week', content)
+            self.assertIn('View Full', content)
 
     @unittest.mock.patch('subprocess.run')
     def test_publish_endpoint(self, mock_run):
