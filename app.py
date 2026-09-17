@@ -30,18 +30,26 @@ def roommate_page(person):
     for w in manager.data.get("weeks", []):
         for task, p in w.get("assignments", {}).items():
             if p == person:
+                date_str, time_str, is_ovr = manager.compute_task_schedule(w, task, person)
+                d = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
                 cleanings.append({
                     "week": w["week_number"],
-                    "date": w["saturday_date"],
+                    "date": date_str,
+                    "day_name": d.strftime("%A"),
+                    "time": time_str,
                     "task": task
                 })
         for tp in w.get("trash_pickups", []):
             if tp.get("assigned_to") == person:
-                d = datetime.datetime.strptime(tp["date"], "%Y-%m-%d")
+                rem_date_str = tp.get("reminder_date") or tp["date"]
+                rem_d = datetime.datetime.strptime(rem_date_str, "%Y-%m-%d")
                 trash_pickups.append({
-                    "date": tp["date"],
-                    "day_name": d.strftime("%A"),
-                    "waste_type": tp["waste_type"]
+                    "reminder_date": rem_date_str,
+                    "reminder_day": rem_d.strftime("%A"),
+                    "reminder_time": tp.get("reminder_time", "20:00"),
+                    "pickup_date": tp.get("pickup_date") or tp["date"],
+                    "waste_type": tp["waste_type"],
+                    "title": tp.get("title") or f"Put out the {tp['waste_type']}"
                 })
                 
     house_events = []
@@ -153,6 +161,36 @@ def delete_house_event(event_id):
         return jsonify({"status": "ok", "data": manager.data})
     return jsonify({"error": "Event not found"}), 404
 
+# --- Preferences & Task Timing API ---
+@app.route('/api/preferences', methods=['POST'])
+def update_preferences():
+    req = request.get_json() or {}
+    person = req.get('person')
+    day_of_week = req.get('day_of_week')
+    time_str = req.get('time')
+    
+    if not person:
+        return jsonify({"error": "Person is required"}), 400
+        
+    prefs = manager.update_person_preference(person, day_of_week, time_str)
+    return jsonify({"status": "ok", "preferences": prefs, "data": manager.data})
+
+@app.route('/api/task_schedule', methods=['POST'])
+def adjust_task_schedule():
+    req = request.get_json() or {}
+    week_index = req.get('week_index')
+    task = req.get('task')
+    date_str = req.get('date')
+    time_str = req.get('time')
+    
+    if week_index is None or not task:
+        return jsonify({"error": "week_index and task are required"}), 400
+        
+    success = manager.adjust_task_schedule(int(week_index), task, date_str, time_str)
+    if success:
+        return jsonify({"status": "ok", "data": manager.data})
+    return jsonify({"error": "Failed to adjust task schedule"}), 400
+
 # --- Settings & Admin API ---
 @app.route('/api/settings', methods=['POST'])
 def update_settings():
@@ -161,11 +199,22 @@ def update_settings():
     num_weeks = req.get('num_weeks')
     people = req.get('people')
     tasks = req.get('tasks')
+    default_cleaning_day = req.get('default_cleaning_day')
+    default_cleaning_time = req.get('default_cleaning_time')
+    person_preferences = req.get('person_preferences')
     
     if not start_date or not num_weeks:
         return jsonify({"error": "Missing start_date or num_weeks"}), 400
         
-    data = manager.update_settings(start_date, int(num_weeks), people, tasks)
+    data = manager.update_settings(
+        start_date=start_date,
+        num_weeks=int(num_weeks),
+        people=people,
+        tasks=tasks,
+        default_cleaning_day=default_cleaning_day,
+        default_cleaning_time=default_cleaning_time,
+        person_preferences=person_preferences
+    )
     return jsonify({"status": "ok", "data": data})
 
 @app.route('/api/reset', methods=['POST'])

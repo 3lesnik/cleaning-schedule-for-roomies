@@ -2,8 +2,10 @@
 """
 Schedule Manager
 
-Handles schedule data persistence (JSON), initial rotation generation,
-trash pickup date mappings, reassignments, swapping, house events, and .ics export.
+Handles schedule data persistence (JSON), rotation generation,
+trash pickup date mappings (scheduled 1 day prior at 8:00 PM),
+customizable weekly task schedules (globally and per person),
+house events, and .ics export.
 """
 
 import os
@@ -29,6 +31,9 @@ DEFAULT_TASKS = [
 ]
 DEFAULT_START_DATE = "2026-08-31"  # Monday
 DEFAULT_NUM_WEEKS = 18
+DEFAULT_CLEANING_DAY = 5  # 0=Monday, 5=Saturday, 6=Sunday
+
+DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 class ScheduleManager:
     def __init__(self, data_file=DATA_FILE):
@@ -51,42 +56,66 @@ class ScheduleManager:
         pickups.sort(key=lambda x: x["date"])
         return pickups
 
-    def generate_default_schedule(self, people, tasks, start_date_str, num_weeks, existing_house_events=None):
-        """Generate mathematical rotation schedule with trash pickup mappings."""
+    def generate_default_schedule(self, people, tasks, start_date_str, num_weeks, existing_house_events=None, person_preferences=None, default_cleaning_day=DEFAULT_CLEANING_DAY, default_cleaning_time=None):
+        """Generate mathematical rotation schedule with trash pickup mappings and customizable task timings."""
         start_date = datetime.datetime.strptime(start_date_str, "%Y-%m-%d").date()
         trash_pickups = self.get_normalized_trash_pickups()
         
+        prefs = person_preferences or {}
         weeks = []
         current_date = start_date
         
         for week_idx in range(num_weeks):
             week_start = current_date
             week_end = current_date + datetime.timedelta(days=6)
-            
-            # Saturday of this week
-            days_until_saturday = 5 - current_date.weekday()
-            if days_until_saturday < 0:
-                days_until_saturday += 7
-            saturday_date = current_date + datetime.timedelta(days=days_until_saturday)
+            week_start_str = week_start.strftime("%Y-%m-%d")
+            week_end_str = week_end.strftime("%Y-%m-%d")
             
             assignments = {}
+            task_schedules = {}
             trash_person = None
+            
             for i, task in enumerate(tasks):
                 person = people[(i + week_idx) % len(people)]
                 assignments[task] = person
                 if "trash" in task.lower():
                     trash_person = person
+                
+                # Compute scheduled day & time for this task based on person preferences or global default
+                if person in prefs and "day_of_week" in prefs[person] and prefs[person]["day_of_week"] is not None:
+                    day_of_week = int(prefs[person]["day_of_week"])
+                    task_time = prefs[person].get("time")
+                else:
+                    day_of_week = int(default_cleaning_day)
+                    task_time = default_cleaning_time
+                
+                task_date = week_start + datetime.timedelta(days=day_of_week)
+                task_schedules[task] = {
+                    "date": task_date.strftime("%Y-%m-%d"),
+                    "day_name": DAY_NAMES[day_of_week],
+                    "time": task_time
+                }
+
+            # Saturday date for reference
+            days_until_saturday = 5 - current_date.weekday()
+            if days_until_saturday < 0:
+                days_until_saturday += 7
+            saturday_date = current_date + datetime.timedelta(days=days_until_saturday)
 
             # Find trash pickups falling into this week
-            week_start_str = week_start.strftime("%Y-%m-%d")
-            week_end_str = week_end.strftime("%Y-%m-%d")
-            
+            # Trash duty is scheduled ONE DAY BEFORE pickup at 8:00 PM
             week_pickups = []
             for tp in trash_pickups:
                 if week_start_str <= tp["date"] <= week_end_str:
+                    pickup_date = datetime.datetime.strptime(tp["date"], "%Y-%m-%d").date()
+                    reminder_date = pickup_date - datetime.timedelta(days=1)
                     week_pickups.append({
-                        "date": tp["date"],
+                        "date": tp["date"],  # Pickup date
+                        "pickup_date": tp["date"],
+                        "reminder_date": reminder_date.strftime("%Y-%m-%d"),
+                        "reminder_time": "20:00",
                         "waste_type": tp["waste_type"],
+                        "title": f"Put out the {tp['waste_type']}",
                         "assigned_to": trash_person
                     })
 
@@ -96,6 +125,8 @@ class ScheduleManager:
                 "end_date": week_end_str,
                 "saturday_date": saturday_date.strftime("%Y-%m-%d"),
                 "assignments": assignments,
+                "task_schedules": task_schedules,
+                "task_overrides": {},
                 "trash_pickups": week_pickups
             })
             
@@ -106,9 +137,48 @@ class ScheduleManager:
             "tasks": tasks,
             "start_date": start_date_str,
             "num_weeks": num_weeks,
+            "default_cleaning_day": default_cleaning_day,
+            "default_cleaning_time": default_cleaning_time,
+            "person_preferences": prefs,
             "weeks": weeks,
             "house_events": existing_house_events or []
         }
+
+    def compute_task_schedule(self, week, task, person):
+        """Compute the scheduled date and time for a chore in a given week."""
+        # 1. Per-week specific override
+        overrides = week.get("task_overrides", {})
+        if task in overrides:
+            return overrides[task]["date"], overrides[task].get("time"), True
+
+        # 2. Per-person preference
+        prefs = self.data.get("person_preferences", {})
+        week_start = datetime.datetime.strptime(week["start_date"], "%Y-%m-%d").date()
+
+        if person in prefs and "day_of_week" in prefs[person] and prefs[person]["day_of_week"] is not None:
+            day_idx = int(prefs[person]["day_of_week"])
+            time_val = prefs[person].get("time")
+        else:
+            day_idx = int(self.data.get("default_cleaning_day", DEFAULT_CLEANING_DAY))
+            time_val = self.data.get("default_cleaning_time")
+
+        task_date = week_start + datetime.timedelta(days=day_idx)
+        return task_date.strftime("%Y-%m-%d"), time_val, False
+
+    def refresh_task_schedules(self):
+        """Recalculate task_schedules dictionary across all weeks."""
+        for week in self.data.get("weeks", []):
+            task_schedules = {}
+            for task, person in week.get("assignments", {}).items():
+                date_str, time_str, is_ovr = self.compute_task_schedule(week, task, person)
+                d = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+                task_schedules[task] = {
+                    "date": date_str,
+                    "day_name": DAY_NAMES[d.weekday()],
+                    "time": time_str,
+                    "is_override": is_ovr
+                }
+            week["task_schedules"] = task_schedules
 
     def load_or_initialize(self):
         """Load schedule from JSON file or generate default."""
@@ -118,6 +188,23 @@ class ScheduleManager:
                     data = json.load(f)
                     if "weeks" in data and "people" in data and "tasks" in data:
                         data.setdefault("house_events", [])
+                        data.setdefault("default_cleaning_day", DEFAULT_CLEANING_DAY)
+                        data.setdefault("default_cleaning_time", None)
+                        data.setdefault("person_preferences", {})
+                        
+                        # Ensure all trash pickups have reminder_date, reminder_time, and title
+                        for w in data["weeks"]:
+                            w.setdefault("task_overrides", {})
+                            for tp in w.get("trash_pickups", []):
+                                tp.setdefault("pickup_date", tp.get("date"))
+                                if "reminder_date" not in tp:
+                                    pk = datetime.datetime.strptime(tp["date"], "%Y-%m-%d").date()
+                                    tp["reminder_date"] = (pk - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+                                tp.setdefault("reminder_time", "20:00")
+                                tp.setdefault("title", f"Put out the {tp['waste_type']}")
+                                
+                        self.data = data
+                        self.refresh_task_schedules()
                         return data
             except Exception as e:
                 print(f"Error loading {self.data_file}: {e}, generating defaults...")
@@ -135,6 +222,7 @@ class ScheduleManager:
         """Save schedule data to JSON file."""
         if data is not None:
             self.data = data
+        self.refresh_task_schedules()
         with open(self.data_file, 'w') as f:
             json.dump(self.data, f, indent=2)
 
@@ -182,12 +270,53 @@ class ScheduleManager:
                 return True
         return False
 
+    def adjust_task_schedule(self, week_index, task, date_str, time_str=None):
+        """Override the date and time of a specific task occurrence in a specific week."""
+        if 0 <= week_index < len(self.data["weeks"]):
+            week = self.data["weeks"][week_index]
+            week.setdefault("task_overrides", {})
+            
+            if date_str:
+                week["task_overrides"][task] = {
+                    "date": date_str,
+                    "time": time_str if time_str else None
+                }
+            else:
+                week["task_overrides"].pop(task, None)
+                
+            self.save_data()
+            return True
+        return False
+
+    def update_person_preference(self, person, day_of_week, time_str=None):
+        """Update a roommate's preferred cleaning day of week and time."""
+        self.data.setdefault("person_preferences", {})
+        if day_of_week is None or day_of_week == "" or day_of_week == -1:
+            self.data["person_preferences"].pop(person, None)
+        else:
+            self.data["person_preferences"][person] = {
+                "day_of_week": int(day_of_week),
+                "time": time_str if time_str else None
+            }
+        self.save_data()
+        return self.data["person_preferences"]
+
+    def update_global_schedule_time(self, default_cleaning_day, default_cleaning_time=None):
+        """Update the global default cleaning day and time."""
+        self.data["default_cleaning_day"] = int(default_cleaning_day)
+        self.data["default_cleaning_time"] = default_cleaning_time if default_cleaning_time else None
+        self.save_data()
+        return {
+            "default_cleaning_day": self.data["default_cleaning_day"],
+            "default_cleaning_time": self.data["default_cleaning_time"]
+        }
+
     def override_trash_pickup(self, date_str, new_person):
         """Override the assignee of a specific trash pickup date."""
         updated = False
         for week in self.data["weeks"]:
             for tp in week.get("trash_pickups", []):
-                if tp["date"] == date_str:
+                if tp["date"] == date_str or tp.get("pickup_date") == date_str:
                     tp["assigned_to"] = new_person
                     updated = True
         if updated:
@@ -228,36 +357,48 @@ class ScheduleManager:
         return self.data.get("house_events", [])
 
     def reset_to_rotation(self):
-        """Reset current schedule to standard rotation, preserving house events."""
+        """Reset current schedule to standard rotation, preserving house events and preferences."""
         self.data = self.generate_default_schedule(
             people=self.data.get("people", DEFAULT_PEOPLE),
             tasks=self.data.get("tasks", DEFAULT_TASKS),
             start_date_str=self.data.get("start_date", DEFAULT_START_DATE),
             num_weeks=self.data.get("num_weeks", DEFAULT_NUM_WEEKS),
-            existing_house_events=self.data.get("house_events", [])
+            existing_house_events=self.data.get("house_events", []),
+            person_preferences=self.data.get("person_preferences", {}),
+            default_cleaning_day=self.data.get("default_cleaning_day", DEFAULT_CLEANING_DAY),
+            default_cleaning_time=self.data.get("default_cleaning_time")
         )
         self.save_data()
         return self.data
 
-    def update_settings(self, start_date_str, num_weeks, people=None, tasks=None):
+    def update_settings(self, start_date_str, num_weeks, people=None, tasks=None, default_cleaning_day=None, default_cleaning_time=None, person_preferences=None):
         """Update schedule configuration and regenerate."""
         if people is None:
             people = self.data.get("people", DEFAULT_PEOPLE)
         if tasks is None:
             tasks = self.data.get("tasks", DEFAULT_TASKS)
+        if default_cleaning_day is None:
+            default_cleaning_day = self.data.get("default_cleaning_day", DEFAULT_CLEANING_DAY)
+        if default_cleaning_time is None:
+            default_cleaning_time = self.data.get("default_cleaning_time")
+        if person_preferences is None:
+            person_preferences = self.data.get("person_preferences", {})
             
         self.data = self.generate_default_schedule(
             people=people,
             tasks=tasks,
             start_date_str=start_date_str,
             num_weeks=num_weeks,
-            existing_house_events=self.data.get("house_events", [])
+            existing_house_events=self.data.get("house_events", []),
+            person_preferences=person_preferences,
+            default_cleaning_day=default_cleaning_day,
+            default_cleaning_time=default_cleaning_time
         )
         self.save_data()
         return self.data
 
     def generate_ical_for_person(self, person_name, calendar_name="Apartment Cleaning"):
-        """Generate iCalendar bytes for a specific person including cleaning, trash, and house events."""
+        """Generate iCalendar bytes for a specific person with exact chore timings, 8:00 PM trash reminders, and house events."""
         cal = Calendar()
         cal.add('prodid', '-//Cleaning Schedule Generator//github.com//')
         cal.add('version', '2.0')
@@ -268,31 +409,57 @@ class ScheduleManager:
         
         events = []
         
-        # 1. Saturday Cleaning Chores
+        # 1. Weekly Cleaning Chores (Respecting custom scheduled date and time)
         for week in self.data["weeks"]:
-            saturday_date = datetime.datetime.strptime(week["saturday_date"], "%Y-%m-%d").date()
-            
             for task, assigned_person in week["assignments"].items():
                 if assigned_person == person_name:
+                    date_str, time_str, _ = self.compute_task_schedule(week, task, person_name)
+                    task_date = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+                    
                     ev = Event()
                     ev.add('summary', task)
-                    ev.add('description', f"You are responsible for {task} this Saturday")
-                    ev.add('dtstart', saturday_date)
-                    ev.add('dtend', saturday_date + datetime.timedelta(days=1))
+                    ev.add('description', f"You are responsible for {task}")
+                    
+                    if time_str:
+                        try:
+                            hour, minute = map(int, time_str.split(':'))
+                            start_dt = datetime.datetime.combine(task_date, datetime.time(hour, minute))
+                            ev.add('dtstart', start_dt)
+                            ev.add('dtend', start_dt + datetime.timedelta(hours=1))
+                        except Exception:
+                            ev.add('dtstart', task_date)
+                            ev.add('dtend', task_date + datetime.timedelta(days=1))
+                    else:
+                        ev.add('dtstart', task_date)
+                        ev.add('dtend', task_date + datetime.timedelta(days=1))
+                        
                     ev['uid'] = str(uuid.uuid4())
                     ev.add('dtstamp', datetime.datetime.now())
                     events.append(ev)
             
-            # 2. Trash Pickups
+            # 2. Trash Duties: Scheduled ONE DAY BEFORE pickup at 8:00 PM
             for tp in week.get("trash_pickups", []):
                 if tp.get("assigned_to") == person_name:
-                    pdate = datetime.datetime.strptime(tp["date"], "%Y-%m-%d").date()
                     waste = tp["waste_type"]
+                    title = tp.get("title") or f"Put out the {waste}"
+                    
+                    # Reminder date is 1 day before pickup date
+                    if "reminder_date" in tp:
+                        rem_date = datetime.datetime.strptime(tp["reminder_date"], "%Y-%m-%d").date()
+                    else:
+                        pk_date = datetime.datetime.strptime(tp["date"], "%Y-%m-%d").date()
+                        rem_date = pk_date - datetime.timedelta(days=1)
+                    
+                    # 8:00 PM (20:00) to 8:30 PM (20:30)
+                    start_dt = datetime.datetime.combine(rem_date, datetime.time(20, 0))
+                    end_dt = datetime.datetime.combine(rem_date, datetime.time(20, 30))
+                    
                     tev = Event()
-                    tev.add('summary', f"Trash: {waste}")
-                    tev.add('description', f"Trash pickup for {waste}. You are responsible for taking out the trash this week!")
-                    tev.add('dtstart', pdate)
-                    tev.add('dtend', pdate + datetime.timedelta(days=1))
+                    tev.add('summary', title)
+                    pickup_date_str = tp.get("pickup_date") or tp["date"]
+                    tev.add('description', f"Trash pickup is tomorrow ({pickup_date_str}). Put out the {waste} bin tonight by 8:00 pm!")
+                    tev.add('dtstart', start_dt)
+                    tev.add('dtend', end_dt)
                     tev['uid'] = str(uuid.uuid4())
                     tev.add('dtstamp', datetime.datetime.now())
                     events.append(tev)
@@ -302,9 +469,7 @@ class ScheduleManager:
             if he.get("target_audience") in ["all", person_name]:
                 hev = Event()
                 hev.add('summary', f"🏠 {he['title']}")
-                desc = he.get('description', '')
-                if not desc:
-                    desc = "Apartment House Event"
+                desc = he.get('description', '') or "Apartment House Event"
                 hev.add('description', desc)
                 
                 date_val = datetime.datetime.strptime(he['date'], "%Y-%m-%d").date()
@@ -366,26 +531,29 @@ class ScheduleManager:
             f.write("=" * 80 + "\n\n")
             f.write(f"Start date: {start_date.strftime('%A, %B %d, %Y')}\n")
             f.write(f"Number of weeks: {self.data['num_weeks']}\n\n")
-            f.write(f"{'Week':<6} {'Date':<12} {'Person':<15} {'Task':<45}\n")
+            f.write(f"{'Week':<6} {'Date':<14} {'Person':<15} {'Task':<45}\n")
             f.write("-" * 80 + "\n")
             
             for week in self.data["weeks"]:
                 week_num = week["week_number"]
-                sat_str = week["saturday_date"]
                 week_pickups = week.get("trash_pickups", [])
                 pickups_str = ""
                 if week_pickups:
-                    pickups_str = " [" + ", ".join([f"{tp['date']}: {tp['waste_type']} ({tp.get('assigned_to')})" for tp in week_pickups]) + "]"
+                    pickups_str = " [" + ", ".join([f"{tp.get('reminder_date', tp['date'])} 8PM: Put out {tp['waste_type']} ({tp.get('assigned_to')})" for tp in week_pickups]) + "]"
 
                 for task in self.data["tasks"]:
                     person = week["assignments"].get(task, "")
+                    sched = week.get("task_schedules", {}).get(task, {})
+                    sched_date = sched.get("date", week.get("saturday_date"))
+                    time_info = f" {sched.get('time')}" if sched.get('time') else ""
+                    date_display = f"{sched_date}{time_info}"
+                    
                     display_task = task
                     if "trash" in task.lower() and pickups_str:
                         display_task = f"{task}{pickups_str}"
-                    f.write(f"{week_num:<6} {sat_str:<12} {person:<15} {display_task:<45}\n")
+                    f.write(f"{week_num:<6} {date_display:<14} {person:<15} {display_task:<45}\n")
                 f.write("-" * 80 + "\n")
                 
-            # List house events if any
             house_events = self.data.get("house_events", [])
             if house_events:
                 f.write("\nHOUSE EVENTS\n")
@@ -394,8 +562,6 @@ class ScheduleManager:
                     time_str = f" at {he['time']}" if he.get('time') else " (All day)"
                     audience = f" [For: {he['target_audience']}]" if he.get('target_audience') != 'all' else " [All Roommates]"
                     f.write(f"- {he['date']}{time_str}: {he['title']}{audience}\n")
-                    if he.get('description'):
-                        f.write(f"  Note: {he['description']}\n")
 
         generated_files.append(txt_path)
         
@@ -461,13 +627,6 @@ class ScheduleManager:
             margin: 2px 4px 2px 0;
             font-weight: 500;
         }}
-        .event-card {{
-            background: #fdf4ff;
-            border: 1px solid #f0abfc;
-            padding: 10px 14px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-        }}
     </style>
 </head>
 <body>
@@ -476,49 +635,41 @@ class ScheduleManager:
         <p><strong>Start date:</strong> {start_date.strftime('%A, %B %d, %Y')}</p>
         <p><strong>Number of weeks:</strong> {self.data['num_weeks']}</p>
     </div>
-""")
-            house_events = self.data.get("house_events", [])
-            if house_events:
-                f.write("""    <div class="info" style="background:#faf5ff; border-color:#e9d5ff;">
-        <h2 style="margin-top:0; color:#7e22ce; font-size:16px;">🏠 Upcoming House Events</h2>\n""")
-                for he in house_events:
-                    time_info = f" at {he['time']}" if he.get('time') else " (All day)"
-                    f.write(f"""        <div class="event-card">
-            <strong>{he['title']}</strong> — {he['date']}{time_info}
-            <div style="font-size:12px; color:#6b7280; margin-top:2px;">{he.get('description', '')}</div>
-        </div>\n""")
-                f.write("    </div>\n")
-
-            f.write("""    <table>
+    <table>
         <tr>
             <th>Week</th>
-            <th>Saturday Cleaning</th>
+            <th>Scheduled Date</th>
             <th>Person</th>
             <th>Task</th>
         </tr>
 """)
             for week in self.data["weeks"]:
-                sat_date = datetime.datetime.strptime(week["saturday_date"], "%Y-%m-%d").strftime("%B %d, %Y")
                 week_pickups = week.get("trash_pickups", [])
                 
                 for i, task in enumerate(self.data["tasks"]):
                     person = week["assignments"].get(task, "")
+                    sched = week.get("task_schedules", {}).get(task, {})
+                    sched_date = sched.get("date", week.get("saturday_date"))
+                    day_name = sched.get("day_name", "")
+                    time_info = f" at {sched.get('time')}" if sched.get('time') else ""
+                    date_display = f"{day_name} ({sched_date}){time_info}"
+                    
                     task_html = f"<strong>{task}</strong>"
                     if "trash" in task.lower() and week_pickups:
-                        badges = "".join([f'<span class="trash-badge">🗑️ {tp["date"]}: {tp["waste_type"]}</span>' for tp in week_pickups])
+                        badges = "".join([f'<span class="trash-badge">🗑️ Put out {tp["waste_type"]} • {tp.get("reminder_date", tp["date"])} 8:00 PM</span>' for tp in week_pickups])
                         task_html += f"<div style='margin-top:4px;'>{badges}</div>"
                     
                     if i == 0:
                         f.write(f"""        <tr class="week-start">
             <td><strong>Week {week['week_number']}</strong></td>
-            <td>{sat_date}</td>
+            <td>{date_display}</td>
             <td><strong>{person}</strong></td>
             <td>{task_html}</td>
         </tr>\n""")
                     else:
                         f.write(f"""        <tr>
             <td></td>
-            <td></td>
+            <td>{date_display}</td>
             <td><strong>{person}</strong></td>
             <td>{task_html}</td>
         </tr>\n""")
@@ -536,7 +687,6 @@ class ScheduleManager:
                 ical_bytes = self.generate_ical_for_person(person)
                 zf.writestr(f"cleaning_schedule_{person.replace(' ', '_')}.ics", ical_bytes)
             
-            # Add overview text and HTML
             self.sync_to_filesystem()
             txt_path = os.path.join(SCHEDULES_DIR, "cleaning_schedule_overview.txt")
             if os.path.exists(txt_path):

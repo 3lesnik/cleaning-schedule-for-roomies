@@ -79,16 +79,21 @@ def create_cleaning_schedule(tasks, people, start_date, num_weeks, output_file, 
             else:
                 person_events[person] = [event]
         
-        # If there is a trash person and trash pickups during this week, add them
+        # If there is a trash person and trash pickups during this week, add them (1 day before pickup at 8:00 PM)
         if week_trash_person and normalized_trash:
             for pickup in normalized_trash:
                 if week_start <= pickup["date"] <= week_end:
                     trash_event = Event()
                     waste = pickup["waste_type"]
-                    trash_event.add('summary', f"Trash: {waste}")
-                    trash_event.add('description', f"Trash pickup for {waste}. You are responsible for taking out the trash this week!")
-                    trash_event.add('dtstart', pickup["date"])
-                    trash_event.add('dtend', pickup["date"] + datetime.timedelta(days=1))
+                    title = f"Put out the {waste}"
+                    reminder_date = pickup["date"] - datetime.timedelta(days=1)
+                    start_dt = datetime.datetime.combine(reminder_date, datetime.time(20, 0))
+                    end_dt = datetime.datetime.combine(reminder_date, datetime.time(20, 30))
+                    
+                    trash_event.add('summary', title)
+                    trash_event.add('description', f"Trash pickup for {waste} is tomorrow ({pickup['date']}). Put out the bin tonight by 8:00 pm!")
+                    trash_event.add('dtstart', start_dt)
+                    trash_event.add('dtend', end_dt)
                     trash_event['uid'] = str(uuid.uuid4())
                     trash_event.add('dtstamp', datetime.datetime.now())
                     if week_trash_person in person_events:
@@ -111,9 +116,18 @@ def create_cleaning_schedule(tasks, people, start_date, num_weeks, output_file, 
         cal.add('x-wr-calname', f"{calendar_name} - {person}")
         cal.add('x-wr-timezone', 'UTC')
         
-        # Sort events chronologically
+        # Sort events chronologically (supporting both date and datetime)
+        def get_sort_key(ev):
+            dt_prop = ev.get('dtstart')
+            if not dt_prop:
+                return datetime.datetime.min
+            val = dt_prop.dt
+            if isinstance(val, datetime.datetime):
+                return val
+            return datetime.datetime.combine(val, datetime.time.min)
+
         events = person_events.get(person, [])
-        events.sort(key=lambda ev: ev.get('dtstart').dt if ev.get('dtstart') else datetime.date.min)
+        events.sort(key=get_sort_key)
 
         # Add all events for this person
         for event in events:

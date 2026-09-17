@@ -50,7 +50,7 @@
                 <span class="text-3xl">🧹</span>
                 <div>
                     <h1 class="text-xl font-bold text-slate-900 leading-tight">Apartment Cleaning & Trash Schedule</h1>
-                    <p class="text-xs text-slate-500">6 Roommates • Rotating Saturday Cleaning • Synced Trash Pickups • House Events</p>
+                    <p class="text-xs text-slate-500">6 Roommates • Customizable Cleaning Days • 8:00 PM Trash Reminders • House Events</p>
                 </div>
             </div>
 
@@ -90,8 +90,8 @@
                 <div id="stat-start-date" class="text-lg font-bold text-slate-800 mt-0.5">--</div>
             </div>
             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Schedule Duration</span>
-                <div id="stat-weeks" class="text-lg font-bold text-blue-600 mt-0.5">-- Weeks</div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Default Cleaning Day</span>
+                <div id="stat-default-day" class="text-lg font-bold text-blue-600 mt-0.5">Saturday</div>
             </div>
             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
                 <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Roommates</span>
@@ -115,7 +115,7 @@
             </button>
             <button onclick="switchTab('trash')" id="tab-btn-trash" class="px-4 py-2.5 text-sm font-medium text-slate-500 hover:text-slate-700 border-b-2 border-transparent transition flex items-center space-x-2">
                 <span>🗑️</span>
-                <span>Trash Pickups Timeline</span>
+                <span>Trash Duties (8:00 PM Prior)</span>
             </button>
             <button onclick="switchTab('house-events')" id="tab-btn-house-events" class="px-4 py-2.5 text-sm font-medium text-slate-500 hover:text-slate-700 border-b-2 border-transparent transition flex items-center space-x-2">
                 <span>🏠</span>
@@ -127,7 +127,7 @@
         <div id="tab-weekly" class="bg-white rounded-b-xl border border-slate-200 border-t-0 shadow-xs overflow-hidden">
             <div class="p-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4 bg-slate-50/50">
                 <div class="text-xs text-slate-500">
-                    💡 Click any roommate badge to <strong>reassign</strong> or <strong>swap</strong> tasks for that week.
+                    💡 Click any roommate badge to <strong>reassign</strong>, <strong>swap</strong>, or <strong>reschedule</strong> day/time for that chore.
                 </div>
                 <div class="flex items-center space-x-3">
                     <label for="filter-roommate" class="text-xs font-semibold text-slate-600">Filter by Person:</label>
@@ -142,7 +142,7 @@
                     <thead class="bg-slate-100/75 text-slate-600 uppercase text-xs tracking-wider border-b border-slate-200">
                         <tr>
                             <th class="py-3 px-4 font-semibold w-24">Week</th>
-                            <th class="py-3 px-4 font-semibold w-40">Saturday Cleaning</th>
+                            <th class="py-3 px-4 font-semibold w-32">Week Span</th>
                             <th id="task-headers" colspan="6" class="p-0"></th>
                         </tr>
                     </thead>
@@ -166,12 +166,12 @@
             </div>
         </div>
 
-        <!-- TAB 3: Trash Pickups Timeline -->
+        <!-- TAB 3: Trash Duties Timeline -->
         <div id="tab-trash" class="hidden bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
             <div class="p-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4 bg-slate-50/50">
                 <div>
-                    <h2 class="text-base font-bold text-slate-900">Trash Pickup Calendar</h2>
-                    <p class="text-xs text-slate-500">Automatically linked to whoever is assigned the "Taking out trash" task during each pickup's week.</p>
+                    <h2 class="text-base font-bold text-slate-900">🗑️ Trash Duties Schedule</h2>
+                    <p class="text-xs text-slate-500">Scheduled <strong>one day before pickup at 8:00 PM</strong> with title "Put out the {waste_type}".</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-2">
                     <button onclick="filterTrashType('all')" class="trash-filter-btn px-3 py-1 text-xs rounded-full border border-slate-300 bg-white font-medium hover:bg-slate-50">All</button>
@@ -186,12 +186,12 @@
                 <table class="w-full text-left text-sm">
                     <thead class="bg-slate-100/75 text-slate-600 uppercase text-xs tracking-wider border-b border-slate-200">
                         <tr>
-                            <th class="py-3 px-4 font-semibold w-36">Pickup Date</th>
-                            <th class="py-3 px-4 font-semibold w-28">Day</th>
-                            <th class="py-3 px-4 font-semibold w-56">Waste Type</th>
+                            <th class="py-3 px-4 font-semibold w-56">Chore (Title)</th>
+                            <th class="py-3 px-4 font-semibold w-52">Reminder Time</th>
+                            <th class="py-3 px-4 font-semibold w-36">Pickup Day</th>
                             <th class="py-3 px-4 font-semibold w-24">Week #</th>
                             <th class="py-3 px-4 font-semibold w-48">Assigned Roommate</th>
-                            <th class="py-3 px-4 font-semibold w-40">Actions</th>
+                            <th class="py-3 px-4 font-semibold w-36">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="trash-tbody" class="divide-y divide-slate-100">
@@ -251,7 +251,6 @@
                     <label for="event-audience" class="block font-semibold text-slate-700 mb-1">Target Audience:</label>
                     <select id="event-audience" class="w-full border border-slate-300 rounded-lg p-2 text-sm bg-white">
                         <option value="all">All Roommates (Everyone's Calendar)</option>
-                        <!-- Populated dynamically with roommates -->
                     </select>
                 </div>
 
@@ -268,11 +267,11 @@
         </div>
     </div>
 
-    <!-- REASSIGN / SWAP MODAL -->
+    <!-- REASSIGN / SWAP / RESCHEDULE MODAL -->
     <div id="reassign-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 class="text-lg font-bold text-slate-900">Adjust Task Assignment</h3>
+                <h3 class="text-lg font-bold text-slate-900">Adjust Task Chore</h3>
                 <button onclick="closeReassignModal()" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
             </div>
 
@@ -280,15 +279,19 @@
                 <div><span class="text-slate-500 font-medium">Week:</span> <span id="modal-week-label" class="font-bold text-slate-800">Week 1</span></div>
                 <div><span class="text-slate-500 font-medium">Task:</span> <span id="modal-task-label" class="font-bold text-slate-800">Kitchen</span></div>
                 <div><span class="text-slate-500 font-medium">Current Assignee:</span> <span id="modal-current-person" class="font-bold text-blue-600">Nancy</span></div>
+                <div><span class="text-slate-500 font-medium">Scheduled Date:</span> <span id="modal-scheduled-date" class="font-bold text-slate-700">Saturday</span></div>
             </div>
 
-            <!-- Mode Selector: Reassign or Swap -->
+            <!-- Mode Selector: Reassign, Swap, or Reschedule -->
             <div class="flex rounded-lg bg-slate-100 p-1">
                 <button id="btn-mode-reassign" onclick="setAdjustMode('reassign')" class="flex-1 py-1.5 text-xs font-semibold rounded-md bg-white shadow-xs text-slate-800">
-                    Direct Reassign
+                    Reassign
                 </button>
                 <button id="btn-mode-swap" onclick="setAdjustMode('swap')" class="flex-1 py-1.5 text-xs font-semibold rounded-md text-slate-500 hover:text-slate-800">
-                    Swap with Roommate
+                    Swap
+                </button>
+                <button id="btn-mode-reschedule" onclick="setAdjustMode('reschedule')" class="flex-1 py-1.5 text-xs font-semibold rounded-md text-slate-500 hover:text-slate-800">
+                    Reschedule
                 </button>
             </div>
 
@@ -296,47 +299,102 @@
             <div id="adjust-reassign-view" class="space-y-3">
                 <label for="modal-select-person" class="block text-xs font-semibold text-slate-700">Assign To:</label>
                 <select id="modal-select-person" class="w-full border border-slate-300 rounded-lg p-2 text-sm bg-white focus:ring-2 focus:ring-blue-500 outline-hidden">
-                    <!-- Populated dynamically -->
                 </select>
-                <p class="text-xs text-slate-400">Assigns this task to another person. If this is a trash task, all trash pickups for this week will update to them.</p>
+                <p class="text-xs text-slate-400">Assigns this task to another person. If this is a trash task, all trash duties for this week will update to them.</p>
             </div>
 
             <!-- Swap View -->
             <div id="adjust-swap-view" class="hidden space-y-3">
                 <label for="modal-select-swap-person" class="block text-xs font-semibold text-slate-700">Swap tasks with:</label>
                 <select id="modal-select-swap-person" class="w-full border border-slate-300 rounded-lg p-2 text-sm bg-white focus:ring-2 focus:ring-blue-500 outline-hidden">
-                    <!-- Populated dynamically -->
                 </select>
                 <p class="text-xs text-slate-400">Swaps their assigned task with yours for this week.</p>
             </div>
 
+            <!-- Reschedule Day / Time View -->
+            <div id="adjust-reschedule-view" class="hidden space-y-3">
+                <div>
+                    <label for="modal-reschedule-date" class="block text-xs font-semibold text-slate-700 mb-1">Scheduled Date for this Occurrence:</label>
+                    <input type="date" id="modal-reschedule-date" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                </div>
+                <div>
+                    <label for="modal-reschedule-time" class="block text-xs font-semibold text-slate-700 mb-1">Time (optional):</label>
+                    <input type="time" id="modal-reschedule-time" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                </div>
+                <div class="flex items-center justify-between pt-1">
+                    <button type="button" onclick="clearTaskOverride()" class="text-xs text-rose-600 hover:underline">Reset to Default for This Week</button>
+                </div>
+            </div>
+
             <div class="flex items-center justify-end space-x-2 pt-2 border-t border-slate-100">
                 <button onclick="closeReassignModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Cancel</button>
-                <button onclick="saveAssignmentAdjustment()" class="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-xs transition">Save Adjustment</button>
+                <button onclick="saveAssignmentAdjustment()" class="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-xs transition">Save Changes</button>
             </div>
         </div>
     </div>
 
     <!-- SETTINGS MODAL -->
-    <div id="settings-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
+    <div id="settings-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center hidden p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-5 my-8 animate-in fade-in zoom-in-95 duration-150">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 class="text-lg font-bold text-slate-900">Schedule Settings</h3>
+                <h3 class="text-lg font-bold text-slate-900">Schedule & Timing Settings</h3>
                 <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
             </div>
 
-            <div class="space-y-4 text-xs">
-                <div>
-                    <label for="settings-start-date" class="block font-semibold text-slate-700 mb-1">Start Date (Monday):</label>
-                    <input type="date" id="settings-start-date" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
-                    <p class="text-[11px] text-slate-400 mt-1">Default 2026-08-31 covers all trash pickups through December 2026.</p>
+            <div class="space-y-5 text-xs max-h-[70vh] overflow-y-auto pr-1">
+                <!-- Basic Schedule Horizon -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="settings-start-date" class="block font-semibold text-slate-700 mb-1">Start Date (Monday):</label>
+                        <input type="date" id="settings-start-date" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                    </div>
+                    <div>
+                        <label for="settings-num-weeks" class="block font-semibold text-slate-700 mb-1">Number of Weeks:</label>
+                        <input type="number" id="settings-num-weeks" min="1" max="52" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                    </div>
                 </div>
 
-                <div>
-                    <label for="settings-num-weeks" class="block font-semibold text-slate-700 mb-1">Number of Weeks:</label>
-                    <input type="number" id="settings-num-weeks" min="1" max="52" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                <!-- Global Default Cleaning Day & Time -->
+                <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-3.5 space-y-3">
+                    <div class="font-bold text-blue-900 text-xs flex items-center space-x-1.5">
+                        <span>🌐</span>
+                        <span>Global Cleaning Day & Time</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label for="settings-default-day" class="block text-slate-700 mb-1 font-semibold">Default Day of Week:</label>
+                            <select id="settings-default-day" class="w-full border border-slate-300 rounded-lg p-2 text-sm bg-white">
+                                <option value="0">Monday</option>
+                                <option value="1">Tuesday</option>
+                                <option value="2">Wednesday</option>
+                                <option value="3">Thursday</option>
+                                <option value="4">Friday</option>
+                                <option value="5">Saturday (Default)</option>
+                                <option value="6">Sunday</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="settings-default-time" class="block text-slate-700 mb-1 font-semibold">Default Time (optional):</label>
+                            <input type="time" id="settings-default-time" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-500">Unless overridden by individual preferences below, chores are scheduled on this day.</p>
                 </div>
 
+                <!-- Per-Roommate Day & Time Preferences -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-3">
+                    <div class="font-bold text-slate-800 text-xs flex items-center space-x-1.5">
+                        <span>👤</span>
+                        <span>Per-Roommate Cleaning Day Preferences (Optional)</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500">Set a specific day/time when individual roommates prefer their chores scheduled:</p>
+                    
+                    <div id="roommate-preferences-container" class="space-y-2">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Roommates and Tasks -->
                 <div>
                     <label for="settings-roommates" class="block font-semibold text-slate-700 mb-1">Roommates (comma separated):</label>
                     <input type="text" id="settings-roommates" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
@@ -350,7 +408,7 @@
 
             <div class="flex items-center justify-end space-x-2 pt-2 border-t border-slate-100">
                 <button onclick="closeSettingsModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Cancel</button>
-                <button onclick="saveSettings()" class="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-xs transition">Save & Regenerate</button>
+                <button onclick="saveSettings()" class="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-xs transition">Save Settings</button>
             </div>
         </div>
     </div>
@@ -362,6 +420,8 @@
         let trashFilter = 'all';
         let currentModalContext = null;
         let adjustMode = 'reassign';
+
+        const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
         // Color mapping for roommates
         const roommateColors = {
@@ -402,7 +462,9 @@
 
             // Stats
             document.getElementById('stat-start-date').textContent = scheduleData.start_date;
-            document.getElementById('stat-weeks').textContent = `${scheduleData.num_weeks} Weeks`;
+            const defDayIdx = scheduleData.default_cleaning_day !== undefined ? scheduleData.default_cleaning_day : 5;
+            const defTimeStr = scheduleData.default_cleaning_time ? ` at ${scheduleData.default_cleaning_time}` : '';
+            document.getElementById('stat-default-day').textContent = `${dayNames[defDayIdx]}${defTimeStr}`;
             document.getElementById('stat-roommates').textContent = `${scheduleData.people.length} People`;
             
             const houseEvents = scheduleData.house_events || [];
@@ -466,8 +528,8 @@
                 tr.appendChild(tdWeek);
 
                 const tdDate = document.createElement('td');
-                tdDate.className = 'py-3.5 px-4 text-xs font-medium text-slate-500';
-                tdDate.innerHTML = `<span class="inline-block bg-slate-100 text-slate-700 px-2 py-1 rounded font-mono">${week.saturday_date}</span>`;
+                tdDate.className = 'py-3.5 px-4 text-xs font-mono text-slate-500';
+                tdDate.innerHTML = `<div>${week.start_date.slice(5)}</div><div class="text-[10px] text-slate-400">&rarr; ${week.end_date.slice(5)}</div>`;
                 tr.appendChild(tdDate);
 
                 scheduleData.tasks.forEach(task => {
@@ -477,23 +539,33 @@
                     const person = week.assignments[task] || '-';
                     const isFiltered = filterPerson && person !== filterPerson;
                     const style = getRoommateStyle(person);
+                    const sched = week.task_schedules ? week.task_schedules[task] : null;
 
                     let pickupsHtml = '';
                     if (task.toLowerCase().includes('trash') && week.trash_pickups && week.trash_pickups.length > 0) {
                         const tags = week.trash_pickups.map(tp => {
                             const badgeClass = getWasteBadgeClass(tp.waste_type);
+                            const remDate = tp.reminder_date ? tp.reminder_date.slice(5) : tp.date.slice(5);
                             return `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium ${badgeClass} mr-1 mb-1">
-                                🗑️ ${tp.date.slice(5)}: ${tp.waste_type}
+                                🗑️ Put out ${tp.waste_type} • ${remDate} 8:00 PM
                             </span>`;
                         }).join('');
                         pickupsHtml = `<div class="mt-1 flex flex-wrap">${tags}</div>`;
                     }
+
+                    const schedText = sched ? `${sched.day_name.slice(0,3)} ${sched.date.slice(5)}${sched.time ? ' ' + sched.time : ''}` : '';
+                    const isOverride = sched && sched.is_override;
 
                     tdTask.innerHTML = `
                         <button onclick="openReassignModal(${wIdx}, '${task}', '${person}')" 
                                 class="person-pill inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${style.bg} ${style.text} ${style.border} ${isFiltered ? 'opacity-30' : ''}">
                             <span>${person}</span>
                         </button>
+                        <div class="mt-1 text-[10px] text-slate-500 flex items-center space-x-1">
+                            <span>📅</span>
+                            <span>${schedText}</span>
+                            ${isOverride ? '<span class="text-purple-600 font-bold" title="Custom override for this week">*</span>' : ''}
+                        </div>
                         ${pickupsHtml}
                     `;
                     tr.appendChild(tdTask);
@@ -524,23 +596,29 @@
             if (!selectedRoommate) return;
 
             const myCleanings = [];
-            const myTrashPickups = [];
+            const myTrashDuties = [];
 
             scheduleData.weeks.forEach(w => {
                 for (const [task, p] of Object.entries(w.assignments)) {
                     if (p === selectedRoommate) {
+                        const sched = w.task_schedules ? w.task_schedules[task] : {};
                         myCleanings.push({
                             week: w.week_number,
-                            date: w.saturday_date,
+                            date: sched.date || w.saturday_date,
+                            day_name: sched.day_name || 'Saturday',
+                            time: sched.time || null,
                             task: task
                         });
                     }
                 }
                 (w.trash_pickups || []).forEach(tp => {
                     if (tp.assigned_to === selectedRoommate) {
-                        myTrashPickups.push({
+                        myTrashDuties.push({
                             week: w.week_number,
-                            date: tp.date,
+                            title: tp.title || `Put out the ${tp.waste_type}`,
+                            reminder_date: tp.reminder_date || tp.date,
+                            reminder_time: tp.reminder_time || '20:00',
+                            pickup_date: tp.pickup_date || tp.date,
                             waste_type: tp.waste_type
                         });
                     }
@@ -557,7 +635,7 @@
                 <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5">
                     <div>
                         <h2 class="text-2xl font-bold text-slate-900">${selectedRoommate}'s Schedule</h2>
-                        <p class="text-xs text-slate-500 mt-0.5">Saturday chores, assigned trash pickup dates & house events</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Assigned chores, 8:00 PM trash duties & house events</p>
                     </div>
                     
                     <!-- Share & Subscription Buttons -->
@@ -573,12 +651,12 @@
                             <span>Subscribe (Apple/iOS)</span>
                         </a>
                         <a href="/calendars/${encodeURIComponent(selectedRoommate)}.ics" download="cleaning_schedule_${selectedRoommate}.ics" 
-                           class="inline-flex items-center space-x-1.5 px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold border border-slate-300 transition">
+                           class="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold border border-slate-300 transition">
                             <span>📥</span>
                             <span>.ics</span>
                         </a>
                         <button onclick="copyToClipboard('${icsUrl}', 'Calendar feed URL copied!')"
-                                class="inline-flex items-center space-x-1.5 px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold border border-slate-300 transition">
+                                class="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold border border-slate-300 transition">
                             <span>📋</span>
                             <span>Copy Feed URL</span>
                         </button>
@@ -586,19 +664,19 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-                    <!-- Saturday Cleanings -->
+                    <!-- Cleanings -->
                     <div class="space-y-3">
                         <h3 class="text-sm font-bold text-slate-800 flex items-center space-x-2">
                             <span>🧹</span>
-                            <span>Saturday Cleaning Duties (${myCleanings.length})</span>
+                            <span>Cleaning Duties (${myCleanings.length})</span>
                         </h3>
                         <div class="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden max-h-96 overflow-y-auto">
                             ${myCleanings.length === 0 ? '<div class="p-4 text-xs text-slate-400">No duties assigned.</div>' :
                             myCleanings.map(c => `
                                 <div class="p-3 bg-white flex items-center justify-between text-xs hover:bg-slate-50 transition">
                                     <div>
-                                        <span class="font-bold text-slate-800">Week ${c.week}</span>
-                                        <span class="text-slate-400 ml-2">${c.date}</span>
+                                        <div class="font-bold text-slate-800">${c.day_name}, ${c.date}</div>
+                                        <div class="text-slate-400 text-[11px]">Week ${c.week}${c.time ? ' at ' + c.time : ''}</div>
                                     </div>
                                     <span class="font-semibold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100">${c.task}</span>
                                 </div>
@@ -606,21 +684,22 @@
                         </div>
                     </div>
 
-                    <!-- Trash Pickups -->
+                    <!-- Trash Duties -->
                     <div class="space-y-3">
                         <h3 class="text-sm font-bold text-slate-800 flex items-center space-x-2">
                             <span>🗑️</span>
-                            <span>Trash Pickups Assigned (${myTrashPickups.length})</span>
+                            <span>Trash Duties (${myTrashDuties.length})</span>
                         </h3>
                         <div class="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden max-h-96 overflow-y-auto">
-                            ${myTrashPickups.length === 0 ? '<div class="p-4 text-xs text-slate-400">No trash pickups assigned.</div>' : 
-                            myTrashPickups.map(tp => `
-                                <div class="p-3 bg-white flex items-center justify-between text-xs hover:bg-slate-50 transition">
-                                    <div>
-                                        <span class="font-bold text-slate-800">${tp.date}</span>
-                                        <span class="text-slate-400 ml-2">Week ${tp.week}</span>
+                            ${myTrashDuties.length === 0 ? '<div class="p-4 text-xs text-slate-400">No trash duties assigned.</div>' : 
+                            myTrashDuties.map(tp => `
+                                <div class="p-3 bg-white text-xs hover:bg-slate-50 transition space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-bold text-slate-800">${tp.title}</span>
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold ${getWasteBadgeClass(tp.waste_type)}">${tp.waste_type}</span>
                                     </div>
-                                    <span class="px-2.5 py-1 rounded-md text-xs font-semibold ${getWasteBadgeClass(tp.waste_type)}">${tp.waste_type}</span>
+                                    <div class="text-[11px] text-purple-700 font-medium">⏰ ${tp.reminder_date} at 8:00 PM</div>
+                                    <div class="text-[10px] text-slate-400">Pickup tomorrow: ${tp.pickup_date}</div>
                                 </div>
                             `).join('')}
                         </div>
@@ -650,7 +729,7 @@
             `;
         }
 
-        // Render Trash Pickups Timeline
+        // Render Trash Duties Timeline
         function renderTrashTimeline() {
             const tbody = document.getElementById('trash-tbody');
             tbody.innerHTML = '';
@@ -665,7 +744,7 @@
                 });
             });
 
-            allPickups.sort((a,b) => a.date.localeCompare(b.date));
+            allPickups.sort((a,b) => (a.reminder_date || a.date).localeCompare(b.reminder_date || b.date));
 
             allPickups.forEach(tp => {
                 if (trashFilter !== 'all' && !tp.waste_type.includes(trashFilter)) return;
@@ -673,14 +752,23 @@
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-slate-50/80 transition';
 
-                const d = new Date(tp.date + 'T12:00:00Z');
-                const dayName = d.toLocaleDateString('en-US', { weekday: 'long' });
+                const remDate = tp.reminder_date || tp.date;
+                const d = new Date(remDate + 'T12:00:00Z');
+                const remDayName = d.toLocaleDateString('en-US', { weekday: 'short' });
 
                 tr.innerHTML = `
-                    <td class="py-3 px-4 font-mono text-xs font-bold text-slate-800">${tp.date}</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">${dayName}</td>
+                    <td class="py-3 px-4 text-xs font-bold text-slate-900">
+                        ${tp.title || 'Put out the ' + tp.waste_type}
+                    </td>
                     <td class="py-3 px-4 text-xs">
-                        <span class="px-2.5 py-1 rounded-md font-semibold ${getWasteBadgeClass(tp.waste_type)}">${tp.waste_type}</span>
+                        <span class="inline-flex items-center space-x-1 font-semibold text-purple-800 bg-purple-50 px-2 py-0.5 rounded-md border border-purple-100">
+                            <span>⏰</span>
+                            <span>${remDayName}, ${remDate} 8:00 PM</span>
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-xs text-slate-500">
+                        <div class="font-mono">${tp.pickup_date || tp.date}</div>
+                        <div class="text-[10px] text-slate-400">Next morning</div>
                     </td>
                     <td class="py-3 px-4 text-xs font-medium text-slate-600">Week ${tp.week_number}</td>
                     <td class="py-3 px-4 text-xs">
@@ -836,12 +924,16 @@
             }
         }
 
-        // Modal: Reassign / Swap
+        // Modal: Reassign / Swap / Reschedule
         function openReassignModal(weekIndex, task, currentPerson) {
-            currentModalContext = { weekIndex, task, currentPerson };
+            const week = scheduleData.weeks[weekIndex];
+            const sched = week.task_schedules ? week.task_schedules[task] : {};
+
+            currentModalContext = { weekIndex, task, currentPerson, sched };
             document.getElementById('modal-week-label').textContent = `Week ${weekIndex + 1}`;
             document.getElementById('modal-task-label').textContent = task;
             document.getElementById('modal-current-person').textContent = currentPerson;
+            document.getElementById('modal-scheduled-date').textContent = `${sched.day_name || ''} (${sched.date || ''})${sched.time ? ' at ' + sched.time : ''}`;
 
             const selectPerson = document.getElementById('modal-select-person');
             selectPerson.innerHTML = '';
@@ -864,6 +956,9 @@
                 }
             });
 
+            document.getElementById('modal-reschedule-date').value = sched.date || '';
+            document.getElementById('modal-reschedule-time').value = sched.time || '';
+
             setAdjustMode('reassign');
             document.getElementById('reassign-modal').classList.remove('hidden');
         }
@@ -883,17 +978,17 @@
 
         function setAdjustMode(mode) {
             adjustMode = mode;
-            if (mode === 'reassign') {
-                document.getElementById('btn-mode-reassign').className = "flex-1 py-1.5 text-xs font-semibold rounded-md bg-white shadow-xs text-slate-800";
-                document.getElementById('btn-mode-swap').className = "flex-1 py-1.5 text-xs font-semibold rounded-md text-slate-500 hover:text-slate-800";
-                document.getElementById('adjust-reassign-view').classList.remove('hidden');
-                document.getElementById('adjust-swap-view').classList.add('hidden');
-            } else {
-                document.getElementById('btn-mode-swap').className = "flex-1 py-1.5 text-xs font-semibold rounded-md bg-white shadow-xs text-slate-800";
-                document.getElementById('btn-mode-reassign').className = "flex-1 py-1.5 text-xs font-semibold rounded-md text-slate-500 hover:text-slate-800";
-                document.getElementById('adjust-swap-view').classList.remove('hidden');
-                document.getElementById('adjust-reassign-view').classList.add('hidden');
-            }
+            ['reassign', 'swap', 'reschedule'].forEach(m => {
+                const btn = document.getElementById(`btn-mode-${m}`);
+                const view = document.getElementById(`adjust-${m}-view`);
+                if (m === mode) {
+                    btn.className = "flex-1 py-1.5 text-xs font-semibold rounded-md bg-white shadow-xs text-slate-800";
+                    view.classList.remove('hidden');
+                } else {
+                    btn.className = "flex-1 py-1.5 text-xs font-semibold rounded-md text-slate-500 hover:text-slate-800";
+                    view.classList.add('hidden');
+                }
+            });
         }
 
         async function saveAssignmentAdjustment() {
@@ -915,7 +1010,7 @@
                     } else {
                         showToast(result.error || 'Failed to update', true);
                     }
-                } else {
+                } else if (adjustMode === 'swap') {
                     const swapPerson = document.getElementById('modal-select-swap-person').value;
                     const res = await fetch('/api/swap', {
                         method: 'POST',
@@ -929,11 +1024,47 @@
                     } else {
                         showToast(result.error || 'Failed to swap', true);
                     }
+                } else if (adjustMode === 'reschedule') {
+                    const newDate = document.getElementById('modal-reschedule-date').value;
+                    const newTime = document.getElementById('modal-reschedule-time').value;
+                    const res = await fetch('/api/task_schedule', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ week_index: weekIndex, task: task, date: newDate, time: newTime })
+                    });
+                    const result = await res.json();
+                    if (res.ok) {
+                        scheduleData = result.data;
+                        showToast(`Rescheduled ${task} to ${newDate}${newTime ? ' at ' + newTime : ''}`);
+                    } else {
+                        showToast(result.error || 'Failed to reschedule', true);
+                    }
                 }
                 closeReassignModal();
                 renderAll();
             } catch (err) {
-                showToast('Network error saving assignment', true);
+                showToast('Network error saving adjustment', true);
+            }
+        }
+
+        async function clearTaskOverride() {
+            if (!currentModalContext) return;
+            const { weekIndex, task } = currentModalContext;
+            try {
+                const res = await fetch('/api/task_schedule', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ week_index: weekIndex, task: task, date: null, time: null })
+                });
+                const result = await res.json();
+                if (res.ok) {
+                    scheduleData = result.data;
+                    closeReassignModal();
+                    renderAll();
+                    showToast(`Cleared override for ${task}`);
+                }
+            } catch (err) {
+                showToast('Error resetting task timing', true);
             }
         }
 
@@ -948,13 +1079,13 @@
                 const result = await res.json();
                 if (res.ok) {
                     scheduleData = result.data;
-                    showToast(`Updated trash pickup on ${dateStr} to ${person}`);
+                    showToast(`Updated trash duty on ${dateStr} to ${person}`);
                     renderAll();
                 } else {
                     showToast(result.error || 'Failed to update', true);
                 }
             } catch (err) {
-                showToast('Error updating trash pickup', true);
+                showToast('Error updating trash duty', true);
             }
         }
 
@@ -962,8 +1093,40 @@
         function openSettingsModal() {
             document.getElementById('settings-start-date').value = scheduleData.start_date;
             document.getElementById('settings-num-weeks').value = scheduleData.num_weeks;
+            document.getElementById('settings-default-day').value = scheduleData.default_cleaning_day !== undefined ? scheduleData.default_cleaning_day : 5;
+            document.getElementById('settings-default-time').value = scheduleData.default_cleaning_time || '';
             document.getElementById('settings-roommates').value = scheduleData.people.join(', ');
             document.getElementById('settings-tasks').value = scheduleData.tasks.join(', ');
+
+            // Populate Roommate Preferences
+            const prefContainer = document.getElementById('roommate-preferences-container');
+            prefContainer.innerHTML = '';
+            const prefs = scheduleData.person_preferences || {};
+
+            scheduleData.people.forEach(p => {
+                const pPref = prefs[p] || {};
+                const pDay = pPref.day_of_week !== undefined ? pPref.day_of_week : -1;
+                const pTime = pPref.time || '';
+
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-2 p-2 bg-white rounded-lg border border-slate-200 text-xs';
+                row.innerHTML = `
+                    <span class="font-bold text-slate-800 w-24 truncate">${p}</span>
+                    <select id="pref-day-${p}" class="border border-slate-300 rounded p-1 text-xs bg-white flex-1">
+                        <option value="-1" ${pDay === -1 ? 'selected' : ''}>Default (Global)</option>
+                        <option value="0" ${pDay === 0 ? 'selected' : ''}>Monday</option>
+                        <option value="1" ${pDay === 1 ? 'selected' : ''}>Tuesday</option>
+                        <option value="2" ${pDay === 2 ? 'selected' : ''}>Wednesday</option>
+                        <option value="3" ${pDay === 3 ? 'selected' : ''}>Thursday</option>
+                        <option value="4" ${pDay === 4 ? 'selected' : ''}>Friday</option>
+                        <option value="5" ${pDay === 5 ? 'selected' : ''}>Saturday</option>
+                        <option value="6" ${pDay === 6 ? 'selected' : ''}>Sunday</option>
+                    </select>
+                    <input type="time" id="pref-time-${p}" value="${pTime}" placeholder="Time" class="border border-slate-300 rounded p-1 text-xs w-24">
+                `;
+                prefContainer.appendChild(row);
+            });
+
             document.getElementById('settings-modal').classList.remove('hidden');
         }
 
@@ -974,8 +1137,23 @@
         async function saveSettings() {
             const startDate = document.getElementById('settings-start-date').value;
             const numWeeks = parseInt(document.getElementById('settings-num-weeks').value);
+            const defaultDay = parseInt(document.getElementById('settings-default-day').value);
+            const defaultTime = document.getElementById('settings-default-time').value || null;
             const people = document.getElementById('settings-roommates').value.split(',').map(s => s.trim()).filter(Boolean);
             const tasks = document.getElementById('settings-tasks').value.split(',').map(s => s.trim()).filter(Boolean);
+
+            // Collect person preferences
+            const person_preferences = {};
+            people.forEach(p => {
+                const dayEl = document.getElementById(`pref-day-${p}`);
+                const timeEl = document.getElementById(`pref-time-${p}`);
+                if (dayEl && dayEl.value !== "-1") {
+                    person_preferences[p] = {
+                        day_of_week: parseInt(dayEl.value),
+                        time: timeEl && timeEl.value ? timeEl.value : null
+                    };
+                }
+            });
 
             if (!startDate || isNaN(numWeeks) || people.length === 0 || tasks.length === 0) {
                 showToast('Please provide valid settings values', true);
@@ -986,14 +1164,22 @@
                 const res = await fetch('/api/settings', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ start_date: startDate, num_weeks: numWeeks, people, tasks })
+                    body: JSON.stringify({
+                        start_date: startDate,
+                        num_weeks: numWeeks,
+                        people,
+                        tasks,
+                        default_cleaning_day: defaultDay,
+                        default_cleaning_time: defaultTime,
+                        person_preferences
+                    })
                 });
                 const result = await res.json();
                 if (res.ok) {
                     scheduleData = result.data;
                     closeSettingsModal();
                     renderAll();
-                    showToast('Schedule settings updated and regenerated');
+                    showToast('Schedule settings and timings updated!');
                 } else {
                     showToast(result.error || 'Failed to update settings', true);
                 }

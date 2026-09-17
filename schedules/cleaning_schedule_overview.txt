@@ -1,134 +1,29 @@
 CLEANING SCHEDULE OVERVIEW
 ================================================================================
 
-Start date: Monday, August 31, 2026
-Number of weeks: 18
+Start date: Thursday, September 17, 2026
+Number of weeks: 3
 
-Week   Date         Person          Task                                         
+Week   Date           Person          Task                                         
 --------------------------------------------------------------------------------
-1      2026-09-05   Nancy           Kitchen                                      
-1      2026-09-05   Natan           Bathroom                                     
-1      2026-09-05   Shlomo          Downstairs Toilet                            
-1      2026-09-05   Lucia           Floors duty                                  
-1      2026-09-05   Tom             Taking out trash [2026-09-01: Organic Waste (Tom)]
-1      2026-09-05   Ellie           Communal laundry                             
+1      2026-09-22     Nancy           Kitchen                                      
+1      2026-09-28 11:00 Natan           Bathroom                                     
+1      2026-09-22     Shlomo          Downstairs Toilet                            
+1      2026-09-22     Lucia           Floors duty                                  
+1      2026-09-22     Brenda          Taking out trash [2026-09-17 8PM: Put out Paper & Cardboard (Brenda), 2026-09-21 8PM: Put out Residual Waste & Plastic (Brenda)]
+1      2026-09-22     Ellie           Communal laundry                             
 --------------------------------------------------------------------------------
-2      2026-09-12   Ellie           Kitchen                                      
-2      2026-09-12   Shlomo          Bathroom                                     
-2      2026-09-12   Lucia           Downstairs Toilet                            
-2      2026-09-12   Tom             Floors duty                                  
-2      2026-09-12   Ellie           Taking out trash [2026-09-08: Residual Waste & Plastic (Ellie)]
-2      2026-09-12   Nancy           Communal laundry                             
+2      2026-09-27 18:00 Natan           Kitchen                                      
+2      2026-09-29     Shlomo          Bathroom                                     
+2      2026-09-29     Lucia           Downstairs Toilet                            
+2      2026-09-29     Brenda          Floors duty                                  
+2      2026-09-29     Ellie           Taking out trash [2026-09-23 8PM: Put out Chemical Waste (Ellie), 2026-09-28 8PM: Put out Organic Waste (Ellie)]
+2      2026-09-29     Nancy           Communal laundry                             
 --------------------------------------------------------------------------------
-3      2026-09-19   Shlomo          Kitchen                                      
-3      2026-09-19   Lucia           Bathroom                                     
-3      2026-09-19   Tom             Downstairs Toilet                            
-3      2026-09-19   Ellie           Floors duty                                  
-3      2026-09-19   Nancy           Taking out trash [2026-09-15: Organic Waste (Nancy), 2026-09-18: Paper & Cardboard (Nancy)]
-3      2026-09-19   Natan           Communal laundry                             
---------------------------------------------------------------------------------
-4      2026-09-26   Lucia           Kitchen                                      
-4      2026-09-26   Tom             Bathroom                                     
-4      2026-09-26   Ellie           Downstairs Toilet                            
-4      2026-09-26   Nancy           Floors duty                                  
-4      2026-09-26   Natan           Taking out trash [2026-09-22: Residual Waste & Plastic (Natan), 2026-09-24: Chemical Waste (Natan)]
-4      2026-09-26   Shlomo          Communal laundry                             
---------------------------------------------------------------------------------
-5      2026-10-03   Tom             Kitchen                                      
-5      2026-10-03   Ellie           Bathroom                                     
-5      2026-10-03   Nancy           Downstairs Toilet                            
-5      2026-10-03   Natan           Floors duty                                  
-5      2026-10-03   Shlomo          Taking out trash [2026-09-29: Organic Waste (Shlomo)]
-5      2026-10-03   Lucia           Communal laundry                             
---------------------------------------------------------------------------------
-6      2026-10-10   Ellie           Kitchen                                      
-6      2026-10-10   Nancy           Bathroom                                     
-6      2026-10-10   Natan           Downstairs Toilet                            
-6      2026-10-10   Shlomo          Floors duty                                  
-6      2026-10-10   Lucia           Taking out trash [2026-10-06: Residual Waste & Plastic (Lucia)]
-6      2026-10-10   Tom             Communal laundry                             
---------------------------------------------------------------------------------
-7      2026-10-17   Nancy           Kitchen                                      
-7      2026-10-17   Natan           Bathroom                                     
-7      2026-10-17   Shlomo          Downstairs Toilet                            
-7      2026-10-17   Lucia           Floors duty                                  
-7      2026-10-17   Tom             Taking out trash [2026-10-13: Organic Waste (Tom), 2026-10-16: Paper & Cardboard (Tom)]
-7      2026-10-17   Ellie           Communal laundry                             
---------------------------------------------------------------------------------
-8      2026-10-24   Natan           Kitchen                                      
-8      2026-10-24   Shlomo          Bathroom                                     
-8      2026-10-24   Lucia           Downstairs Toilet                            
-8      2026-10-24   Tom             Floors duty                                  
-8      2026-10-24   Ellie           Taking out trash [2026-10-20: Residual Waste & Plastic (Ellie)]
-8      2026-10-24   Nancy           Communal laundry                             
---------------------------------------------------------------------------------
-9      2026-10-31   Shlomo          Kitchen                                      
-9      2026-10-31   Lucia           Bathroom                                     
-9      2026-10-31   Tom             Downstairs Toilet                            
-9      2026-10-31   Ellie           Floors duty                                  
-9      2026-10-31   Nancy           Taking out trash [2026-10-27: Organic Waste (Nancy), 2026-10-29: Chemical Waste (Nancy)]
-9      2026-10-31   Natan           Communal laundry                             
---------------------------------------------------------------------------------
-10     2026-11-07   Lucia           Kitchen                                      
-10     2026-11-07   Tom             Bathroom                                     
-10     2026-11-07   Ellie           Downstairs Toilet                            
-10     2026-11-07   Nancy           Floors duty                                  
-10     2026-11-07   Natan           Taking out trash [2026-11-03: Residual Waste & Plastic (Natan)]
-10     2026-11-07   Shlomo          Communal laundry                             
---------------------------------------------------------------------------------
-11     2026-11-14   Tom             Kitchen                                      
-11     2026-11-14   Ellie           Bathroom                                     
-11     2026-11-14   Nancy           Downstairs Toilet                            
-11     2026-11-14   Natan           Floors duty                                  
-11     2026-11-14   Shlomo          Taking out trash [2026-11-10: Organic Waste (Shlomo)]
-11     2026-11-14   Lucia           Communal laundry                             
---------------------------------------------------------------------------------
-12     2026-11-21   Ellie           Kitchen                                      
-12     2026-11-21   Nancy           Bathroom                                     
-12     2026-11-21   Natan           Downstairs Toilet                            
-12     2026-11-21   Shlomo          Floors duty                                  
-12     2026-11-21   Lucia           Taking out trash [2026-11-17: Residual Waste & Plastic (Lucia), 2026-11-20: Paper & Cardboard (Lucia)]
-12     2026-11-21   Tom             Communal laundry                             
---------------------------------------------------------------------------------
-13     2026-11-28   Nancy           Kitchen                                      
-13     2026-11-28   Natan           Bathroom                                     
-13     2026-11-28   Shlomo          Downstairs Toilet                            
-13     2026-11-28   Lucia           Floors duty                                  
-13     2026-11-28   Tom             Taking out trash [2026-11-24: Organic Waste (Tom)]
-13     2026-11-28   Ellie           Communal laundry                             
---------------------------------------------------------------------------------
-14     2026-12-05   Natan           Kitchen                                      
-14     2026-12-05   Shlomo          Bathroom                                     
-14     2026-12-05   Lucia           Downstairs Toilet                            
-14     2026-12-05   Tom             Floors duty                                  
-14     2026-12-05   Ellie           Taking out trash [2026-12-01: Residual Waste & Plastic (Ellie), 2026-12-03: Chemical Waste (Ellie)]
-14     2026-12-05   Nancy           Communal laundry                             
---------------------------------------------------------------------------------
-15     2026-12-12   Shlomo          Kitchen                                      
-15     2026-12-12   Lucia           Bathroom                                     
-15     2026-12-12   Tom             Downstairs Toilet                            
-15     2026-12-12   Ellie           Floors duty                                  
-15     2026-12-12   Nancy           Taking out trash [2026-12-08: Organic Waste (Nancy)]
-15     2026-12-12   Natan           Communal laundry                             
---------------------------------------------------------------------------------
-16     2026-12-19   Lucia           Kitchen                                      
-16     2026-12-19   Tom             Bathroom                                     
-16     2026-12-19   Ellie           Downstairs Toilet                            
-16     2026-12-19   Nancy           Floors duty                                  
-16     2026-12-19   Natan           Taking out trash [2026-12-15: Residual Waste & Plastic (Natan), 2026-12-18: Paper & Cardboard (Natan)]
-16     2026-12-19   Shlomo          Communal laundry                             
---------------------------------------------------------------------------------
-17     2026-12-26   Tom             Kitchen                                      
-17     2026-12-26   Ellie           Bathroom                                     
-17     2026-12-26   Nancy           Downstairs Toilet                            
-17     2026-12-26   Natan           Floors duty                                  
-17     2026-12-26   Shlomo          Taking out trash [2026-12-22: Organic Waste (Shlomo)]
-17     2026-12-26   Lucia           Communal laundry                             
---------------------------------------------------------------------------------
-18     2027-01-02   Ellie           Kitchen                                      
-18     2027-01-02   Nancy           Bathroom                                     
-18     2027-01-02   Natan           Downstairs Toilet                            
-18     2027-01-02   Shlomo          Floors duty                                  
-18     2027-01-02   Lucia           Taking out trash [2026-12-29: Residual Waste & Plastic (Lucia)]
-18     2027-01-02   Tom             Communal laundry                             
+3      2026-10-06     Shlomo          Kitchen                                      
+3      2026-10-06     Lucia           Bathroom                                     
+3      2026-10-06     Brenda          Downstairs Toilet                            
+3      2026-10-06     Ellie           Floors duty                                  
+3      2026-10-06     Nancy           Taking out trash [2026-10-05 8PM: Put out Residual Waste & Plastic (Nancy)]
+3      2026-10-04 18:00 Natan           Communal laundry                             
 --------------------------------------------------------------------------------

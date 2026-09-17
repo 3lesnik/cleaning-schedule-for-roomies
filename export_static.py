@@ -50,18 +50,26 @@ def generate_docs(manager=None):
         for w in weeks:
             for task, p in w["assignments"].items():
                 if p == person:
+                    date_str, time_str, is_ovr = manager.compute_task_schedule(w, task, person)
+                    d = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
                     cleanings.append({
                         "week": w["week_number"],
-                        "date": w["saturday_date"],
+                        "date": date_str,
+                        "day_name": d.strftime("%A"),
+                        "time": time_str,
                         "task": task
                     })
             for tp in w.get("trash_pickups", []):
                 if tp.get("assigned_to") == person:
-                    d = datetime.datetime.strptime(tp["date"], "%Y-%m-%d")
+                    rem_date_str = tp.get("reminder_date") or tp["date"]
+                    rem_d = datetime.datetime.strptime(rem_date_str, "%Y-%m-%d")
                     trash_pickups.append({
-                        "date": tp["date"],
-                        "day_name": d.strftime("%A"),
-                        "waste_type": tp["waste_type"]
+                        "reminder_date": rem_date_str,
+                        "reminder_day": rem_d.strftime("%A"),
+                        "reminder_time": tp.get("reminder_time", "20:00"),
+                        "pickup_date": tp.get("pickup_date") or tp["date"],
+                        "waste_type": tp["waste_type"],
+                        "title": tp.get("title") or f"Put out the {tp['waste_type']}"
                     })
 
         my_house_events = [he for he in house_events if he.get("target_audience") in ["all", person]]
@@ -106,7 +114,7 @@ def generate_docs(manager=None):
                 </div>
                 <div>
                     <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900">{person}'s Schedule</h1>
-                    <p class="text-xs md:text-sm text-slate-500">Live calendar with Saturday cleaning duties, trash pickups & house events</p>
+                    <p class="text-xs md:text-sm text-slate-500">Live calendar with cleaning duties, trash pickups & house events</p>
                 </div>
             </div>
 
@@ -133,34 +141,36 @@ def generate_docs(manager=None):
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Saturday Cleanings -->
+            <!-- Cleaning Chores -->
             <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
                 <h2 class="text-sm font-bold text-slate-900 flex items-center space-x-1.5 border-b border-slate-100 pb-3">
                     <span>🧹</span>
-                    <span>Saturday Duties ({len(cleanings)})</span>
+                    <span>Duties ({len(cleanings)})</span>
                 </h2>
                 <div class="space-y-2.5 max-h-96 overflow-y-auto pr-1">
 """)
             if cleanings:
                 for c in cleanings:
+                    time_badge = f'<div class="text-[11px] text-slate-500">⏰ Scheduled at {c["time"]}</div>' if c.get("time") else ''
                     f.write(f"""                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
                         <div class="flex items-center justify-between">
-                            <span class="font-bold text-slate-800">Week {c['week']}</span>
-                            <span class="text-slate-400 font-mono text-[11px]">{c['date']}</span>
+                            <span class="font-bold text-slate-800">{c['day_name']}, {c['date']}</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week {c['week']}</span>
                         </div>
                         <div class="font-semibold text-blue-700">{c['task']}</div>
+                        {time_badge}
                     </div>\n""")
             else:
-                f.write("""                    <p class="text-xs text-slate-400 py-4 text-center">No Saturday chores assigned.</p>\n""")
+                f.write("""                    <p class="text-xs text-slate-400 py-4 text-center">No chores assigned.</p>\n""")
 
             f.write(f"""                </div>
             </div>
 
-            <!-- Trash Pickups -->
+            <!-- Trash Duties -->
             <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
                 <h2 class="text-sm font-bold text-slate-900 flex items-center space-x-1.5 border-b border-slate-100 pb-3">
                     <span>🗑️</span>
-                    <span>Trash Pickups ({len(trash_pickups)})</span>
+                    <span>Trash Duties ({len(trash_pickups)})</span>
                 </h2>
                 <div class="space-y-2.5 max-h-96 overflow-y-auto pr-1">
 """)
@@ -173,13 +183,18 @@ def generate_docs(manager=None):
                     elif "Chemical" in tp["waste_type"]: waste_cls = "waste-Chemical"
 
                     f.write(f"""                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1.5">
-                        <div class="flex items-center justify-between">
-                            <span class="font-bold text-slate-800">{tp['day_name']}</span>
-                            <span class="text-slate-400 font-mono text-[11px]">{tp['date']}</span>
+                        <div class="font-bold text-slate-800 flex items-center justify-between">
+                            <span>{tp['title']}</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-semibold {waste_cls}">
+                                {tp['waste_type']}
+                            </span>
                         </div>
-                        <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold {waste_cls}">
-                            {tp['waste_type']}
-                        </span>
+                        <div class="text-[11px] text-purple-700 font-medium">
+                            ⏰ {tp['reminder_day']}, {tp['reminder_date']} at 8:00 PM
+                        </div>
+                        <div class="text-[10px] text-slate-400">
+                            Pickup is tomorrow, {tp['pickup_date']}
+                        </div>
                     </div>\n""")
             else:
                 f.write("""                    <p class="text-xs text-slate-400 py-4 text-center">No trash pickups assigned.</p>\n""")

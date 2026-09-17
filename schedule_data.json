@@ -35,14 +35,66 @@
         {
           "date": "2026-09-18",
           "waste_type": "Paper & Cardboard",
-          "assigned_to": "Brenda"
+          "assigned_to": "Brenda",
+          "pickup_date": "2026-09-18",
+          "reminder_date": "2026-09-17",
+          "reminder_time": "20:00",
+          "title": "Put out the Paper & Cardboard"
         },
         {
           "date": "2026-09-22",
           "waste_type": "Residual Waste & Plastic",
-          "assigned_to": "Brenda"
+          "assigned_to": "Brenda",
+          "pickup_date": "2026-09-22",
+          "reminder_date": "2026-09-21",
+          "reminder_time": "20:00",
+          "title": "Put out the Residual Waste & Plastic"
         }
-      ]
+      ],
+      "task_overrides": {
+        "Bathroom": {
+          "date": "2026-09-28",
+          "time": "11:00"
+        }
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-09-22",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-09-28",
+          "day_name": "Monday",
+          "time": "11:00",
+          "is_override": true
+        },
+        "Downstairs Toilet": {
+          "date": "2026-09-22",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Floors duty": {
+          "date": "2026-09-22",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Taking out trash": {
+          "date": "2026-09-22",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Communal laundry": {
+          "date": "2026-09-22",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        }
+      }
     },
     {
       "week_number": 2,
@@ -61,14 +113,61 @@
         {
           "date": "2026-09-24",
           "waste_type": "Chemical Waste",
-          "assigned_to": "Ellie"
+          "assigned_to": "Ellie",
+          "pickup_date": "2026-09-24",
+          "reminder_date": "2026-09-23",
+          "reminder_time": "20:00",
+          "title": "Put out the Chemical Waste"
         },
         {
           "date": "2026-09-29",
           "waste_type": "Organic Waste",
-          "assigned_to": "Ellie"
+          "assigned_to": "Ellie",
+          "pickup_date": "2026-09-29",
+          "reminder_date": "2026-09-28",
+          "reminder_time": "20:00",
+          "title": "Put out the Organic Waste"
         }
-      ]
+      ],
+      "task_overrides": {},
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-09-27",
+          "day_name": "Sunday",
+          "time": "18:00",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-09-29",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Downstairs Toilet": {
+          "date": "2026-09-29",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Floors duty": {
+          "date": "2026-09-29",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Taking out trash": {
+          "date": "2026-09-29",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Communal laundry": {
+          "date": "2026-09-29",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        }
+      }
     },
     {
       "week_number": 3,
@@ -87,9 +186,61 @@
         {
           "date": "2026-10-06",
           "waste_type": "Residual Waste & Plastic",
-          "assigned_to": "Nancy"
+          "assigned_to": "Nancy",
+          "pickup_date": "2026-10-06",
+          "reminder_date": "2026-10-05",
+          "reminder_time": "20:00",
+          "title": "Put out the Residual Waste & Plastic"
         }
-      ]
+      ],
+      "task_overrides": {},
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-10-06",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-10-06",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Downstairs Toilet": {
+          "date": "2026-10-06",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Floors duty": {
+          "date": "2026-10-06",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Taking out trash": {
+          "date": "2026-10-06",
+          "day_name": "Tuesday",
+          "time": null,
+          "is_override": false
+        },
+        "Communal laundry": {
+          "date": "2026-10-04",
+          "day_name": "Sunday",
+          "time": "18:00",
+          "is_override": false
+        }
+      }
     }
-  ]
+  ],
+  "house_events": [],
+  "default_cleaning_day": 5,
+  "default_cleaning_time": null,
+  "person_preferences": {
+    "Natan": {
+      "day_of_week": 3,
+      "time": "18:00"
+    }
+  }
 }

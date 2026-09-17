@@ -95,24 +95,27 @@
                         {% for c in cleanings %}
                         <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition text-xs space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800">Week {{ c.week }}</span>
-                                <span class="text-slate-400 font-mono text-[11px]">{{ c.date }}</span>
+                                <span class="font-bold text-slate-800">{{ c.day_name }}, {{ c.date }}</span>
+                                <span class="text-slate-400 font-mono text-[11px]">Week {{ c.week }}</span>
                             </div>
                             <div class="font-semibold text-blue-700">{{ c.task }}</div>
+                            {% if c.time %}
+                            <div class="text-[11px] text-slate-500">⏰ Scheduled at {{ c.time }}</div>
+                            {% endif %}
                         </div>
                         {% endfor %}
                     {% else %}
-                        <p class="text-xs text-slate-400 py-4 text-center">No Saturday chores assigned.</p>
+                        <p class="text-xs text-slate-400 py-4 text-center">No chores assigned.</p>
                     {% endif %}
                 </div>
             </div>
 
-            <!-- Trash Pickups -->
+            <!-- Trash Duties -->
             <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                     <h2 class="text-sm font-bold text-slate-900 flex items-center space-x-1.5">
                         <span>🗑️</span>
-                        <span>Trash Pickups ({{ trash_pickups|length }})</span>
+                        <span>Trash Duties ({{ trash_pickups|length }})</span>
                     </h2>
                 </div>
 
@@ -120,17 +123,22 @@
                     {% if trash_pickups %}
                         {% for tp in trash_pickups %}
                         <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition text-xs space-y-1.5">
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800">{{ tp.day_name }}</span>
-                                <span class="text-slate-400 font-mono text-[11px]">{{ tp.date }}</span>
+                            <div class="font-bold text-slate-800 flex items-center justify-between">
+                                <span>{{ tp.title }}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-semibold {% if 'Organic' in tp.waste_type %}waste-Organic{% elif 'Residual' in tp.waste_type %}waste-Residual{% elif 'Paper' in tp.waste_type %}waste-Paper{% elif 'Chemical' in tp.waste_type %}waste-Chemical{% else %}bg-slate-100{% endif %}">
+                                    {{ tp.waste_type }}
+                                </span>
                             </div>
-                            <span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold {% if 'Organic' in tp.waste_type %}waste-Organic{% elif 'Residual' in tp.waste_type %}waste-Residual{% elif 'Paper' in tp.waste_type %}waste-Paper{% elif 'Chemical' in tp.waste_type %}waste-Chemical{% else %}bg-slate-100{% endif %}">
-                                {{ tp.waste_type }}
-                            </span>
+                            <div class="text-[11px] text-purple-700 font-medium">
+                                ⏰ {{ tp.reminder_day }}, {{ tp.reminder_date }} at 8:00 PM
+                            </div>
+                            <div class="text-[10px] text-slate-400">
+                                Pickup is tomorrow, {{ tp.pickup_date }}
+                            </div>
                         </div>
                         {% endfor %}
                     {% else %}
-                        <p class="text-xs text-slate-400 py-4 text-center">No trash pickups assigned.</p>
+                        <p class="text-xs text-slate-400 py-4 text-center">No trash duties assigned.</p>
                     {% endif %}
                 </div>
             </div>
