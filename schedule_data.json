@@ -12,7 +12,8 @@
     "Bathroom",
     "Hallway & Stairs",
     "Trash & Recycling",
-    "Living Room"
+    "Downstairs toilet",
+    "Communal laundry"
   ],
   "start_date": "2026-09-07",
   "num_weeks": 8,
@@ -35,7 +36,8 @@
         "Bathroom": "Natan",
         "Hallway & Stairs": "Ellie",
         "Trash & Recycling": "Lucia",
-        "Living Room": "Shlomo"
+        "Downstairs toilet": "Shlomo",
+        "Communal laundry": "Brenda"
       },
       "task_schedules": {
         "Kitchen": {
@@ -62,10 +64,16 @@
           "time": "14:30",
           "is_override": false
         },
-        "Living Room": {
+        "Downstairs toilet": {
           "date": "2026-09-12",
           "day_name": "Saturday",
           "time": null,
+          "is_override": false
+        },
+        "Communal laundry": {
+          "date": "2026-09-07",
+          "day_name": "Monday",
+          "time": "14:30",
           "is_override": false
         }
       },
@@ -92,7 +100,8 @@
         "Bathroom": "Ellie",
         "Hallway & Stairs": "Lucia",
         "Trash & Recycling": "Shlomo",
-        "Living Room": "Brenda"
+        "Downstairs toilet": "Brenda",
+        "Communal laundry": "Nancy"
       },
       "task_schedules": {
         "Kitchen": {
@@ -119,7 +128,13 @@
           "time": null,
           "is_override": false
         },
-        "Living Room": {
+        "Downstairs toilet": {
+          "date": "2026-09-14",
+          "day_name": "Monday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Communal laundry": {
           "date": "2026-09-14",
           "day_name": "Monday",
           "time": "14:30",
@@ -158,7 +173,8 @@
         "Bathroom": "Lucia",
         "Hallway & Stairs": "Shlomo",
         "Trash & Recycling": "Brenda",
-        "Living Room": "Nancy"
+        "Downstairs toilet": "Nancy",
+        "Communal laundry": "Natan"
       },
       "task_schedules": {
         "Kitchen": {
@@ -185,7 +201,13 @@
           "time": "14:30",
           "is_override": false
         },
-        "Living Room": {
+        "Downstairs toilet": {
+          "date": "2026-09-21",
+          "day_name": "Monday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Communal laundry": {
           "date": "2026-09-21",
           "day_name": "Monday",
           "time": "14:30",
@@ -224,7 +246,8 @@
         "Bathroom": "Shlomo",
         "Hallway & Stairs": "Brenda",
         "Trash & Recycling": "Nancy",
-        "Living Room": "Natan"
+        "Downstairs toilet": "Natan",
+        "Communal laundry": "Ellie"
       },
       "task_schedules": {
         "Kitchen": {
@@ -251,7 +274,13 @@
           "time": "14:30",
           "is_override": false
         },
-        "Living Room": {
+        "Downstairs toilet": {
+          "date": "2026-09-28",
+          "day_name": "Monday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Communal laundry": {
           "date": "2026-09-28",
           "day_name": "Monday",
           "time": "14:30",
@@ -281,7 +310,8 @@
         "Bathroom": "Brenda",
         "Hallway & Stairs": "Nancy",
         "Trash & Recycling": "Natan",
-        "Living Room": "Ellie"
+        "Downstairs toilet": "Ellie",
+        "Communal laundry": "Lucia"
       },
       "task_schedules": {
         "Kitchen": {
@@ -308,7 +338,13 @@
           "time": "14:30",
           "is_override": false
         },
-        "Living Room": {
+        "Downstairs toilet": {
+          "date": "2026-10-05",
+          "day_name": "Monday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Communal laundry": {
           "date": "2026-10-05",
           "day_name": "Monday",
           "time": "14:30",
@@ -338,7 +374,8 @@
         "Bathroom": "Nancy",
         "Hallway & Stairs": "Natan",
         "Trash & Recycling": "Ellie",
-        "Living Room": "Lucia"
+        "Downstairs toilet": "Lucia",
+        "Communal laundry": "Shlomo"
       },
       "task_schedules": {
         "Kitchen": {
@@ -365,10 +402,16 @@
           "time": "14:30",
           "is_override": false
         },
-        "Living Room": {
+        "Downstairs toilet": {
           "date": "2026-10-12",
           "day_name": "Monday",
           "time": "14:30",
+          "is_override": false
+        },
+        "Communal laundry": {
+          "date": "2026-10-17",
+          "day_name": "Saturday",
+          "time": null,
           "is_override": false
         }
       },
@@ -404,7 +447,8 @@
         "Bathroom": "Natan",
         "Hallway & Stairs": "Ellie",
         "Trash & Recycling": "Lucia",
-        "Living Room": "Shlomo"
+        "Downstairs toilet": "Shlomo",
+        "Communal laundry": "Brenda"
       },
       "task_schedules": {
         "Kitchen": {
@@ -431,10 +475,16 @@
           "time": "14:30",
           "is_override": false
         },
-        "Living Room": {
+        "Downstairs toilet": {
           "date": "2026-10-24",
           "day_name": "Saturday",
           "time": null,
+          "is_override": false
+        },
+        "Communal laundry": {
+          "date": "2026-10-19",
+          "day_name": "Monday",
+          "time": "14:30",
           "is_override": false
         }
       },
@@ -461,7 +511,8 @@
         "Bathroom": "Ellie",
         "Hallway & Stairs": "Lucia",
         "Trash & Recycling": "Shlomo",
-        "Living Room": "Brenda"
+        "Downstairs toilet": "Brenda",
+        "Communal laundry": "Nancy"
       },
       "task_schedules": {
         "Kitchen": {
@@ -488,7 +539,13 @@
           "time": null,
           "is_override": false
         },
-        "Living Room": {
+        "Downstairs toilet": {
+          "date": "2026-10-26",
+          "day_name": "Monday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Communal laundry": {
           "date": "2026-10-26",
           "day_name": "Monday",
           "time": "14:30",
