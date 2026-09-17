@@ -4,6 +4,8 @@ Comprehensive Test Suite for Cleaning Schedule, Trash Pickups, House Events, and
 """
 
 import unittest
+import unittest.mock
+from unittest.mock import patch, MagicMock
 import json
 import os
 import io
@@ -229,6 +231,21 @@ class TestCleaningSchedule(unittest.TestCase):
         for person in self.manager.data["people"]:
             self.assertTrue(os.path.exists(os.path.join(docs_dir, "calendars", f"{person}.ics")))
             self.assertTrue(os.path.exists(os.path.join(docs_dir, "c", f"{person}.html")))
+
+    @unittest.mock.patch('subprocess.run')
+    def test_publish_endpoint(self, mock_run):
+        """Verify POST /api/publish regenerates docs, commits, and pushes to git."""
+        mock_proc = unittest.mock.MagicMock()
+        mock_proc.returncode = 0
+        mock_proc.stdout = ""
+        mock_proc.stderr = ""
+        mock_run.return_value = mock_proc
+
+        res = self.client.post('/api/publish', json={"message": "Test auto-publish"})
+        self.assertEqual(res.status_code, 200)
+        data = json.loads(res.data)
+        self.assertEqual(data["status"], "ok")
+        self.assertIn("Successfully exported and pushed", data["message"])
 
 if __name__ == '__main__':
     unittest.main()

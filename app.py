@@ -6,6 +6,7 @@ Local Web Application for Cleaning Schedule, Trash Pickups, and House Events
 import os
 import io
 import datetime
+import subprocess
 from flask import Flask, render_template, jsonify, request, send_file, Response
 from schedule_manager import ScheduleManager
 import export_static
@@ -241,6 +242,54 @@ def export_gh_pages():
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route('/api/publish', methods=['POST'])
+def publish_to_github():
+    """Export static site, sync calendars, commit changes, and push to GitHub."""
+    req = request.get_json() or {}
+    commit_msg = req.get('message') or "Update cleaning schedule & calendar feeds"
+    
+    # 1. Regenerate static site in docs/ and sync schedules/
+    try:
+        docs_dir = export_static.generate_docs(manager)
+        manager.sync_to_filesystem()
+    except Exception as e:
+        return jsonify({"error": f"Failed to generate static docs: {str(e)}"}), 500
+
+    # 2. Git add and commit
+    try:
+        subprocess.run(["git", "add", "-A"], check=True)
+        
+        # Check if there are changes to commit
+        status = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
+        if status.stdout.strip():
+            subprocess.run(["git", "commit", "-m", commit_msg], check=True)
+            
+        # 3. Git push
+        push_res = subprocess.run(
+            ["git", "push", "origin", "main"], 
+            capture_output=True, 
+            text=True, 
+            timeout=30
+        )
+        if push_res.returncode == 0:
+            return jsonify({
+                "status": "ok",
+                "message": "🚀 Successfully exported and pushed to GitHub! Roommates' calendars will update in ~1 minute."
+            })
+        else:
+            err_msg = (push_res.stderr or push_res.stdout or "Push error").strip()
+            return jsonify({
+                "status": "warning",
+                "message": f"Saved and committed locally, but push failed ({err_msg}). Run 'git push' manually."
+            })
+    except subprocess.TimeoutExpired:
+        return jsonify({
+            "status": "warning",
+            "message": "Push timed out (likely waiting for credentials). Run 'git push' in your terminal."
+        })
+    except Exception as e:
+        return jsonify({"error": f"Git operation failed: {str(e)}"}), 500
 
 @app.route('/api/export/<person>.ics', methods=['GET'])
 def export_person(person):
