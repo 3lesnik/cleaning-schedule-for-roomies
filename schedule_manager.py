@@ -89,7 +89,8 @@ class ScheduleManager:
                     day_of_week = int(default_cleaning_day)
                     task_time = default_cleaning_time
                 
-                task_date = week_start + datetime.timedelta(days=day_of_week)
+                day_offset = (day_of_week - week_start.weekday()) % 7
+                task_date = week_start + datetime.timedelta(days=day_offset)
                 task_schedules[task] = {
                     "date": task_date.strftime("%Y-%m-%d"),
                     "day_name": DAY_NAMES[day_of_week],
@@ -162,7 +163,8 @@ class ScheduleManager:
             day_idx = int(self.data.get("default_cleaning_day", DEFAULT_CLEANING_DAY))
             time_val = self.data.get("default_cleaning_time")
 
-        task_date = week_start + datetime.timedelta(days=day_idx)
+        day_offset = (day_idx - week_start.weekday()) % 7
+        task_date = week_start + datetime.timedelta(days=day_offset)
         return task_date.strftime("%Y-%m-%d"), time_val, False
 
     def refresh_task_schedules(self):

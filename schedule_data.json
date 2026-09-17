@@ -59,8 +59,8 @@
       },
       "task_schedules": {
         "Kitchen": {
-          "date": "2026-09-17",
-          "day_name": "Thursday",
+          "date": "2026-09-19",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
@@ -71,26 +71,26 @@
           "is_override": true
         },
         "Downstairs Toilet": {
-          "date": "2026-09-17",
-          "day_name": "Thursday",
+          "date": "2026-09-19",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
         "Floors duty": {
-          "date": "2026-09-17",
-          "day_name": "Thursday",
+          "date": "2026-09-19",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
         "Taking out trash": {
-          "date": "2026-09-17",
-          "day_name": "Thursday",
+          "date": "2026-09-19",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
         "Communal laundry": {
-          "date": "2026-09-17",
-          "day_name": "Thursday",
+          "date": "2026-09-19",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         }
@@ -134,36 +134,36 @@
         "Kitchen": {
           "date": "2026-09-24",
           "day_name": "Thursday",
-          "time": null,
+          "time": "18:00",
           "is_override": false
         },
         "Bathroom": {
-          "date": "2026-09-24",
-          "day_name": "Thursday",
+          "date": "2026-09-26",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
         "Downstairs Toilet": {
-          "date": "2026-09-24",
-          "day_name": "Thursday",
+          "date": "2026-09-26",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
         "Floors duty": {
-          "date": "2026-09-24",
-          "day_name": "Thursday",
+          "date": "2026-09-26",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
         "Taking out trash": {
-          "date": "2026-09-24",
-          "day_name": "Thursday",
+          "date": "2026-09-26",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
         "Communal laundry": {
-          "date": "2026-09-24",
-          "day_name": "Thursday",
+          "date": "2026-09-26",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         }
@@ -196,46 +196,51 @@
       "task_overrides": {},
       "task_schedules": {
         "Kitchen": {
-          "date": "2026-10-01",
-          "day_name": "Thursday",
+          "date": "2026-10-03",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
         "Bathroom": {
-          "date": "2026-10-01",
-          "day_name": "Thursday",
+          "date": "2026-10-03",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
         "Downstairs Toilet": {
-          "date": "2026-10-01",
-          "day_name": "Thursday",
+          "date": "2026-10-03",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
         "Floors duty": {
-          "date": "2026-10-01",
-          "day_name": "Thursday",
+          "date": "2026-10-03",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
         "Taking out trash": {
-          "date": "2026-10-01",
-          "day_name": "Thursday",
+          "date": "2026-10-03",
+          "day_name": "Saturday",
           "time": null,
           "is_override": false
         },
         "Communal laundry": {
           "date": "2026-10-01",
           "day_name": "Thursday",
-          "time": null,
+          "time": "18:00",
           "is_override": false
         }
       }
     }
   ],
   "house_events": [],
-  "default_cleaning_day": 0,
+  "default_cleaning_day": 5,
   "default_cleaning_time": null,
-  "person_preferences": {}
+  "person_preferences": {
+    "Natan": {
+      "day_of_week": 3,
+      "time": "18:00"
+    }
+  }
 }
