@@ -188,3 +188,7 @@ Week   Date           Person          Task
 26     2027-03-01     Brenda          Downstairs toilet                            
 26     2027-03-01     Nancy           Communal laundry                             
 --------------------------------------------------------------------------------
+
+HOUSE EVENTS
+================================================================================
+- 2026-09-18 at 22:00: Mexican Movie Night [All Roommates]

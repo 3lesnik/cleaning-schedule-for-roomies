@@ -1664,5 +1664,14 @@
       "trash_pickups": []
     }
   ],
-  "house_events": []
+  "house_events": [
+    {
+      "id": "be2a1132",
+      "title": "Mexican Movie Night",
+      "date": "2026-09-18",
+      "time": "22:00",
+      "description": "",
+      "target_audience": "all"
+    }
+  ]
 }
