@@ -121,21 +121,22 @@ def generate_docs(manager=None):
             <div class="bg-slate-50 rounded-xl p-4 md:p-5 border border-slate-200 space-y-3">
                 <div class="text-xs font-bold uppercase tracking-wider text-slate-500">Subscribe & Sync With Your Calendar</div>
                 <div class="flex flex-wrap gap-2.5">
-                    <a id="webcal-btn" href="#" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition">
+                    <a id="webcal-btn" href="#" class="inline-flex items-center space-x-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition">
                         <span>📲</span>
-                        <span>Subscribe in Calendar (Apple/iOS/Mac)</span>
-                    </a>
-                    <a href="../calendars/{person}.ics" download="cleaning_schedule_{person}.ics" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 shadow-xs transition">
-                        <span>📥</span>
-                        <span>Download .ics File</span>
+                        <span>Subscribe in Calendar (Apple/iOS/Mac/Outlook)</span>
                     </a>
                     <button onclick="copyFeedUrl()" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 shadow-xs transition">
-                        <span>🔗</span>
-                        <span>Copy Feed URL</span>
+                        <span>📋</span>
+                        <span>Copy Feed URL (Google Calendar)</span>
                     </button>
                 </div>
-                <div class="text-[11px] text-slate-500 pt-1">
-                    <strong>For Google Calendar:</strong> Copy the feed URL &rarr; Go to <a href="https://calendar.google.com/calendar/r/settings/addbyurl" target="_blank" class="text-blue-600 underline">Google Calendar &gt; Add Calendar &gt; From URL</a> &rarr; Paste link.
+                <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 pt-1 border-t border-slate-200/60">
+                    <div>
+                        <strong>Google Calendar:</strong> Click Copy Feed URL &rarr; Go to <a href="https://calendar.google.com/calendar/r/settings/addbyurl" target="_blank" class="text-blue-600 underline">Google Calendar &gt; Add Calendar &gt; From URL</a> &rarr; Paste link.
+                    </div>
+                    <a href="../calendars/{person}.ics" download="cleaning_schedule_{person}.ics" class="text-slate-400 hover:text-slate-600 underline">
+                        Download raw .ics
+                    </a>
                 </div>
             </div>
         </div>
@@ -275,6 +276,12 @@ def generate_docs(manager=None):
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
 
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform transition-all duration-300 translate-y-20 opacity-0 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium">
+        <span>📋</span>
+        <span id="toast-message">Calendar feed URL copied!</span>
+    </div>
+
     <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
         <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -284,9 +291,9 @@ def generate_docs(manager=None):
                     <p class="text-xs text-slate-500">Live calendar subscriptions & hosted pages for all roommates</p>
                 </div>
             </div>
-            <a href="calendars/cleaning_schedules.zip" id="zip-dl-link" class="hidden sm:inline-flex items-center space-x-1.5 px-3.5 py-2 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition">
-                <span>📥</span>
-                <span>Download All (.zip)</span>
+            <a href="#subscribe-guide" class="hidden sm:inline-flex items-center space-x-1.5 px-3.5 py-2 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition">
+                <span>💡</span>
+                <span>How to Subscribe</span>
             </a>
         </div>
     </header>
@@ -296,29 +303,45 @@ def generate_docs(manager=None):
         <!-- Roommate Cards Directory -->
         <div>
             <h2 class="text-lg font-bold text-slate-900 mb-1">Roommate Calendars & Personal Links</h2>
-            <p class="text-xs text-slate-500 mb-4">Click your name to view your schedule or subscribe to your personal live calendar.</p>
+            <p class="text-xs text-slate-500 mb-4">Click <strong>Subscribe</strong> to sync automatically with your phone or laptop calendar.</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 """)
         for person in people:
-            f.write(f"""                <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs hover:shadow-md transition space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center text-xl font-bold shadow-xs">
-                            {person[0]}
+            f.write(f"""                <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs hover:shadow-md transition space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center text-xl font-bold shadow-xs">
+                                    {person[0]}
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-bold text-slate-900">{person}</h3>
+                                    <span class="inline-flex items-center text-[10px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">Live Sync Feed</span>
+                                </div>
+                            </div>
+                            <a href="c/{person}.html" class="text-xs font-semibold text-blue-600 hover:text-blue-800 p-1.5 hover:bg-blue-50 rounded-lg transition" title="View Full Schedule">
+                                Details &rarr;
+                            </a>
                         </div>
-                        <div>
-                            <h3 class="text-base font-bold text-slate-900">{person}</h3>
-                            <a href="c/{person}.html" class="text-xs text-blue-600 hover:text-blue-800 font-medium">Open Personal Page &rarr;</a>
-                        </div>
+                        <p class="text-xs text-slate-500">Includes weekly cleaning chores, 8:00 PM day-before trash alerts & house events.</p>
                     </div>
 
-                    <div class="flex items-center space-x-2 pt-2 border-t border-slate-100">
-                        <a href="c/{person}.html" class="flex-1 text-center py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition">
-                            View Schedule
-                        </a>
-                        <a href="calendars/{person}.ics" download="cleaning_schedule_{person}.ics" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition" title="Download .ics">
-                            📥 .ics
-                        </a>
+                    <div class="space-y-2 pt-3 border-t border-slate-100">
+                        <div class="flex items-center space-x-2">
+                            <a data-webcal-person="{person}" href="#" class="flex-1 inline-flex items-center justify-center space-x-1.5 py-2.5 px-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition" title="Subscribe in Apple Calendar, iOS or Outlook">
+                                <span>📲</span>
+                                <span>Subscribe</span>
+                            </a>
+                            <button onclick="copyPersonFeed('{person}')" class="inline-flex items-center justify-center space-x-1 py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition" title="Copy URL for Google Calendar">
+                                <span>📋</span>
+                                <span>Copy URL</span>
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between px-1 text-[11px] text-slate-400">
+                            <a href="c/{person}.html" class="hover:text-slate-600">View Schedule &rarr;</a>
+                            <a href="calendars/{person}.ics" download="cleaning_schedule_{person}.ics" class="hover:text-slate-600 underline">Download raw .ics</a>
+                        </div>
                     </div>
                 </div>\n""")
 
@@ -349,16 +372,16 @@ def generate_docs(manager=None):
         </div>\n""")
 
         f.write(f"""        <!-- How to Subscribe Guide -->
-        <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
+        <div id="subscribe-guide" class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4 scroll-mt-20">
             <h2 class="text-base font-bold text-slate-900">How to Subscribe to Your Calendar</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-600">
                 <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-                    <h3 class="font-bold text-slate-900">📱 iPhone / Apple Calendar</h3>
-                    <p>Open your personal page on your iPhone and tap <strong>"Subscribe in Calendar"</strong>. iOS will automatically prompt to add the calendar feed.</p>
+                    <h3 class="font-bold text-slate-900">📱 iPhone / Apple Calendar / Mac</h3>
+                    <p>Click <strong>"Subscribe"</strong> on your card. iOS/macOS will open Calendar automatically with a prompt to subscribe.</p>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
                     <h3 class="font-bold text-slate-900">📅 Google Calendar</h3>
-                    <p>Click <strong>"Copy Feed URL"</strong> on your page. Open Google Calendar &gt; Other calendars (+) &gt; <strong>From URL</strong> &gt; Paste the link.</p>
+                    <p>Click <strong>"Copy URL"</strong>. Go to Google Calendar &gt; Other calendars (+) &gt; <strong>From URL</strong> &gt; Paste the link.</p>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
                     <h3 class="font-bold text-slate-900">🔄 Auto-Updates</h3>
@@ -372,6 +395,34 @@ def generate_docs(manager=None):
     <footer class="text-center py-6 text-xs text-slate-400 border-t border-slate-200 bg-white">
         Apartment Cleaning & Trash Schedule • Hosted via GitHub Pages
     </footer>
+
+    <script>
+        document.querySelectorAll('[data-webcal-person]').forEach(el => {{
+            const person = el.getAttribute('data-webcal-person');
+            const icsUrl = new URL(`calendars/${{encodeURIComponent(person)}}.ics`, window.location.href).href;
+            el.href = icsUrl.replace(/^https?:\\/\\//i, 'webcal://');
+        }});
+
+        function copyPersonFeed(person) {{
+            const icsUrl = new URL(`calendars/${{encodeURIComponent(person)}}.ics`, window.location.href).href;
+            navigator.clipboard.writeText(icsUrl).then(() => {{
+                showToast(`${{person}}'s calendar subscription URL copied!`);
+            }}).catch(() => {{
+                prompt(`Copy ${{person}}'s calendar URL:`, icsUrl);
+            }});
+        }}
+
+        function showToast(msg) {{
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {{
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }}, 3000);
+        }}
+    </script>
 
 </body>
 </html>""")

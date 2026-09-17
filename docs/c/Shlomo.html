@@ -43,21 +43,22 @@
             <div class="bg-slate-50 rounded-xl p-4 md:p-5 border border-slate-200 space-y-3">
                 <div class="text-xs font-bold uppercase tracking-wider text-slate-500">Subscribe & Sync With Your Calendar</div>
                 <div class="flex flex-wrap gap-2.5">
-                    <a id="webcal-btn" href="#" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition">
+                    <a id="webcal-btn" href="#" class="inline-flex items-center space-x-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition">
                         <span>📲</span>
-                        <span>Subscribe in Calendar (Apple/iOS/Mac)</span>
-                    </a>
-                    <a href="../calendars/Shlomo.ics" download="cleaning_schedule_Shlomo.ics" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 shadow-xs transition">
-                        <span>📥</span>
-                        <span>Download .ics File</span>
+                        <span>Subscribe in Calendar (Apple/iOS/Mac/Outlook)</span>
                     </a>
                     <button onclick="copyFeedUrl()" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 shadow-xs transition">
-                        <span>🔗</span>
-                        <span>Copy Feed URL</span>
+                        <span>📋</span>
+                        <span>Copy Feed URL (Google Calendar)</span>
                     </button>
                 </div>
-                <div class="text-[11px] text-slate-500 pt-1">
-                    <strong>For Google Calendar:</strong> Copy the feed URL &rarr; Go to <a href="https://calendar.google.com/calendar/r/settings/addbyurl" target="_blank" class="text-blue-600 underline">Google Calendar &gt; Add Calendar &gt; From URL</a> &rarr; Paste link.
+                <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 pt-1 border-t border-slate-200/60">
+                    <div>
+                        <strong>Google Calendar:</strong> Click Copy Feed URL &rarr; Go to <a href="https://calendar.google.com/calendar/r/settings/addbyurl" target="_blank" class="text-blue-600 underline">Google Calendar &gt; Add Calendar &gt; From URL</a> &rarr; Paste link.
+                    </div>
+                    <a href="../calendars/Shlomo.ics" download="cleaning_schedule_Shlomo.ics" class="text-slate-400 hover:text-slate-600 underline">
+                        Download raw .ics
+                    </a>
                 </div>
             </div>
         </div>
@@ -67,12 +68,12 @@
             <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
                 <h2 class="text-sm font-bold text-slate-900 flex items-center space-x-1.5 border-b border-slate-100 pb-3">
                     <span>🧹</span>
-                    <span>Duties (3)</span>
+                    <span>Duties (18)</span>
                 </h2>
                 <div class="space-y-2.5 max-h-96 overflow-y-auto pr-1">
                     <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
                         <div class="flex items-center justify-between">
-                            <span class="font-bold text-slate-800">Tuesday, 2026-09-22</span>
+                            <span class="font-bold text-slate-800">Saturday, 2026-09-05</span>
                             <span class="text-slate-400 font-mono text-[11px]">Week 1</span>
                         </div>
                         <div class="font-semibold text-blue-700">Downstairs Toilet</div>
@@ -80,7 +81,7 @@
                     </div>
                     <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
                         <div class="flex items-center justify-between">
-                            <span class="font-bold text-slate-800">Tuesday, 2026-09-29</span>
+                            <span class="font-bold text-slate-800">Saturday, 2026-09-12</span>
                             <span class="text-slate-400 font-mono text-[11px]">Week 2</span>
                         </div>
                         <div class="font-semibold text-blue-700">Bathroom</div>
@@ -88,10 +89,130 @@
                     </div>
                     <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
                         <div class="flex items-center justify-between">
-                            <span class="font-bold text-slate-800">Tuesday, 2026-10-06</span>
+                            <span class="font-bold text-slate-800">Saturday, 2026-09-19</span>
                             <span class="text-slate-400 font-mono text-[11px]">Week 3</span>
                         </div>
                         <div class="font-semibold text-blue-700">Kitchen</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-09-26</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 4</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Communal laundry</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-10-03</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 5</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Taking out trash</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-10-10</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 6</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Floors duty</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-10-17</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 7</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Downstairs Toilet</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-10-24</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 8</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Bathroom</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-10-31</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 9</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Kitchen</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-11-07</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 10</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Communal laundry</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-11-14</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 11</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Taking out trash</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-11-21</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 12</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Floors duty</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-11-28</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 13</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Downstairs Toilet</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-12-05</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 14</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Bathroom</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-12-12</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 15</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Kitchen</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-12-19</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 16</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Communal laundry</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2026-12-26</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 17</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Taking out trash</div>
+                        
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Saturday, 2027-01-02</span>
+                            <span class="text-slate-400 font-mono text-[11px]">Week 18</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Floors duty</div>
                         
                     </div>
                 </div>
@@ -101,10 +222,51 @@
             <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
                 <h2 class="text-sm font-bold text-slate-900 flex items-center space-x-1.5 border-b border-slate-100 pb-3">
                     <span>🗑️</span>
-                    <span>Trash Duties (0)</span>
+                    <span>Trash Duties (3)</span>
                 </h2>
                 <div class="space-y-2.5 max-h-96 overflow-y-auto pr-1">
-                    <p class="text-xs text-slate-400 py-4 text-center">No trash pickups assigned.</p>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1.5">
+                        <div class="font-bold text-slate-800 flex items-center justify-between">
+                            <span>Put out the Organic Waste</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-semibold waste-Organic">
+                                Organic Waste
+                            </span>
+                        </div>
+                        <div class="text-[11px] text-purple-700 font-medium">
+                            ⏰ Monday, 2026-09-28 at 8:00 PM
+                        </div>
+                        <div class="text-[10px] text-slate-400">
+                            Pickup is tomorrow, 2026-09-29
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1.5">
+                        <div class="font-bold text-slate-800 flex items-center justify-between">
+                            <span>Put out the Organic Waste</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-semibold waste-Organic">
+                                Organic Waste
+                            </span>
+                        </div>
+                        <div class="text-[11px] text-purple-700 font-medium">
+                            ⏰ Monday, 2026-11-09 at 8:00 PM
+                        </div>
+                        <div class="text-[10px] text-slate-400">
+                            Pickup is tomorrow, 2026-11-10
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1.5">
+                        <div class="font-bold text-slate-800 flex items-center justify-between">
+                            <span>Put out the Organic Waste</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-semibold waste-Organic">
+                                Organic Waste
+                            </span>
+                        </div>
+                        <div class="text-[11px] text-purple-700 font-medium">
+                            ⏰ Monday, 2026-12-21 at 8:00 PM
+                        </div>
+                        <div class="text-[10px] text-slate-400">
+                            Pickup is tomorrow, 2026-12-22
+                        </div>
+                    </div>
                 </div>
             </div>
 

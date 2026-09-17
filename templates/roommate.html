@@ -53,27 +53,27 @@
                 
                 <div class="flex flex-wrap gap-2.5">
                     <!-- Webcal Subscribe Button (Apple Calendar / Outlook) -->
-                    <a id="webcal-btn" href="#" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition">
+                    <a id="webcal-btn" href="#" class="inline-flex items-center space-x-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition">
                         <span>📲</span>
-                        <span>Subscribe in Calendar (Apple/iOS/Mac)</span>
-                    </a>
-
-                    <!-- Direct ICS Download -->
-                    <a href="/calendars/{{ person }}.ics" download="cleaning_schedule_{{ person }}.ics" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 shadow-xs transition">
-                        <span>📥</span>
-                        <span>Download .ics File</span>
+                        <span>Subscribe in Calendar (Apple/iOS/Mac/Outlook)</span>
                     </a>
 
                     <!-- Copy Feed URL -->
                     <button onclick="copyFeedUrl()" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 shadow-xs transition">
-                        <span>🔗</span>
-                        <span>Copy Feed URL</span>
+                        <span>📋</span>
+                        <span>Copy Feed URL (Google Calendar)</span>
                     </button>
                 </div>
 
-                <!-- Google Calendar Instructions -->
-                <div class="text-[11px] text-slate-500 pt-1">
-                    <strong>For Google Calendar:</strong> Copy the feed URL &rarr; Go to <a href="https://calendar.google.com/calendar/r/settings/addbyurl" target="_blank" class="text-blue-600 underline">Google Calendar &gt; Add Calendar &gt; From URL</a> &rarr; Paste link.
+                <!-- Google Calendar Instructions & De-prioritized .ics download -->
+                <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 pt-1 border-t border-slate-200/60">
+                    <div>
+                        <strong>Google Calendar:</strong> Click Copy Feed URL &rarr; Go to <a href="https://calendar.google.com/calendar/r/settings/addbyurl" target="_blank" class="text-blue-600 underline">Google Calendar &gt; Add Calendar &gt; From URL</a> &rarr; Paste link.
+                    </div>
+                    <!-- De-prioritized raw .ics download -->
+                    <a href="/calendars/{{ person }}.ics" download="cleaning_schedule_{{ person }}.ics" class="text-slate-400 hover:text-slate-600 underline">
+                        Download raw .ics
+                    </a>
                 </div>
             </div>
         </div>
