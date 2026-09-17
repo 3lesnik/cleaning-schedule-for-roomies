@@ -208,13 +208,14 @@ def update_settings():
         return jsonify({"error": "Missing start_date or num_weeks"}), 400
         
     data = manager.update_settings(
-        start_date=start_date,
+        start_date_str=start_date,
         num_weeks=int(num_weeks),
         people=people,
         tasks=tasks,
-        default_cleaning_day=default_cleaning_day,
+        default_cleaning_day=int(default_cleaning_day) if default_cleaning_day is not None else None,
         default_cleaning_time=default_cleaning_time,
-        person_preferences=person_preferences
+        person_preferences=person_preferences,
+        start_date=start_date
     )
     return jsonify({"status": "ok", "data": data})
 

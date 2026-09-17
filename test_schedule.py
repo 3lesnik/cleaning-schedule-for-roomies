@@ -223,6 +223,22 @@ class TestCleaningSchedule(unittest.TestCase):
         res2_json = json.loads(res2.data)
         self.assertEqual(res2_json["status"], "ok")
 
+        # 3. Update global settings via API
+        res3 = self.client.post('/api/settings', json={
+            "start_date": "2026-09-07",
+            "num_weeks": 26,
+            "people": ["Nancy", "Natan", "Ellie", "Lucia", "Shlomo"],
+            "tasks": ["Kitchen", "Bathroom", "Hallway & Stairs", "Trash & Recycling", "Living Room"],
+            "default_cleaning_day": 6,
+            "default_cleaning_time": "14:30",
+            "person_preferences": {}
+        })
+        self.assertEqual(res3.status_code, 200)
+        res3_json = json.loads(res3.data)
+        self.assertEqual(res3_json["status"], "ok")
+        self.assertEqual(res3_json["data"]["default_cleaning_day"], 6)
+        self.assertEqual(res3_json["data"]["default_cleaning_time"], "14:30")
+
     def test_static_site_generation(self):
         """Verify export_static creates docs/ structure."""
         docs_dir = export_static.generate_docs(self.manager)

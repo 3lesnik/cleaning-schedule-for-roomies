@@ -371,30 +371,58 @@ class ScheduleManager:
         self.save_data()
         return self.data
 
-    def update_settings(self, start_date_str, num_weeks, people=None, tasks=None, default_cleaning_day=None, default_cleaning_time=None, person_preferences=None):
-        """Update schedule configuration and regenerate."""
+    def update_settings(self, start_date_str=None, num_weeks=None, people=None, tasks=None, default_cleaning_day=None, default_cleaning_time=None, person_preferences=None, start_date=None):
+        """Update schedule configuration and adjust without wiping custom assignments if structure hasn't changed."""
+        if start_date_str is None:
+            start_date_str = start_date or self.data.get("start_date", DEFAULT_START_DATE)
+        if num_weeks is None:
+            num_weeks = self.data.get("num_weeks", DEFAULT_NUM_WEEKS)
+        num_weeks = int(num_weeks)
+        
+        current_people = self.data.get("people", DEFAULT_PEOPLE)
+        current_tasks = self.data.get("tasks", DEFAULT_TASKS)
+        current_start = self.data.get("start_date", DEFAULT_START_DATE)
+        current_num_weeks = self.data.get("num_weeks", DEFAULT_NUM_WEEKS)
+
         if people is None:
-            people = self.data.get("people", DEFAULT_PEOPLE)
+            people = current_people
         if tasks is None:
-            tasks = self.data.get("tasks", DEFAULT_TASKS)
+            tasks = current_tasks
         if default_cleaning_day is None:
             default_cleaning_day = self.data.get("default_cleaning_day", DEFAULT_CLEANING_DAY)
-        if default_cleaning_time is None:
+        default_cleaning_day = int(default_cleaning_day)
+        
+        if default_cleaning_time is None and "default_cleaning_time" in self.data:
             default_cleaning_time = self.data.get("default_cleaning_time")
         if person_preferences is None:
             person_preferences = self.data.get("person_preferences", {})
-            
-        self.data = self.generate_default_schedule(
-            people=people,
-            tasks=tasks,
-            start_date_str=start_date_str,
-            num_weeks=num_weeks,
-            existing_house_events=self.data.get("house_events", []),
-            person_preferences=person_preferences,
-            default_cleaning_day=default_cleaning_day,
-            default_cleaning_time=default_cleaning_time
+
+        # If rotation structure changed (people, tasks, start_date, num_weeks), regenerate rotation
+        structure_changed = (
+            people != current_people or
+            tasks != current_tasks or
+            start_date_str != current_start or
+            num_weeks != current_num_weeks
         )
-        self.save_data()
+
+        if structure_changed:
+            self.data = self.generate_default_schedule(
+                people=people,
+                tasks=tasks,
+                start_date_str=start_date_str,
+                num_weeks=num_weeks,
+                existing_house_events=self.data.get("house_events", []),
+                person_preferences=person_preferences,
+                default_cleaning_day=default_cleaning_day,
+                default_cleaning_time=default_cleaning_time
+            )
+        else:
+            # Only timing/preferences changed: update config and recompute dates without resetting week assignments
+            self.data["default_cleaning_day"] = default_cleaning_day
+            self.data["default_cleaning_time"] = default_cleaning_time
+            self.data["person_preferences"] = person_preferences
+            self.save_data()
+
         return self.data
 
     def generate_ical_for_person(self, person_name, calendar_name="Apartment Cleaning"):
