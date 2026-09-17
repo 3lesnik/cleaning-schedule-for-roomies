@@ -1,0 +1,95 @@
+{
+  "people": [
+    "Nancy",
+    "Natan",
+    "Shlomo",
+    "Lucia",
+    "Brenda",
+    "Ellie"
+  ],
+  "tasks": [
+    "Kitchen",
+    "Bathroom",
+    "Downstairs Toilet",
+    "Floors duty",
+    "Taking out trash",
+    "Communal laundry"
+  ],
+  "start_date": "2026-09-17",
+  "num_weeks": 3,
+  "weeks": [
+    {
+      "week_number": 1,
+      "start_date": "2026-09-17",
+      "end_date": "2026-09-23",
+      "saturday_date": "2026-09-19",
+      "assignments": {
+        "Kitchen": "Nancy",
+        "Bathroom": "Natan",
+        "Downstairs Toilet": "Shlomo",
+        "Floors duty": "Lucia",
+        "Taking out trash": "Brenda",
+        "Communal laundry": "Ellie"
+      },
+      "trash_pickups": [
+        {
+          "date": "2026-09-18",
+          "waste_type": "Paper & Cardboard",
+          "assigned_to": "Brenda"
+        },
+        {
+          "date": "2026-09-22",
+          "waste_type": "Residual Waste & Plastic",
+          "assigned_to": "Brenda"
+        }
+      ]
+    },
+    {
+      "week_number": 2,
+      "start_date": "2026-09-24",
+      "end_date": "2026-09-30",
+      "saturday_date": "2026-09-26",
+      "assignments": {
+        "Kitchen": "Natan",
+        "Bathroom": "Shlomo",
+        "Downstairs Toilet": "Lucia",
+        "Floors duty": "Brenda",
+        "Taking out trash": "Ellie",
+        "Communal laundry": "Nancy"
+      },
+      "trash_pickups": [
+        {
+          "date": "2026-09-24",
+          "waste_type": "Chemical Waste",
+          "assigned_to": "Ellie"
+        },
+        {
+          "date": "2026-09-29",
+          "waste_type": "Organic Waste",
+          "assigned_to": "Ellie"
+        }
+      ]
+    },
+    {
+      "week_number": 3,
+      "start_date": "2026-10-01",
+      "end_date": "2026-10-07",
+      "saturday_date": "2026-10-03",
+      "assignments": {
+        "Kitchen": "Shlomo",
+        "Bathroom": "Lucia",
+        "Downstairs Toilet": "Brenda",
+        "Floors duty": "Ellie",
+        "Taking out trash": "Nancy",
+        "Communal laundry": "Natan"
+      },
+      "trash_pickups": [
+        {
+          "date": "2026-10-06",
+          "waste_type": "Residual Waste & Plastic",
+          "assigned_to": "Nancy"
+        }
+      ]
+    }
+  ]
+}

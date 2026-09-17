@@ -1,0 +1,11 @@
+[project]
+name = "cleaning-schedule"
+version = "0.1.0"
+description = "Cleaning schedule and trash pickup generator with local web dashboard"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "icalendar>=6.0.0",
+    "python-dateutil>=2.9.0",
+    "flask>=3.0.0",
+]

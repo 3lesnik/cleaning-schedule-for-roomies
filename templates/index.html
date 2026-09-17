@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartment Cleaning & Trash Schedule</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        organic: '#10b981',
+                        residual: '#0284c7',
+                        paper: '#f59e0b',
+                        chemical: '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .waste-Organic { background-color: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .waste-Residual { background-color: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+        .waste-Paper { background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        .waste-Chemical { background-color: #ede9fe; color: #5b21b6; border: 1px solid #ddd6fe; }
+        .person-pill {
+            transition: all 0.15s ease-in-out;
+        }
+        .person-pill:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Toast container -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform transition-all duration-300 translate-y-20 opacity-0 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium">
+        <span id="toast-icon">✅</span>
+        <span id="toast-message">Action successful</span>
+    </div>
+
+    <!-- Top Navigation Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <span class="text-3xl">🧹</span>
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900 leading-tight">Apartment Cleaning & Trash Schedule</h1>
+                    <p class="text-xs text-slate-500">6 Roommates • Rotating Saturday Cleaning • Synced Trash Pickups • House Events</p>
+                </div>
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="flex items-center flex-wrap gap-2">
+                <button onclick="exportGhPages()" class="inline-flex items-center space-x-1.5 px-3.5 py-2 text-xs font-semibold text-purple-700 bg-purple-50 hover:bg-purple-100 rounded-lg border border-purple-200 transition" title="Generate static docs/ folder for free GitHub Pages hosting">
+                    <span>🚀</span>
+                    <span>Export for GitHub Pages</span>
+                </button>
+                <button onclick="syncToDisk()" class="inline-flex items-center space-x-1.5 px-3.5 py-2 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-lg border border-emerald-200 transition">
+                    <span>💾</span>
+                    <span>Save & Sync to Folder</span>
+                </button>
+                <a href="/api/export/all.zip" class="inline-flex items-center space-x-1.5 px-3.5 py-2 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition">
+                    <span>📥</span>
+                    <span>Export All (.zip)</span>
+                </a>
+                <button onclick="openSettingsModal()" class="inline-flex items-center space-x-1.5 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
+                    <span>⚙️</span>
+                    <span>Settings</span>
+                </button>
+                <button onclick="confirmReset()" class="inline-flex items-center space-x-1.5 px-3.5 py-2 text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-lg border border-rose-200 transition">
+                    <span>🔄</span>
+                    <span>Reset</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
+
+        <!-- Stats Overview Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Start Date</span>
+                <div id="stat-start-date" class="text-lg font-bold text-slate-800 mt-0.5">--</div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Schedule Duration</span>
+                <div id="stat-weeks" class="text-lg font-bold text-blue-600 mt-0.5">-- Weeks</div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Roommates</span>
+                <div id="stat-roommates" class="text-lg font-bold text-slate-800 mt-0.5">6 People</div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">House Events</span>
+                <div id="stat-house-events" class="text-lg font-bold text-purple-600 mt-0.5">0 Events</div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="border-b border-slate-200 bg-white rounded-t-xl px-4 pt-2 shadow-xs flex flex-wrap gap-2">
+            <button onclick="switchTab('weekly')" id="tab-btn-weekly" class="px-4 py-2.5 text-sm font-semibold border-b-2 border-blue-600 text-blue-600 transition flex items-center space-x-2">
+                <span>📅</span>
+                <span>Weekly Schedule</span>
+            </button>
+            <button onclick="switchTab('roommates')" id="tab-btn-roommates" class="px-4 py-2.5 text-sm font-medium text-slate-500 hover:text-slate-700 border-b-2 border-transparent transition flex items-center space-x-2">
+                <span>👤</span>
+                <span>Roommate Calendars & Links</span>
+            </button>
+            <button onclick="switchTab('trash')" id="tab-btn-trash" class="px-4 py-2.5 text-sm font-medium text-slate-500 hover:text-slate-700 border-b-2 border-transparent transition flex items-center space-x-2">
+                <span>🗑️</span>
+                <span>Trash Pickups Timeline</span>
+            </button>
+            <button onclick="switchTab('house-events')" id="tab-btn-house-events" class="px-4 py-2.5 text-sm font-medium text-slate-500 hover:text-slate-700 border-b-2 border-transparent transition flex items-center space-x-2">
+                <span>🏠</span>
+                <span>House Events</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: Weekly Schedule Table -->
+        <div id="tab-weekly" class="bg-white rounded-b-xl border border-slate-200 border-t-0 shadow-xs overflow-hidden">
+            <div class="p-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4 bg-slate-50/50">
+                <div class="text-xs text-slate-500">
+                    💡 Click any roommate badge to <strong>reassign</strong> or <strong>swap</strong> tasks for that week.
+                </div>
+                <div class="flex items-center space-x-3">
+                    <label for="filter-roommate" class="text-xs font-semibold text-slate-600">Filter by Person:</label>
+                    <select id="filter-roommate" onchange="renderWeeklyTable()" class="text-xs border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white">
+                        <option value="">All Roommates</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-100/75 text-slate-600 uppercase text-xs tracking-wider border-b border-slate-200">
+                        <tr>
+                            <th class="py-3 px-4 font-semibold w-24">Week</th>
+                            <th class="py-3 px-4 font-semibold w-40">Saturday Cleaning</th>
+                            <th id="task-headers" colspan="6" class="p-0"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="weekly-tbody" class="divide-y divide-slate-100">
+                        <!-- Rendered dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 2: Roommate Calendars View -->
+        <div id="tab-roommates" class="hidden space-y-6">
+            <!-- Roommate Selector Pills -->
+            <div class="flex flex-wrap gap-2" id="roommate-selector-pills">
+                <!-- Rendered dynamically -->
+            </div>
+
+            <!-- Roommate Details Card -->
+            <div id="roommate-detail-card" class="bg-white rounded-xl border border-slate-200 p-6 shadow-xs">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+
+        <!-- TAB 3: Trash Pickups Timeline -->
+        <div id="tab-trash" class="hidden bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+            <div class="p-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4 bg-slate-50/50">
+                <div>
+                    <h2 class="text-base font-bold text-slate-900">Trash Pickup Calendar</h2>
+                    <p class="text-xs text-slate-500">Automatically linked to whoever is assigned the "Taking out trash" task during each pickup's week.</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="filterTrashType('all')" class="trash-filter-btn px-3 py-1 text-xs rounded-full border border-slate-300 bg-white font-medium hover:bg-slate-50">All</button>
+                    <button onclick="filterTrashType('Organic Waste')" class="trash-filter-btn px-3 py-1 text-xs rounded-full border border-emerald-300 bg-emerald-50 text-emerald-800 font-medium">Organic</button>
+                    <button onclick="filterTrashType('Residual Waste & Plastic')" class="trash-filter-btn px-3 py-1 text-xs rounded-full border border-sky-300 bg-sky-50 text-sky-800 font-medium">Residual & Plastic</button>
+                    <button onclick="filterTrashType('Paper & Cardboard')" class="trash-filter-btn px-3 py-1 text-xs rounded-full border border-amber-300 bg-amber-50 text-amber-800 font-medium">Paper</button>
+                    <button onclick="filterTrashType('Chemical Waste')" class="trash-filter-btn px-3 py-1 text-xs rounded-full border border-purple-300 bg-purple-50 text-purple-800 font-medium">Chemical</button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-100/75 text-slate-600 uppercase text-xs tracking-wider border-b border-slate-200">
+                        <tr>
+                            <th class="py-3 px-4 font-semibold w-36">Pickup Date</th>
+                            <th class="py-3 px-4 font-semibold w-28">Day</th>
+                            <th class="py-3 px-4 font-semibold w-56">Waste Type</th>
+                            <th class="py-3 px-4 font-semibold w-24">Week #</th>
+                            <th class="py-3 px-4 font-semibold w-48">Assigned Roommate</th>
+                            <th class="py-3 px-4 font-semibold w-40">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="trash-tbody" class="divide-y divide-slate-100">
+                        <!-- Rendered dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 4: House Events -->
+        <div id="tab-house-events" class="hidden bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">🏠 Shared House Events</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Add communal events (meetings, deep cleans, dinners, rent due) that automatically sync into everyone's calendar!</p>
+                </div>
+                <button onclick="openAddEventModal()" class="inline-flex items-center space-x-1.5 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-semibold shadow-xs transition">
+                    <span>➕</span>
+                    <span>Add House Event</span>
+                </button>
+            </div>
+
+            <!-- Events List -->
+            <div id="house-events-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ADD HOUSE EVENT MODAL -->
+    <div id="add-event-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="text-lg font-bold text-slate-900">Add House Event</h3>
+                <button onclick="closeAddEventModal()" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <label for="event-title" class="block font-semibold text-slate-700 mb-1">Event Title:</label>
+                    <input type="text" id="event-title" placeholder="e.g., House Meeting, Apartment Deep Clean, Dinner Party" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="event-date" class="block font-semibold text-slate-700 mb-1">Date:</label>
+                        <input type="date" id="event-date" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                    </div>
+                    <div>
+                        <label for="event-time" class="block font-semibold text-slate-700 mb-1">Time (optional):</label>
+                        <input type="time" id="event-time" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="event-audience" class="block font-semibold text-slate-700 mb-1">Target Audience:</label>
+                    <select id="event-audience" class="w-full border border-slate-300 rounded-lg p-2 text-sm bg-white">
+                        <option value="all">All Roommates (Everyone's Calendar)</option>
+                        <!-- Populated dynamically with roommates -->
+                    </select>
+                </div>
+
+                <div>
+                    <label for="event-description" class="block font-semibold text-slate-700 mb-1">Description / Notes (optional):</label>
+                    <textarea id="event-description" rows="2" placeholder="e.g. Please bring agenda items and receipts." class="w-full border border-slate-300 rounded-lg p-2 text-sm"></textarea>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end space-x-2 pt-2 border-t border-slate-100">
+                <button onclick="closeAddEventModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Cancel</button>
+                <button onclick="submitHouseEvent()" class="px-4 py-2 text-xs font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-lg shadow-xs transition">Add to Calendars</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- REASSIGN / SWAP MODAL -->
+    <div id="reassign-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="text-lg font-bold text-slate-900">Adjust Task Assignment</h3>
+                <button onclick="closeReassignModal()" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
+            </div>
+
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
+                <div><span class="text-slate-500 font-medium">Week:</span> <span id="modal-week-label" class="font-bold text-slate-800">Week 1</span></div>
+                <div><span class="text-slate-500 font-medium">Task:</span> <span id="modal-task-label" class="font-bold text-slate-800">Kitchen</span></div>
+                <div><span class="text-slate-500 font-medium">Current Assignee:</span> <span id="modal-current-person" class="font-bold text-blue-600">Nancy</span></div>
+            </div>
+
+            <!-- Mode Selector: Reassign or Swap -->
+            <div class="flex rounded-lg bg-slate-100 p-1">
+                <button id="btn-mode-reassign" onclick="setAdjustMode('reassign')" class="flex-1 py-1.5 text-xs font-semibold rounded-md bg-white shadow-xs text-slate-800">
+                    Direct Reassign
+                </button>
+                <button id="btn-mode-swap" onclick="setAdjustMode('swap')" class="flex-1 py-1.5 text-xs font-semibold rounded-md text-slate-500 hover:text-slate-800">
+                    Swap with Roommate
+                </button>
+            </div>
+
+            <!-- Reassign View -->
+            <div id="adjust-reassign-view" class="space-y-3">
+                <label for="modal-select-person" class="block text-xs font-semibold text-slate-700">Assign To:</label>
+                <select id="modal-select-person" class="w-full border border-slate-300 rounded-lg p-2 text-sm bg-white focus:ring-2 focus:ring-blue-500 outline-hidden">
+                    <!-- Populated dynamically -->
+                </select>
+                <p class="text-xs text-slate-400">Assigns this task to another person. If this is a trash task, all trash pickups for this week will update to them.</p>
+            </div>
+
+            <!-- Swap View -->
+            <div id="adjust-swap-view" class="hidden space-y-3">
+                <label for="modal-select-swap-person" class="block text-xs font-semibold text-slate-700">Swap tasks with:</label>
+                <select id="modal-select-swap-person" class="w-full border border-slate-300 rounded-lg p-2 text-sm bg-white focus:ring-2 focus:ring-blue-500 outline-hidden">
+                    <!-- Populated dynamically -->
+                </select>
+                <p class="text-xs text-slate-400">Swaps their assigned task with yours for this week.</p>
+            </div>
+
+            <div class="flex items-center justify-end space-x-2 pt-2 border-t border-slate-100">
+                <button onclick="closeReassignModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Cancel</button>
+                <button onclick="saveAssignmentAdjustment()" class="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-xs transition">Save Adjustment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settings-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="text-lg font-bold text-slate-900">Schedule Settings</h3>
+                <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <label for="settings-start-date" class="block font-semibold text-slate-700 mb-1">Start Date (Monday):</label>
+                    <input type="date" id="settings-start-date" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                    <p class="text-[11px] text-slate-400 mt-1">Default 2026-08-31 covers all trash pickups through December 2026.</p>
+                </div>
+
+                <div>
+                    <label for="settings-num-weeks" class="block font-semibold text-slate-700 mb-1">Number of Weeks:</label>
+                    <input type="number" id="settings-num-weeks" min="1" max="52" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                </div>
+
+                <div>
+                    <label for="settings-roommates" class="block font-semibold text-slate-700 mb-1">Roommates (comma separated):</label>
+                    <input type="text" id="settings-roommates" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                </div>
+
+                <div>
+                    <label for="settings-tasks" class="block font-semibold text-slate-700 mb-1">Cleaning Tasks (comma separated):</label>
+                    <input type="text" id="settings-tasks" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end space-x-2 pt-2 border-t border-slate-100">
+                <button onclick="closeSettingsModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Cancel</button>
+                <button onclick="saveSettings()" class="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-xs transition">Save & Regenerate</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let scheduleData = null;
+        let selectedRoommate = null;
+        let trashFilter = 'all';
+        let currentModalContext = null;
+        let adjustMode = 'reassign';
+
+        // Color mapping for roommates
+        const roommateColors = {
+            'Nancy': { bg: 'bg-rose-50', text: 'text-rose-700', border: 'border-rose-200' },
+            'Natan': { bg: 'bg-indigo-50', text: 'text-indigo-700', border: 'border-indigo-200' },
+            'Shlomo': { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200' },
+            'Lucia': { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' },
+            'Tom': { bg: 'bg-sky-50', text: 'text-sky-700', border: 'border-sky-200' },
+            'Brenda': { bg: 'bg-sky-50', text: 'text-sky-700', border: 'border-sky-200' },
+            'Ellie': { bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200' }
+        };
+
+        function getRoommateStyle(name) {
+            return roommateColors[name] || { bg: 'bg-slate-100', text: 'text-slate-700', border: 'border-slate-300' };
+        }
+
+        function getWasteBadgeClass(type) {
+            if (type.includes('Organic')) return 'waste-Organic';
+            if (type.includes('Residual')) return 'waste-Residual';
+            if (type.includes('Paper')) return 'waste-Paper';
+            if (type.includes('Chemical')) return 'waste-Chemical';
+            return 'bg-slate-100 text-slate-700';
+        }
+
+        // Fetch Schedule
+        async function fetchSchedule() {
+            try {
+                const res = await fetch('/api/schedule');
+                scheduleData = await res.json();
+                renderAll();
+            } catch (err) {
+                showToast('Failed to load schedule', true);
+            }
+        }
+
+        function renderAll() {
+            if (!scheduleData) return;
+
+            // Stats
+            document.getElementById('stat-start-date').textContent = scheduleData.start_date;
+            document.getElementById('stat-weeks').textContent = `${scheduleData.num_weeks} Weeks`;
+            document.getElementById('stat-roommates').textContent = `${scheduleData.people.length} People`;
+            
+            const houseEvents = scheduleData.house_events || [];
+            document.getElementById('stat-house-events').textContent = `${houseEvents.length} Events`;
+
+            // Populate filter roommate dropdown
+            const filterSelect = document.getElementById('filter-roommate');
+            const currentVal = filterSelect.value;
+            filterSelect.innerHTML = '<option value="">All Roommates</option>';
+            scheduleData.people.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p;
+                opt.textContent = p;
+                if (p === currentVal) opt.selected = true;
+                filterSelect.appendChild(opt);
+            });
+
+            // Populate event audience select
+            const audienceSelect = document.getElementById('event-audience');
+            audienceSelect.innerHTML = '<option value="all">All Roommates (Everyone\'s Calendar)</option>';
+            scheduleData.people.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p;
+                opt.textContent = `${p} only`;
+                audienceSelect.appendChild(opt);
+            });
+
+            if (!selectedRoommate && scheduleData.people.length > 0) {
+                selectedRoommate = scheduleData.people[0];
+            }
+
+            renderWeeklyTable();
+            renderRoommatesView();
+            renderTrashTimeline();
+            renderHouseEvents();
+        }
+
+        // Render Weekly Table
+        function renderWeeklyTable() {
+            const tbody = document.getElementById('weekly-tbody');
+            tbody.innerHTML = '';
+
+            const theadTasks = document.getElementById('task-headers');
+            theadTasks.innerHTML = '';
+            scheduleData.tasks.forEach(t => {
+                const th = document.createElement('th');
+                th.className = 'py-3 px-4 font-semibold';
+                th.textContent = t;
+                theadTasks.appendChild(th);
+            });
+
+            const filterPerson = document.getElementById('filter-roommate').value;
+
+            scheduleData.weeks.forEach((week, wIdx) => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50/80 transition';
+
+                const tdWeek = document.createElement('td');
+                tdWeek.className = 'py-3.5 px-4 font-bold text-slate-900';
+                tdWeek.textContent = `Week ${week.week_number}`;
+                tr.appendChild(tdWeek);
+
+                const tdDate = document.createElement('td');
+                tdDate.className = 'py-3.5 px-4 text-xs font-medium text-slate-500';
+                tdDate.innerHTML = `<span class="inline-block bg-slate-100 text-slate-700 px-2 py-1 rounded font-mono">${week.saturday_date}</span>`;
+                tr.appendChild(tdDate);
+
+                scheduleData.tasks.forEach(task => {
+                    const tdTask = document.createElement('td');
+                    tdTask.className = 'py-3.5 px-4 text-xs';
+
+                    const person = week.assignments[task] || '-';
+                    const isFiltered = filterPerson && person !== filterPerson;
+                    const style = getRoommateStyle(person);
+
+                    let pickupsHtml = '';
+                    if (task.toLowerCase().includes('trash') && week.trash_pickups && week.trash_pickups.length > 0) {
+                        const tags = week.trash_pickups.map(tp => {
+                            const badgeClass = getWasteBadgeClass(tp.waste_type);
+                            return `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium ${badgeClass} mr-1 mb-1">
+                                🗑️ ${tp.date.slice(5)}: ${tp.waste_type}
+                            </span>`;
+                        }).join('');
+                        pickupsHtml = `<div class="mt-1 flex flex-wrap">${tags}</div>`;
+                    }
+
+                    tdTask.innerHTML = `
+                        <button onclick="openReassignModal(${wIdx}, '${task}', '${person}')" 
+                                class="person-pill inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${style.bg} ${style.text} ${style.border} ${isFiltered ? 'opacity-30' : ''}">
+                            <span>${person}</span>
+                        </button>
+                        ${pickupsHtml}
+                    `;
+                    tr.appendChild(tdTask);
+                });
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Render Roommates View
+        function renderRoommatesView() {
+            const pillsContainer = document.getElementById('roommate-selector-pills');
+            pillsContainer.innerHTML = '';
+
+            scheduleData.people.forEach(person => {
+                const isSelected = person === selectedRoommate;
+                const btn = document.createElement('button');
+                btn.className = `px-4 py-2 rounded-xl text-xs font-bold border transition flex items-center space-x-2 ${isSelected ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}`;
+                btn.innerHTML = `<span>👤</span><span>${person}</span>`;
+                btn.onclick = () => {
+                    selectedRoommate = person;
+                    renderRoommatesView();
+                };
+                pillsContainer.appendChild(btn);
+            });
+
+            const detailCard = document.getElementById('roommate-detail-card');
+            if (!selectedRoommate) return;
+
+            const myCleanings = [];
+            const myTrashPickups = [];
+
+            scheduleData.weeks.forEach(w => {
+                for (const [task, p] of Object.entries(w.assignments)) {
+                    if (p === selectedRoommate) {
+                        myCleanings.push({
+                            week: w.week_number,
+                            date: w.saturday_date,
+                            task: task
+                        });
+                    }
+                }
+                (w.trash_pickups || []).forEach(tp => {
+                    if (tp.assigned_to === selectedRoommate) {
+                        myTrashPickups.push({
+                            week: w.week_number,
+                            date: tp.date,
+                            waste_type: tp.waste_type
+                        });
+                    }
+                });
+            });
+
+            const myHouseEvents = (scheduleData.house_events || []).filter(he => he.target_audience === 'all' || he.target_audience === selectedRoommate);
+
+            const pageUrl = `${window.location.origin}/c/${encodeURIComponent(selectedRoommate)}`;
+            const icsUrl = `${window.location.origin}/calendars/${encodeURIComponent(selectedRoommate)}.ics`;
+            const webcalUrl = icsUrl.replace(/^https?:\/\//i, 'webcal://');
+
+            detailCard.innerHTML = `
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">${selectedRoommate}'s Schedule</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Saturday chores, assigned trash pickup dates & house events</p>
+                    </div>
+                    
+                    <!-- Share & Subscription Buttons -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <a href="/c/${encodeURIComponent(selectedRoommate)}" target="_blank"
+                           class="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold shadow-xs transition">
+                            <span>🔗</span>
+                            <span>Open Share Page</span>
+                        </a>
+                        <a href="${webcalUrl}"
+                           class="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-xs transition">
+                            <span>📲</span>
+                            <span>Subscribe (Apple/iOS)</span>
+                        </a>
+                        <a href="/calendars/${encodeURIComponent(selectedRoommate)}.ics" download="cleaning_schedule_${selectedRoommate}.ics" 
+                           class="inline-flex items-center space-x-1.5 px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold border border-slate-300 transition">
+                            <span>📥</span>
+                            <span>.ics</span>
+                        </a>
+                        <button onclick="copyToClipboard('${icsUrl}', 'Calendar feed URL copied!')"
+                                class="inline-flex items-center space-x-1.5 px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-semibold border border-slate-300 transition">
+                            <span>📋</span>
+                            <span>Copy Feed URL</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+                    <!-- Saturday Cleanings -->
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-bold text-slate-800 flex items-center space-x-2">
+                            <span>🧹</span>
+                            <span>Saturday Cleaning Duties (${myCleanings.length})</span>
+                        </h3>
+                        <div class="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden max-h-96 overflow-y-auto">
+                            ${myCleanings.length === 0 ? '<div class="p-4 text-xs text-slate-400">No duties assigned.</div>' :
+                            myCleanings.map(c => `
+                                <div class="p-3 bg-white flex items-center justify-between text-xs hover:bg-slate-50 transition">
+                                    <div>
+                                        <span class="font-bold text-slate-800">Week ${c.week}</span>
+                                        <span class="text-slate-400 ml-2">${c.date}</span>
+                                    </div>
+                                    <span class="font-semibold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100">${c.task}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Trash Pickups -->
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-bold text-slate-800 flex items-center space-x-2">
+                            <span>🗑️</span>
+                            <span>Trash Pickups Assigned (${myTrashPickups.length})</span>
+                        </h3>
+                        <div class="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden max-h-96 overflow-y-auto">
+                            ${myTrashPickups.length === 0 ? '<div class="p-4 text-xs text-slate-400">No trash pickups assigned.</div>' : 
+                            myTrashPickups.map(tp => `
+                                <div class="p-3 bg-white flex items-center justify-between text-xs hover:bg-slate-50 transition">
+                                    <div>
+                                        <span class="font-bold text-slate-800">${tp.date}</span>
+                                        <span class="text-slate-400 ml-2">Week ${tp.week}</span>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-md text-xs font-semibold ${getWasteBadgeClass(tp.waste_type)}">${tp.waste_type}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- House Events -->
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-bold text-slate-800 flex items-center space-x-2">
+                            <span>🏠</span>
+                            <span>House Events (${myHouseEvents.length})</span>
+                        </h3>
+                        <div class="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden max-h-96 overflow-y-auto">
+                            ${myHouseEvents.length === 0 ? '<div class="p-4 text-xs text-slate-400">No house events scheduled.</div>' : 
+                            myHouseEvents.map(he => `
+                                <div class="p-3 bg-white text-xs hover:bg-slate-50 transition space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-bold text-purple-900">${he.title}</span>
+                                        <span class="text-purple-600 font-mono text-[11px]">${he.date}</span>
+                                    </div>
+                                    ${he.time ? `<div class="text-purple-700 text-[11px]">⏰ ${he.time}</div>` : ''}
+                                    ${he.description ? `<p class="text-slate-500 text-[11px]">${he.description}</p>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Trash Pickups Timeline
+        function renderTrashTimeline() {
+            const tbody = document.getElementById('trash-tbody');
+            tbody.innerHTML = '';
+
+            const allPickups = [];
+            scheduleData.weeks.forEach(w => {
+                (w.trash_pickups || []).forEach(tp => {
+                    allPickups.push({
+                        ...tp,
+                        week_number: w.week_number
+                    });
+                });
+            });
+
+            allPickups.sort((a,b) => a.date.localeCompare(b.date));
+
+            allPickups.forEach(tp => {
+                if (trashFilter !== 'all' && !tp.waste_type.includes(trashFilter)) return;
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50/80 transition';
+
+                const d = new Date(tp.date + 'T12:00:00Z');
+                const dayName = d.toLocaleDateString('en-US', { weekday: 'long' });
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-mono text-xs font-bold text-slate-800">${tp.date}</td>
+                    <td class="py-3 px-4 text-xs text-slate-500">${dayName}</td>
+                    <td class="py-3 px-4 text-xs">
+                        <span class="px-2.5 py-1 rounded-md font-semibold ${getWasteBadgeClass(tp.waste_type)}">${tp.waste_type}</span>
+                    </td>
+                    <td class="py-3 px-4 text-xs font-medium text-slate-600">Week ${tp.week_number}</td>
+                    <td class="py-3 px-4 text-xs">
+                        <span class="font-bold text-slate-800">${tp.assigned_to || '-'}</span>
+                    </td>
+                    <td class="py-3 px-4 text-xs">
+                        <select onchange="overrideTrash('${tp.date}', this.value)" class="text-xs border border-slate-300 rounded-md px-2 py-1 bg-white">
+                            ${scheduleData.people.map(p => `<option value="${p}" ${p === tp.assigned_to ? 'selected' : ''}>${p}</option>`).join('')}
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterTrashType(type) {
+            trashFilter = type;
+            renderTrashTimeline();
+        }
+
+        // Render House Events
+        function renderHouseEvents() {
+            const container = document.getElementById('house-events-list');
+            const events = scheduleData.house_events || [];
+
+            if (events.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-slate-400 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                        <span class="text-3xl block mb-2">🏠</span>
+                        <p class="font-medium text-sm">No house events scheduled yet.</p>
+                        <p class="text-xs text-slate-400 mt-1">Click "Add House Event" above to schedule a house meeting, deep clean, or dinner!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = events.map(he => {
+                const audienceLabel = he.target_audience === 'all' ? '👥 All Roommates' : `👤 ${he.target_audience} only`;
+                const timeInfo = he.time ? `⏰ ${he.time}` : '📅 All Day';
+
+                return `
+                    <div class="bg-white rounded-2xl border border-purple-200 p-5 shadow-xs hover:shadow-md transition space-y-3 flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-100 text-purple-800">${audienceLabel}</span>
+                                <span class="text-xs font-mono font-bold text-slate-500">${he.date}</span>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-900">${he.title}</h3>
+                            <div class="text-xs text-purple-700 font-medium">${timeInfo}</div>
+                            ${he.description ? `<p class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100">${he.description}</p>` : ''}
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-100 flex items-center justify-end">
+                            <button onclick="deleteHouseEvent('${he.id}')" class="text-xs font-semibold text-rose-600 hover:text-rose-800 px-2 py-1 hover:bg-rose-50 rounded-lg transition">
+                                🗑️ Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Tab Switching
+        function switchTab(tab) {
+            ['weekly', 'roommates', 'trash', 'house-events'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                if (el) el.classList.add('hidden');
+                const btn = document.getElementById(`tab-btn-${t}`);
+                if (btn) btn.className = "px-4 py-2.5 text-sm font-medium text-slate-500 hover:text-slate-700 border-b-2 border-transparent transition flex items-center space-x-2";
+            });
+
+            const activeEl = document.getElementById(`tab-${tab}`);
+            if (activeEl) activeEl.classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-btn-${tab}`);
+            if (activeBtn) activeBtn.className = "px-4 py-2.5 text-sm font-semibold border-b-2 border-blue-600 text-blue-600 transition flex items-center space-x-2";
+        }
+
+        // House Event Modal & Submit
+        function openAddEventModal() {
+            document.getElementById('event-title').value = '';
+            document.getElementById('event-date').value = '';
+            document.getElementById('event-time').value = '';
+            document.getElementById('event-description').value = '';
+            document.getElementById('event-audience').value = 'all';
+            document.getElementById('add-event-modal').classList.remove('hidden');
+        }
+
+        function closeAddEventModal() {
+            document.getElementById('add-event-modal').classList.add('hidden');
+        }
+
+        async function submitHouseEvent() {
+            const title = document.getElementById('event-title').value.trim();
+            const date = document.getElementById('event-date').value;
+            const time = document.getElementById('event-time').value;
+            const description = document.getElementById('event-description').value.trim();
+            const target_audience = document.getElementById('event-audience').value;
+
+            if (!title || !date) {
+                showToast('Please enter title and date', true);
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/house_events', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, date, time, description, target_audience })
+                });
+                const result = await res.json();
+                if (res.ok) {
+                    scheduleData = result.data;
+                    closeAddEventModal();
+                    renderAll();
+                    showToast(`Added "${title}" to calendars!`);
+                } else {
+                    showToast(result.error || 'Failed to add event', true);
+                }
+            } catch (err) {
+                showToast('Error saving house event', true);
+            }
+        }
+
+        async function deleteHouseEvent(eventId) {
+            if (!confirm('Are you sure you want to delete this house event?')) return;
+            try {
+                const res = await fetch(`/api/house_events/${eventId}`, { method: 'DELETE' });
+                const result = await res.json();
+                if (res.ok) {
+                    scheduleData = result.data;
+                    renderAll();
+                    showToast('House event removed.');
+                } else {
+                    showToast(result.error || 'Failed to delete', true);
+                }
+            } catch (err) {
+                showToast('Error deleting event', true);
+            }
+        }
+
+        // Export for GitHub Pages
+        async function exportGhPages() {
+            try {
+                const res = await fetch('/api/export_gh_pages', { method: 'POST' });
+                const result = await res.json();
+                if (res.ok) {
+                    showToast(result.message || 'Exported static files to docs/!');
+                } else {
+                    showToast(result.error || 'Failed to export', true);
+                }
+            } catch (err) {
+                showToast('Error exporting for GitHub Pages', true);
+            }
+        }
+
+        // Modal: Reassign / Swap
+        function openReassignModal(weekIndex, task, currentPerson) {
+            currentModalContext = { weekIndex, task, currentPerson };
+            document.getElementById('modal-week-label').textContent = `Week ${weekIndex + 1}`;
+            document.getElementById('modal-task-label').textContent = task;
+            document.getElementById('modal-current-person').textContent = currentPerson;
+
+            const selectPerson = document.getElementById('modal-select-person');
+            selectPerson.innerHTML = '';
+            scheduleData.people.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p;
+                opt.textContent = p;
+                if (p === currentPerson) opt.selected = true;
+                selectPerson.appendChild(opt);
+            });
+
+            const selectSwap = document.getElementById('modal-select-swap-person');
+            selectSwap.innerHTML = '';
+            scheduleData.people.forEach(p => {
+                if (p !== currentPerson) {
+                    const opt = document.createElement('option');
+                    opt.value = p;
+                    opt.textContent = `${p} (${getTaskForPersonInWeek(weekIndex, p)})`;
+                    selectSwap.appendChild(opt);
+                }
+            });
+
+            setAdjustMode('reassign');
+            document.getElementById('reassign-modal').classList.remove('hidden');
+        }
+
+        function getTaskForPersonInWeek(wIdx, person) {
+            const assignments = scheduleData.weeks[wIdx].assignments;
+            for (const [t, p] of Object.entries(assignments)) {
+                if (p === person) return t;
+            }
+            return 'None';
+        }
+
+        function closeReassignModal() {
+            document.getElementById('reassign-modal').classList.add('hidden');
+            currentModalContext = null;
+        }
+
+        function setAdjustMode(mode) {
+            adjustMode = mode;
+            if (mode === 'reassign') {
+                document.getElementById('btn-mode-reassign').className = "flex-1 py-1.5 text-xs font-semibold rounded-md bg-white shadow-xs text-slate-800";
+                document.getElementById('btn-mode-swap').className = "flex-1 py-1.5 text-xs font-semibold rounded-md text-slate-500 hover:text-slate-800";
+                document.getElementById('adjust-reassign-view').classList.remove('hidden');
+                document.getElementById('adjust-swap-view').classList.add('hidden');
+            } else {
+                document.getElementById('btn-mode-swap').className = "flex-1 py-1.5 text-xs font-semibold rounded-md bg-white shadow-xs text-slate-800";
+                document.getElementById('btn-mode-reassign').className = "flex-1 py-1.5 text-xs font-semibold rounded-md text-slate-500 hover:text-slate-800";
+                document.getElementById('adjust-swap-view').classList.remove('hidden');
+                document.getElementById('adjust-reassign-view').classList.add('hidden');
+            }
+        }
+
+        async function saveAssignmentAdjustment() {
+            if (!currentModalContext) return;
+            const { weekIndex, task, currentPerson } = currentModalContext;
+
+            try {
+                if (adjustMode === 'reassign') {
+                    const newPerson = document.getElementById('modal-select-person').value;
+                    const res = await fetch('/api/reassign', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ week_index: weekIndex, task: task, person: newPerson })
+                    });
+                    const result = await res.json();
+                    if (res.ok) {
+                        scheduleData = result.data;
+                        showToast(`Reassigned ${task} to ${newPerson}`);
+                    } else {
+                        showToast(result.error || 'Failed to update', true);
+                    }
+                } else {
+                    const swapPerson = document.getElementById('modal-select-swap-person').value;
+                    const res = await fetch('/api/swap', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ week_index: weekIndex, person1: currentPerson, person2: swapPerson })
+                    });
+                    const result = await res.json();
+                    if (res.ok) {
+                        scheduleData = result.data;
+                        showToast(`Swapped tasks between ${currentPerson} and ${swapPerson}`);
+                    } else {
+                        showToast(result.error || 'Failed to swap', true);
+                    }
+                }
+                closeReassignModal();
+                renderAll();
+            } catch (err) {
+                showToast('Network error saving assignment', true);
+            }
+        }
+
+        // Quick Override Trash Pickup
+        async function overrideTrash(dateStr, person) {
+            try {
+                const res = await fetch('/api/override_trash_pickup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ date: dateStr, assigned_to: person })
+                });
+                const result = await res.json();
+                if (res.ok) {
+                    scheduleData = result.data;
+                    showToast(`Updated trash pickup on ${dateStr} to ${person}`);
+                    renderAll();
+                } else {
+                    showToast(result.error || 'Failed to update', true);
+                }
+            } catch (err) {
+                showToast('Error updating trash pickup', true);
+            }
+        }
+
+        // Settings Modal
+        function openSettingsModal() {
+            document.getElementById('settings-start-date').value = scheduleData.start_date;
+            document.getElementById('settings-num-weeks').value = scheduleData.num_weeks;
+            document.getElementById('settings-roommates').value = scheduleData.people.join(', ');
+            document.getElementById('settings-tasks').value = scheduleData.tasks.join(', ');
+            document.getElementById('settings-modal').classList.remove('hidden');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settings-modal').classList.add('hidden');
+        }
+
+        async function saveSettings() {
+            const startDate = document.getElementById('settings-start-date').value;
+            const numWeeks = parseInt(document.getElementById('settings-num-weeks').value);
+            const people = document.getElementById('settings-roommates').value.split(',').map(s => s.trim()).filter(Boolean);
+            const tasks = document.getElementById('settings-tasks').value.split(',').map(s => s.trim()).filter(Boolean);
+
+            if (!startDate || isNaN(numWeeks) || people.length === 0 || tasks.length === 0) {
+                showToast('Please provide valid settings values', true);
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ start_date: startDate, num_weeks: numWeeks, people, tasks })
+                });
+                const result = await res.json();
+                if (res.ok) {
+                    scheduleData = result.data;
+                    closeSettingsModal();
+                    renderAll();
+                    showToast('Schedule settings updated and regenerated');
+                } else {
+                    showToast(result.error || 'Failed to update settings', true);
+                }
+            } catch (err) {
+                showToast('Error saving settings', true);
+            }
+        }
+
+        // Reset
+        async function confirmReset() {
+            if (!confirm('Are you sure you want to reset all tasks to standard rotation? Any custom chore reassignments will be reset.')) {
+                return;
+            }
+            try {
+                const res = await fetch('/api/reset', { method: 'POST' });
+                const result = await res.json();
+                if (res.ok) {
+                    scheduleData = result.data;
+                    renderAll();
+                    showToast('Reset to standard rotation');
+                }
+            } catch (err) {
+                showToast('Error resetting schedule', true);
+            }
+        }
+
+        // Sync to Filesystem
+        async function syncToDisk() {
+            try {
+                const res = await fetch('/api/sync', { method: 'POST' });
+                const result = await res.json();
+                if (res.ok) {
+                    showToast(result.message || 'Synced to schedules/ folder!');
+                } else {
+                    showToast('Failed to sync to folder', true);
+                }
+            } catch (err) {
+                showToast('Error syncing files', true);
+            }
+        }
+
+        function copyToClipboard(text, successMsg) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(successMsg);
+            }).catch(() => {
+                prompt('Copy URL:', text);
+            });
+        }
+
+        // Toast feedback
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const text = document.getElementById('toast-message');
+
+            icon.textContent = isError ? '⚠️' : '✅';
+            text.textContent = msg;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+
+        // Initialize
+        fetchSchedule();
+    </script>
+</body>
+</html>

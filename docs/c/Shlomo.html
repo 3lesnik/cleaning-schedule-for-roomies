@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shlomo's Calendar & Schedule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .waste-Organic { background-color: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .waste-Residual { background-color: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+        .waste-Paper { background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        .waste-Chemical { background-color: #ede9fe; color: #5b21b6; border: 1px solid #ddd6fe; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-16">
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform transition-all duration-300 translate-y-20 opacity-0 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium">
+        <span>📋</span>
+        <span id="toast-message">Calendar feed link copied!</span>
+    </div>
+
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="../index.html" class="text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center space-x-1">
+                <span>&larr;</span>
+                <span>Full House Schedule</span>
+            </a>
+            <span class="text-xs text-slate-400 font-medium">Apartment Calendar Sync</span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8 space-y-6">
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 md:p-8 shadow-xs space-y-6">
+            <div class="flex items-center space-x-4">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center text-3xl font-bold shadow-md">
+                    S
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900">Shlomo's Schedule</h1>
+                    <p class="text-xs md:text-sm text-slate-500">Live calendar with Saturday cleaning duties, trash pickups & house events</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-4 md:p-5 border border-slate-200 space-y-3">
+                <div class="text-xs font-bold uppercase tracking-wider text-slate-500">Subscribe & Sync With Your Calendar</div>
+                <div class="flex flex-wrap gap-2.5">
+                    <a id="webcal-btn" href="#" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition">
+                        <span>📲</span>
+                        <span>Subscribe in Calendar (Apple/iOS/Mac)</span>
+                    </a>
+                    <a href="../calendars/Shlomo.ics" download="cleaning_schedule_Shlomo.ics" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 shadow-xs transition">
+                        <span>📥</span>
+                        <span>Download .ics File</span>
+                    </a>
+                    <button onclick="copyFeedUrl()" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 shadow-xs transition">
+                        <span>🔗</span>
+                        <span>Copy Feed URL</span>
+                    </button>
+                </div>
+                <div class="text-[11px] text-slate-500 pt-1">
+                    <strong>For Google Calendar:</strong> Copy the feed URL &rarr; Go to <a href="https://calendar.google.com/calendar/r/settings/addbyurl" target="_blank" class="text-blue-600 underline">Google Calendar &gt; Add Calendar &gt; From URL</a> &rarr; Paste link.
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Saturday Cleanings -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
+                <h2 class="text-sm font-bold text-slate-900 flex items-center space-x-1.5 border-b border-slate-100 pb-3">
+                    <span>🧹</span>
+                    <span>Saturday Duties (3)</span>
+                </h2>
+                <div class="space-y-2.5 max-h-96 overflow-y-auto pr-1">
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Week 1</span>
+                            <span class="text-slate-400 font-mono text-[11px]">2026-09-19</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Downstairs Toilet</div>
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Week 2</span>
+                            <span class="text-slate-400 font-mono text-[11px]">2026-09-26</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Bathroom</div>
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 bg-slate-50/50 text-xs space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-800">Week 3</span>
+                            <span class="text-slate-400 font-mono text-[11px]">2026-10-03</span>
+                        </div>
+                        <div class="font-semibold text-blue-700">Kitchen</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trash Pickups -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
+                <h2 class="text-sm font-bold text-slate-900 flex items-center space-x-1.5 border-b border-slate-100 pb-3">
+                    <span>🗑️</span>
+                    <span>Trash Pickups (0)</span>
+                </h2>
+                <div class="space-y-2.5 max-h-96 overflow-y-auto pr-1">
+                    <p class="text-xs text-slate-400 py-4 text-center">No trash pickups assigned.</p>
+                </div>
+            </div>
+
+            <!-- House Events -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
+                <h2 class="text-sm font-bold text-slate-900 flex items-center space-x-1.5 border-b border-slate-100 pb-3">
+                    <span>🏠</span>
+                    <span>House Events (0)</span>
+                </h2>
+                <div class="space-y-2.5 max-h-96 overflow-y-auto pr-1">
+                    <p class="text-xs text-slate-400 py-4 text-center">No house events scheduled.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const icsRelativeUrl = new URL("../calendars/Shlomo.ics", window.location.href).href;
+        const webcalUrl = icsRelativeUrl.replace(/^https?:\/\//i, 'webcal://');
+        document.getElementById('webcal-btn').href = webcalUrl;
+
+        function copyFeedUrl() {
+            navigator.clipboard.writeText(icsRelativeUrl).then(() => {
+                showToast('Calendar feed URL copied to clipboard!');
+            }).catch(() => {
+                prompt('Copy this calendar feed URL:', icsRelativeUrl);
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
