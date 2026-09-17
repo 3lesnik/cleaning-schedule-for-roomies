@@ -238,6 +238,8 @@ class TestCleaningSchedule(unittest.TestCase):
         self.assertEqual(res3_json["status"], "ok")
         self.assertEqual(res3_json["data"]["default_cleaning_day"], 6)
         self.assertEqual(res3_json["data"]["default_cleaning_time"], "14:30")
+        self.assertEqual(res3_json["data"]["num_weeks"], 26)
+        self.assertEqual(len(res3_json["data"]["weeks"]), 26)
 
     def test_static_site_generation(self):
         """Verify export_static creates docs/ structure."""

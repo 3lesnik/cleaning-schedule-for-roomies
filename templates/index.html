@@ -86,7 +86,7 @@
         <!-- Stats Overview Cards -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Start Date</span>
+                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Schedule Period</span>
                 <div id="stat-start-date" class="text-lg font-bold text-slate-800 mt-0.5">--</div>
             </div>
             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
@@ -461,7 +461,8 @@
             if (!scheduleData) return;
 
             // Stats
-            document.getElementById('stat-start-date').textContent = scheduleData.start_date;
+            const totalWeeks = scheduleData.num_weeks || (scheduleData.weeks ? scheduleData.weeks.length : 0);
+            document.getElementById('stat-start-date').textContent = `${scheduleData.start_date} (${totalWeeks} wks)`;
             const defDayIdx = scheduleData.default_cleaning_day !== undefined ? scheduleData.default_cleaning_day : 5;
             const defTimeStr = scheduleData.default_cleaning_time ? ` at ${scheduleData.default_cleaning_time}` : '';
             document.getElementById('stat-default-day').textContent = `${dayNames[defDayIdx]}${defTimeStr}`;

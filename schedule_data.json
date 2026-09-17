@@ -2,66 +2,40 @@
   "people": [
     "Nancy",
     "Natan",
-    "Shlomo",
+    "Ellie",
     "Lucia",
-    "Brenda",
-    "Ellie"
+    "Shlomo"
   ],
   "tasks": [
     "Kitchen",
     "Bathroom",
-    "Downstairs Toilet",
-    "Floors duty",
-    "Taking out trash",
-    "Communal laundry"
+    "Hallway & Stairs",
+    "Trash & Recycling",
+    "Living Room"
   ],
-  "start_date": "2026-09-17",
-  "num_weeks": 3,
+  "start_date": "2026-09-07",
+  "num_weeks": 26,
+  "default_cleaning_day": 6,
+  "default_cleaning_time": "14:30",
+  "person_preferences": {},
   "weeks": [
     {
       "week_number": 1,
-      "start_date": "2026-09-17",
-      "end_date": "2026-09-23",
-      "saturday_date": "2026-09-19",
+      "start_date": "2026-09-07",
+      "end_date": "2026-09-13",
+      "saturday_date": "2026-09-12",
       "assignments": {
         "Kitchen": "Nancy",
         "Bathroom": "Natan",
-        "Downstairs Toilet": "Shlomo",
-        "Floors duty": "Lucia",
-        "Taking out trash": "Brenda",
-        "Communal laundry": "Ellie"
-      },
-      "trash_pickups": [
-        {
-          "date": "2026-09-18",
-          "waste_type": "Paper & Cardboard",
-          "assigned_to": "Brenda",
-          "pickup_date": "2026-09-18",
-          "reminder_date": "2026-09-17",
-          "reminder_time": "20:00",
-          "title": "Put out the Paper & Cardboard"
-        },
-        {
-          "date": "2026-09-22",
-          "waste_type": "Residual Waste & Plastic",
-          "assigned_to": "Brenda",
-          "pickup_date": "2026-09-22",
-          "reminder_date": "2026-09-21",
-          "reminder_time": "20:00",
-          "title": "Put out the Residual Waste & Plastic"
-        }
-      ],
-      "task_overrides": {
-        "Bathroom": {
-          "date": "2026-09-28",
-          "time": "11:00"
-        }
+        "Hallway & Stairs": "Ellie",
+        "Trash & Recycling": "Lucia",
+        "Living Room": "Shlomo"
       },
       "task_schedules": {
         "Kitchen": {
-          "date": "2026-09-19",
-          "day_name": "Saturday",
-          "time": null,
+          "date": "2026-09-13",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         },
         "Bathroom": {
@@ -70,177 +44,1441 @@
           "time": "11:00",
           "is_override": true
         },
-        "Downstairs Toilet": {
-          "date": "2026-09-19",
-          "day_name": "Saturday",
-          "time": null,
+        "Hallway & Stairs": {
+          "date": "2026-09-13",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         },
-        "Floors duty": {
-          "date": "2026-09-19",
-          "day_name": "Saturday",
-          "time": null,
+        "Trash & Recycling": {
+          "date": "2026-09-13",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         },
-        "Taking out trash": {
-          "date": "2026-09-19",
-          "day_name": "Saturday",
-          "time": null,
-          "is_override": false
-        },
-        "Communal laundry": {
-          "date": "2026-09-19",
-          "day_name": "Saturday",
-          "time": null,
+        "Living Room": {
+          "date": "2026-09-13",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         }
-      }
+      },
+      "task_overrides": {
+        "Bathroom": {
+          "date": "2026-09-28",
+          "time": "11:00"
+        }
+      },
+      "trash_pickups": [
+        {
+          "date": "2026-09-08",
+          "pickup_date": "2026-09-08",
+          "reminder_date": "2026-09-07",
+          "reminder_time": "20:00",
+          "waste_type": "Residual Waste & Plastic",
+          "title": "Put out the Residual Waste & Plastic",
+          "assigned_to": "Lucia"
+        }
+      ]
     },
     {
       "week_number": 2,
-      "start_date": "2026-09-24",
-      "end_date": "2026-09-30",
-      "saturday_date": "2026-09-26",
+      "start_date": "2026-09-14",
+      "end_date": "2026-09-20",
+      "saturday_date": "2026-09-19",
       "assignments": {
         "Kitchen": "Natan",
-        "Bathroom": "Shlomo",
-        "Downstairs Toilet": "Lucia",
-        "Floors duty": "Brenda",
-        "Taking out trash": "Ellie",
-        "Communal laundry": "Nancy"
+        "Bathroom": "Ellie",
+        "Hallway & Stairs": "Lucia",
+        "Trash & Recycling": "Shlomo",
+        "Living Room": "Nancy"
       },
-      "trash_pickups": [
-        {
-          "date": "2026-09-24",
-          "waste_type": "Chemical Waste",
-          "assigned_to": "Ellie",
-          "pickup_date": "2026-09-24",
-          "reminder_date": "2026-09-23",
-          "reminder_time": "20:00",
-          "title": "Put out the Chemical Waste"
-        },
-        {
-          "date": "2026-09-29",
-          "waste_type": "Organic Waste",
-          "assigned_to": "Ellie",
-          "pickup_date": "2026-09-29",
-          "reminder_date": "2026-09-28",
-          "reminder_time": "20:00",
-          "title": "Put out the Organic Waste"
-        }
-      ],
-      "task_overrides": {},
       "task_schedules": {
         "Kitchen": {
-          "date": "2026-09-24",
-          "day_name": "Thursday",
-          "time": "18:00",
+          "date": "2026-09-20",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         },
         "Bathroom": {
-          "date": "2026-09-26",
-          "day_name": "Saturday",
-          "time": null,
+          "date": "2026-09-20",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         },
-        "Downstairs Toilet": {
-          "date": "2026-09-26",
-          "day_name": "Saturday",
-          "time": null,
+        "Hallway & Stairs": {
+          "date": "2026-09-20",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         },
-        "Floors duty": {
-          "date": "2026-09-26",
-          "day_name": "Saturday",
-          "time": null,
+        "Trash & Recycling": {
+          "date": "2026-09-20",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         },
-        "Taking out trash": {
-          "date": "2026-09-26",
-          "day_name": "Saturday",
-          "time": null,
-          "is_override": false
-        },
-        "Communal laundry": {
-          "date": "2026-09-26",
-          "day_name": "Saturday",
-          "time": null,
+        "Living Room": {
+          "date": "2026-09-20",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         }
-      }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-09-15",
+          "pickup_date": "2026-09-15",
+          "reminder_date": "2026-09-14",
+          "reminder_time": "20:00",
+          "waste_type": "Organic Waste",
+          "title": "Put out the Organic Waste",
+          "assigned_to": "Shlomo"
+        },
+        {
+          "date": "2026-09-18",
+          "pickup_date": "2026-09-18",
+          "reminder_date": "2026-09-17",
+          "reminder_time": "20:00",
+          "waste_type": "Paper & Cardboard",
+          "title": "Put out the Paper & Cardboard",
+          "assigned_to": "Shlomo"
+        }
+      ]
     },
     {
       "week_number": 3,
-      "start_date": "2026-10-01",
-      "end_date": "2026-10-07",
-      "saturday_date": "2026-10-03",
+      "start_date": "2026-09-21",
+      "end_date": "2026-09-27",
+      "saturday_date": "2026-09-26",
       "assignments": {
-        "Kitchen": "Shlomo",
+        "Kitchen": "Ellie",
         "Bathroom": "Lucia",
-        "Downstairs Toilet": "Brenda",
-        "Floors duty": "Ellie",
-        "Taking out trash": "Nancy",
-        "Communal laundry": "Natan"
+        "Hallway & Stairs": "Shlomo",
+        "Trash & Recycling": "Nancy",
+        "Living Room": "Natan"
       },
-      "trash_pickups": [
-        {
-          "date": "2026-10-06",
-          "waste_type": "Residual Waste & Plastic",
-          "assigned_to": "Nancy",
-          "pickup_date": "2026-10-06",
-          "reminder_date": "2026-10-05",
-          "reminder_time": "20:00",
-          "title": "Put out the Residual Waste & Plastic"
-        }
-      ],
-      "task_overrides": {},
       "task_schedules": {
         "Kitchen": {
-          "date": "2026-10-03",
-          "day_name": "Saturday",
-          "time": null,
+          "date": "2026-09-27",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         },
         "Bathroom": {
-          "date": "2026-10-03",
-          "day_name": "Saturday",
-          "time": null,
+          "date": "2026-09-27",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         },
-        "Downstairs Toilet": {
-          "date": "2026-10-03",
-          "day_name": "Saturday",
-          "time": null,
+        "Hallway & Stairs": {
+          "date": "2026-09-27",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         },
-        "Floors duty": {
-          "date": "2026-10-03",
-          "day_name": "Saturday",
-          "time": null,
+        "Trash & Recycling": {
+          "date": "2026-09-27",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         },
-        "Taking out trash": {
-          "date": "2026-10-03",
-          "day_name": "Saturday",
-          "time": null,
-          "is_override": false
-        },
-        "Communal laundry": {
-          "date": "2026-10-01",
-          "day_name": "Thursday",
-          "time": "18:00",
+        "Living Room": {
+          "date": "2026-09-27",
+          "day_name": "Sunday",
+          "time": "14:30",
           "is_override": false
         }
-      }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-09-22",
+          "pickup_date": "2026-09-22",
+          "reminder_date": "2026-09-21",
+          "reminder_time": "20:00",
+          "waste_type": "Residual Waste & Plastic",
+          "title": "Put out the Residual Waste & Plastic",
+          "assigned_to": "Nancy"
+        },
+        {
+          "date": "2026-09-24",
+          "pickup_date": "2026-09-24",
+          "reminder_date": "2026-09-23",
+          "reminder_time": "20:00",
+          "waste_type": "Chemical Waste",
+          "title": "Put out the Chemical Waste",
+          "assigned_to": "Nancy"
+        }
+      ]
+    },
+    {
+      "week_number": 4,
+      "start_date": "2026-09-28",
+      "end_date": "2026-10-04",
+      "saturday_date": "2026-10-03",
+      "assignments": {
+        "Kitchen": "Lucia",
+        "Bathroom": "Shlomo",
+        "Hallway & Stairs": "Nancy",
+        "Trash & Recycling": "Natan",
+        "Living Room": "Ellie"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-10-04",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-10-04",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-10-04",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-10-04",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-10-04",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-09-29",
+          "pickup_date": "2026-09-29",
+          "reminder_date": "2026-09-28",
+          "reminder_time": "20:00",
+          "waste_type": "Organic Waste",
+          "title": "Put out the Organic Waste",
+          "assigned_to": "Natan"
+        }
+      ]
+    },
+    {
+      "week_number": 5,
+      "start_date": "2026-10-05",
+      "end_date": "2026-10-11",
+      "saturday_date": "2026-10-10",
+      "assignments": {
+        "Kitchen": "Shlomo",
+        "Bathroom": "Nancy",
+        "Hallway & Stairs": "Natan",
+        "Trash & Recycling": "Ellie",
+        "Living Room": "Lucia"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-10-11",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-10-11",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-10-11",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-10-11",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-10-11",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-10-06",
+          "pickup_date": "2026-10-06",
+          "reminder_date": "2026-10-05",
+          "reminder_time": "20:00",
+          "waste_type": "Residual Waste & Plastic",
+          "title": "Put out the Residual Waste & Plastic",
+          "assigned_to": "Ellie"
+        }
+      ]
+    },
+    {
+      "week_number": 6,
+      "start_date": "2026-10-12",
+      "end_date": "2026-10-18",
+      "saturday_date": "2026-10-17",
+      "assignments": {
+        "Kitchen": "Nancy",
+        "Bathroom": "Natan",
+        "Hallway & Stairs": "Ellie",
+        "Trash & Recycling": "Lucia",
+        "Living Room": "Shlomo"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-10-18",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-10-18",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-10-18",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-10-18",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-10-18",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-10-13",
+          "pickup_date": "2026-10-13",
+          "reminder_date": "2026-10-12",
+          "reminder_time": "20:00",
+          "waste_type": "Organic Waste",
+          "title": "Put out the Organic Waste",
+          "assigned_to": "Lucia"
+        },
+        {
+          "date": "2026-10-16",
+          "pickup_date": "2026-10-16",
+          "reminder_date": "2026-10-15",
+          "reminder_time": "20:00",
+          "waste_type": "Paper & Cardboard",
+          "title": "Put out the Paper & Cardboard",
+          "assigned_to": "Lucia"
+        }
+      ]
+    },
+    {
+      "week_number": 7,
+      "start_date": "2026-10-19",
+      "end_date": "2026-10-25",
+      "saturday_date": "2026-10-24",
+      "assignments": {
+        "Kitchen": "Natan",
+        "Bathroom": "Ellie",
+        "Hallway & Stairs": "Lucia",
+        "Trash & Recycling": "Shlomo",
+        "Living Room": "Nancy"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-10-25",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-10-25",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-10-25",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-10-25",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-10-25",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-10-20",
+          "pickup_date": "2026-10-20",
+          "reminder_date": "2026-10-19",
+          "reminder_time": "20:00",
+          "waste_type": "Residual Waste & Plastic",
+          "title": "Put out the Residual Waste & Plastic",
+          "assigned_to": "Shlomo"
+        }
+      ]
+    },
+    {
+      "week_number": 8,
+      "start_date": "2026-10-26",
+      "end_date": "2026-11-01",
+      "saturday_date": "2026-10-31",
+      "assignments": {
+        "Kitchen": "Ellie",
+        "Bathroom": "Lucia",
+        "Hallway & Stairs": "Shlomo",
+        "Trash & Recycling": "Nancy",
+        "Living Room": "Natan"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-11-01",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-11-01",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-11-01",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-11-01",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-11-01",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-10-27",
+          "pickup_date": "2026-10-27",
+          "reminder_date": "2026-10-26",
+          "reminder_time": "20:00",
+          "waste_type": "Organic Waste",
+          "title": "Put out the Organic Waste",
+          "assigned_to": "Nancy"
+        },
+        {
+          "date": "2026-10-29",
+          "pickup_date": "2026-10-29",
+          "reminder_date": "2026-10-28",
+          "reminder_time": "20:00",
+          "waste_type": "Chemical Waste",
+          "title": "Put out the Chemical Waste",
+          "assigned_to": "Nancy"
+        }
+      ]
+    },
+    {
+      "week_number": 9,
+      "start_date": "2026-11-02",
+      "end_date": "2026-11-08",
+      "saturday_date": "2026-11-07",
+      "assignments": {
+        "Kitchen": "Lucia",
+        "Bathroom": "Shlomo",
+        "Hallway & Stairs": "Nancy",
+        "Trash & Recycling": "Natan",
+        "Living Room": "Ellie"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-11-08",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-11-08",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-11-08",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-11-08",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-11-08",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-11-03",
+          "pickup_date": "2026-11-03",
+          "reminder_date": "2026-11-02",
+          "reminder_time": "20:00",
+          "waste_type": "Residual Waste & Plastic",
+          "title": "Put out the Residual Waste & Plastic",
+          "assigned_to": "Natan"
+        }
+      ]
+    },
+    {
+      "week_number": 10,
+      "start_date": "2026-11-09",
+      "end_date": "2026-11-15",
+      "saturday_date": "2026-11-14",
+      "assignments": {
+        "Kitchen": "Shlomo",
+        "Bathroom": "Nancy",
+        "Hallway & Stairs": "Natan",
+        "Trash & Recycling": "Ellie",
+        "Living Room": "Lucia"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-11-15",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-11-15",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-11-15",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-11-15",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-11-15",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-11-10",
+          "pickup_date": "2026-11-10",
+          "reminder_date": "2026-11-09",
+          "reminder_time": "20:00",
+          "waste_type": "Organic Waste",
+          "title": "Put out the Organic Waste",
+          "assigned_to": "Ellie"
+        }
+      ]
+    },
+    {
+      "week_number": 11,
+      "start_date": "2026-11-16",
+      "end_date": "2026-11-22",
+      "saturday_date": "2026-11-21",
+      "assignments": {
+        "Kitchen": "Nancy",
+        "Bathroom": "Natan",
+        "Hallway & Stairs": "Ellie",
+        "Trash & Recycling": "Lucia",
+        "Living Room": "Shlomo"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-11-22",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-11-22",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-11-22",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-11-22",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-11-22",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-11-17",
+          "pickup_date": "2026-11-17",
+          "reminder_date": "2026-11-16",
+          "reminder_time": "20:00",
+          "waste_type": "Residual Waste & Plastic",
+          "title": "Put out the Residual Waste & Plastic",
+          "assigned_to": "Lucia"
+        },
+        {
+          "date": "2026-11-20",
+          "pickup_date": "2026-11-20",
+          "reminder_date": "2026-11-19",
+          "reminder_time": "20:00",
+          "waste_type": "Paper & Cardboard",
+          "title": "Put out the Paper & Cardboard",
+          "assigned_to": "Lucia"
+        }
+      ]
+    },
+    {
+      "week_number": 12,
+      "start_date": "2026-11-23",
+      "end_date": "2026-11-29",
+      "saturday_date": "2026-11-28",
+      "assignments": {
+        "Kitchen": "Natan",
+        "Bathroom": "Ellie",
+        "Hallway & Stairs": "Lucia",
+        "Trash & Recycling": "Shlomo",
+        "Living Room": "Nancy"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-11-29",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-11-29",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-11-29",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-11-29",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-11-29",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-11-24",
+          "pickup_date": "2026-11-24",
+          "reminder_date": "2026-11-23",
+          "reminder_time": "20:00",
+          "waste_type": "Organic Waste",
+          "title": "Put out the Organic Waste",
+          "assigned_to": "Shlomo"
+        }
+      ]
+    },
+    {
+      "week_number": 13,
+      "start_date": "2026-11-30",
+      "end_date": "2026-12-06",
+      "saturday_date": "2026-12-05",
+      "assignments": {
+        "Kitchen": "Ellie",
+        "Bathroom": "Lucia",
+        "Hallway & Stairs": "Shlomo",
+        "Trash & Recycling": "Nancy",
+        "Living Room": "Natan"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-12-06",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-12-06",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-12-06",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-12-06",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-12-06",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-12-01",
+          "pickup_date": "2026-12-01",
+          "reminder_date": "2026-11-30",
+          "reminder_time": "20:00",
+          "waste_type": "Residual Waste & Plastic",
+          "title": "Put out the Residual Waste & Plastic",
+          "assigned_to": "Nancy"
+        },
+        {
+          "date": "2026-12-03",
+          "pickup_date": "2026-12-03",
+          "reminder_date": "2026-12-02",
+          "reminder_time": "20:00",
+          "waste_type": "Chemical Waste",
+          "title": "Put out the Chemical Waste",
+          "assigned_to": "Nancy"
+        }
+      ]
+    },
+    {
+      "week_number": 14,
+      "start_date": "2026-12-07",
+      "end_date": "2026-12-13",
+      "saturday_date": "2026-12-12",
+      "assignments": {
+        "Kitchen": "Lucia",
+        "Bathroom": "Shlomo",
+        "Hallway & Stairs": "Nancy",
+        "Trash & Recycling": "Natan",
+        "Living Room": "Ellie"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-12-13",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-12-13",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-12-13",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-12-13",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-12-13",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-12-08",
+          "pickup_date": "2026-12-08",
+          "reminder_date": "2026-12-07",
+          "reminder_time": "20:00",
+          "waste_type": "Organic Waste",
+          "title": "Put out the Organic Waste",
+          "assigned_to": "Natan"
+        }
+      ]
+    },
+    {
+      "week_number": 15,
+      "start_date": "2026-12-14",
+      "end_date": "2026-12-20",
+      "saturday_date": "2026-12-19",
+      "assignments": {
+        "Kitchen": "Shlomo",
+        "Bathroom": "Nancy",
+        "Hallway & Stairs": "Natan",
+        "Trash & Recycling": "Ellie",
+        "Living Room": "Lucia"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-12-20",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-12-20",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-12-20",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-12-20",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-12-20",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-12-15",
+          "pickup_date": "2026-12-15",
+          "reminder_date": "2026-12-14",
+          "reminder_time": "20:00",
+          "waste_type": "Residual Waste & Plastic",
+          "title": "Put out the Residual Waste & Plastic",
+          "assigned_to": "Ellie"
+        },
+        {
+          "date": "2026-12-18",
+          "pickup_date": "2026-12-18",
+          "reminder_date": "2026-12-17",
+          "reminder_time": "20:00",
+          "waste_type": "Paper & Cardboard",
+          "title": "Put out the Paper & Cardboard",
+          "assigned_to": "Ellie"
+        }
+      ]
+    },
+    {
+      "week_number": 16,
+      "start_date": "2026-12-21",
+      "end_date": "2026-12-27",
+      "saturday_date": "2026-12-26",
+      "assignments": {
+        "Kitchen": "Nancy",
+        "Bathroom": "Natan",
+        "Hallway & Stairs": "Ellie",
+        "Trash & Recycling": "Lucia",
+        "Living Room": "Shlomo"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2026-12-27",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2026-12-27",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2026-12-27",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2026-12-27",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2026-12-27",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-12-22",
+          "pickup_date": "2026-12-22",
+          "reminder_date": "2026-12-21",
+          "reminder_time": "20:00",
+          "waste_type": "Organic Waste",
+          "title": "Put out the Organic Waste",
+          "assigned_to": "Lucia"
+        }
+      ]
+    },
+    {
+      "week_number": 17,
+      "start_date": "2026-12-28",
+      "end_date": "2027-01-03",
+      "saturday_date": "2027-01-02",
+      "assignments": {
+        "Kitchen": "Natan",
+        "Bathroom": "Ellie",
+        "Hallway & Stairs": "Lucia",
+        "Trash & Recycling": "Shlomo",
+        "Living Room": "Nancy"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2027-01-03",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2027-01-03",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2027-01-03",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2027-01-03",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2027-01-03",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": [
+        {
+          "date": "2026-12-29",
+          "pickup_date": "2026-12-29",
+          "reminder_date": "2026-12-28",
+          "reminder_time": "20:00",
+          "waste_type": "Residual Waste & Plastic",
+          "title": "Put out the Residual Waste & Plastic",
+          "assigned_to": "Shlomo"
+        }
+      ]
+    },
+    {
+      "week_number": 18,
+      "start_date": "2027-01-04",
+      "end_date": "2027-01-10",
+      "saturday_date": "2027-01-09",
+      "assignments": {
+        "Kitchen": "Ellie",
+        "Bathroom": "Lucia",
+        "Hallway & Stairs": "Shlomo",
+        "Trash & Recycling": "Nancy",
+        "Living Room": "Natan"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2027-01-10",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2027-01-10",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2027-01-10",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2027-01-10",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2027-01-10",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": []
+    },
+    {
+      "week_number": 19,
+      "start_date": "2027-01-11",
+      "end_date": "2027-01-17",
+      "saturday_date": "2027-01-16",
+      "assignments": {
+        "Kitchen": "Lucia",
+        "Bathroom": "Shlomo",
+        "Hallway & Stairs": "Nancy",
+        "Trash & Recycling": "Natan",
+        "Living Room": "Ellie"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2027-01-17",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2027-01-17",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2027-01-17",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2027-01-17",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2027-01-17",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": []
+    },
+    {
+      "week_number": 20,
+      "start_date": "2027-01-18",
+      "end_date": "2027-01-24",
+      "saturday_date": "2027-01-23",
+      "assignments": {
+        "Kitchen": "Shlomo",
+        "Bathroom": "Nancy",
+        "Hallway & Stairs": "Natan",
+        "Trash & Recycling": "Ellie",
+        "Living Room": "Lucia"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2027-01-24",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2027-01-24",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2027-01-24",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2027-01-24",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2027-01-24",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": []
+    },
+    {
+      "week_number": 21,
+      "start_date": "2027-01-25",
+      "end_date": "2027-01-31",
+      "saturday_date": "2027-01-30",
+      "assignments": {
+        "Kitchen": "Nancy",
+        "Bathroom": "Natan",
+        "Hallway & Stairs": "Ellie",
+        "Trash & Recycling": "Lucia",
+        "Living Room": "Shlomo"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2027-01-31",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2027-01-31",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2027-01-31",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2027-01-31",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2027-01-31",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": []
+    },
+    {
+      "week_number": 22,
+      "start_date": "2027-02-01",
+      "end_date": "2027-02-07",
+      "saturday_date": "2027-02-06",
+      "assignments": {
+        "Kitchen": "Natan",
+        "Bathroom": "Ellie",
+        "Hallway & Stairs": "Lucia",
+        "Trash & Recycling": "Shlomo",
+        "Living Room": "Nancy"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2027-02-07",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2027-02-07",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2027-02-07",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2027-02-07",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2027-02-07",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": []
+    },
+    {
+      "week_number": 23,
+      "start_date": "2027-02-08",
+      "end_date": "2027-02-14",
+      "saturday_date": "2027-02-13",
+      "assignments": {
+        "Kitchen": "Ellie",
+        "Bathroom": "Lucia",
+        "Hallway & Stairs": "Shlomo",
+        "Trash & Recycling": "Nancy",
+        "Living Room": "Natan"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2027-02-14",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2027-02-14",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2027-02-14",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2027-02-14",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2027-02-14",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": []
+    },
+    {
+      "week_number": 24,
+      "start_date": "2027-02-15",
+      "end_date": "2027-02-21",
+      "saturday_date": "2027-02-20",
+      "assignments": {
+        "Kitchen": "Lucia",
+        "Bathroom": "Shlomo",
+        "Hallway & Stairs": "Nancy",
+        "Trash & Recycling": "Natan",
+        "Living Room": "Ellie"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2027-02-21",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2027-02-21",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2027-02-21",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2027-02-21",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2027-02-21",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": []
+    },
+    {
+      "week_number": 25,
+      "start_date": "2027-02-22",
+      "end_date": "2027-02-28",
+      "saturday_date": "2027-02-27",
+      "assignments": {
+        "Kitchen": "Shlomo",
+        "Bathroom": "Nancy",
+        "Hallway & Stairs": "Natan",
+        "Trash & Recycling": "Ellie",
+        "Living Room": "Lucia"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2027-02-28",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2027-02-28",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2027-02-28",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2027-02-28",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2027-02-28",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": []
+    },
+    {
+      "week_number": 26,
+      "start_date": "2027-03-01",
+      "end_date": "2027-03-07",
+      "saturday_date": "2027-03-06",
+      "assignments": {
+        "Kitchen": "Nancy",
+        "Bathroom": "Natan",
+        "Hallway & Stairs": "Ellie",
+        "Trash & Recycling": "Lucia",
+        "Living Room": "Shlomo"
+      },
+      "task_schedules": {
+        "Kitchen": {
+          "date": "2027-03-07",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Bathroom": {
+          "date": "2027-03-07",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Hallway & Stairs": {
+          "date": "2027-03-07",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Trash & Recycling": {
+          "date": "2027-03-07",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        },
+        "Living Room": {
+          "date": "2027-03-07",
+          "day_name": "Sunday",
+          "time": "14:30",
+          "is_override": false
+        }
+      },
+      "task_overrides": {},
+      "trash_pickups": []
     }
   ],
-  "house_events": [],
-  "default_cleaning_day": 5,
-  "default_cleaning_time": null,
-  "person_preferences": {
-    "Natan": {
-      "day_of_week": 3,
-      "time": "18:00"
-    }
-  }
+  "house_events": []
 }

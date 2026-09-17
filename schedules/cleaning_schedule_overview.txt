@@ -7,7 +7,7 @@ Number of weeks: 26
 Week   Date           Person          Task                                         
 --------------------------------------------------------------------------------
 1      2026-09-13 14:30 Nancy           Kitchen                                      
-1      2026-09-13 14:30 Natan           Bathroom                                     
+1      2026-09-28 11:00 Natan           Bathroom                                     
 1      2026-09-13 14:30 Ellie           Hallway & Stairs                             
 1      2026-09-13 14:30 Lucia           Trash & Recycling [2026-09-07 8PM: Put out Residual Waste & Plastic (Lucia)]
 1      2026-09-13 14:30 Shlomo          Living Room                                  

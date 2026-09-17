@@ -374,7 +374,7 @@ class ScheduleManager:
         return self.data
 
     def update_settings(self, start_date_str=None, num_weeks=None, people=None, tasks=None, default_cleaning_day=None, default_cleaning_time=None, person_preferences=None, start_date=None):
-        """Update schedule configuration and adjust without wiping custom assignments if structure hasn't changed."""
+        """Update schedule configuration, number of weeks, and timings, preserving custom week assignments where possible."""
         if start_date_str is None:
             start_date_str = start_date or self.data.get("start_date", DEFAULT_START_DATE)
         if num_weeks is None:
@@ -384,7 +384,7 @@ class ScheduleManager:
         current_people = self.data.get("people", DEFAULT_PEOPLE)
         current_tasks = self.data.get("tasks", DEFAULT_TASKS)
         current_start = self.data.get("start_date", DEFAULT_START_DATE)
-        current_num_weeks = self.data.get("num_weeks", DEFAULT_NUM_WEEKS)
+        current_num_weeks = int(self.data.get("num_weeks", len(self.data.get("weeks", []))))
 
         if people is None:
             people = current_people
@@ -399,15 +399,19 @@ class ScheduleManager:
         if person_preferences is None:
             person_preferences = self.data.get("person_preferences", {})
 
-        # If rotation structure changed (people, tasks, start_date, num_weeks), regenerate rotation
-        structure_changed = (
+        self.data["default_cleaning_day"] = default_cleaning_day
+        self.data["default_cleaning_time"] = default_cleaning_time
+        self.data["person_preferences"] = person_preferences
+
+        # Did core roster or start date change?
+        roster_or_date_changed = (
             people != current_people or
             tasks != current_tasks or
-            start_date_str != current_start or
-            num_weeks != current_num_weeks
+            start_date_str != current_start
         )
 
-        if structure_changed:
+        if roster_or_date_changed:
+            # Full regeneration required
             self.data = self.generate_default_schedule(
                 people=people,
                 tasks=tasks,
@@ -419,12 +423,31 @@ class ScheduleManager:
                 default_cleaning_time=default_cleaning_time
             )
         else:
-            # Only timing/preferences changed: update config and recompute dates without resetting week assignments
-            self.data["default_cleaning_day"] = default_cleaning_day
-            self.data["default_cleaning_time"] = default_cleaning_time
-            self.data["person_preferences"] = person_preferences
-            self.save_data()
+            # Roster and start date didn't change. Handle num_weeks extension or reduction
+            existing_weeks = self.data.get("weeks", [])
+            self.data["num_weeks"] = num_weeks
+            
+            if len(existing_weeks) < num_weeks:
+                # Extend schedule by generating additional weeks
+                full_sched = self.generate_default_schedule(
+                    people=people,
+                    tasks=tasks,
+                    start_date_str=start_date_str,
+                    num_weeks=num_weeks,
+                    existing_house_events=self.data.get("house_events", []),
+                    person_preferences=person_preferences,
+                    default_cleaning_day=default_cleaning_day,
+                    default_cleaning_time=default_cleaning_time
+                )
+                # Keep existing weeks intact, append newly generated weeks
+                new_weeks = existing_weeks + full_sched["weeks"][len(existing_weeks):]
+                self.data["weeks"] = new_weeks
+            elif len(existing_weeks) > num_weeks:
+                # Truncate schedule to num_weeks
+                self.data["weeks"] = existing_weeks[:num_weeks]
 
+        # ALWAYS save data to disk and refresh task schedules
+        self.save_data()
         return self.data
 
     def generate_ical_for_person(self, person_name, calendar_name="Apartment Cleaning"):
