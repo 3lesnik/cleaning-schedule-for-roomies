@@ -201,7 +201,8 @@ def update_settings():
     people = req.get('people')
     tasks = req.get('tasks')
     default_cleaning_day = req.get('default_cleaning_day')
-    default_cleaning_time = req.get('default_cleaning_time')
+    raw_time = req.get('default_cleaning_time')
+    default_cleaning_time = raw_time.strip() if (raw_time and str(raw_time).strip()) else None
     person_preferences = req.get('person_preferences')
     
     if not start_date or not num_weeks:
@@ -212,7 +213,7 @@ def update_settings():
         num_weeks=int(num_weeks),
         people=people,
         tasks=tasks,
-        default_cleaning_day=int(default_cleaning_day) if default_cleaning_day is not None else None,
+        default_cleaning_day=int(default_cleaning_day) if default_cleaning_day is not None and default_cleaning_day != "" else None,
         default_cleaning_time=default_cleaning_time,
         person_preferences=person_preferences,
         start_date=start_date

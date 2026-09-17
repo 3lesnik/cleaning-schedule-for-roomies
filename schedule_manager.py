@@ -32,8 +32,11 @@ DEFAULT_TASKS = [
 DEFAULT_START_DATE = "2026-08-31"  # Monday
 DEFAULT_NUM_WEEKS = 18
 DEFAULT_CLEANING_DAY = 5  # 0=Monday, 5=Saturday, 6=Sunday
+DEFAULT_CLEANING_TIME = None  # None = All-day event by default
 
 DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+_SENTINEL = object()
 
 class ScheduleManager:
     def __init__(self, data_file=DATA_FILE):
@@ -373,7 +376,7 @@ class ScheduleManager:
         self.save_data()
         return self.data
 
-    def update_settings(self, start_date_str=None, num_weeks=None, people=None, tasks=None, default_cleaning_day=None, default_cleaning_time=None, person_preferences=None, start_date=None):
+    def update_settings(self, start_date_str=None, num_weeks=None, people=None, tasks=None, default_cleaning_day=None, default_cleaning_time=_SENTINEL, person_preferences=None, start_date=None):
         """Update schedule configuration, number of weeks, and timings, preserving custom week assignments where possible."""
         if start_date_str is None:
             start_date_str = start_date or self.data.get("start_date", DEFAULT_START_DATE)
@@ -394,8 +397,11 @@ class ScheduleManager:
             default_cleaning_day = self.data.get("default_cleaning_day", DEFAULT_CLEANING_DAY)
         default_cleaning_day = int(default_cleaning_day)
         
-        if default_cleaning_time is None and "default_cleaning_time" in self.data:
+        if default_cleaning_time is _SENTINEL:
             default_cleaning_time = self.data.get("default_cleaning_time")
+        elif not default_cleaning_time:
+            default_cleaning_time = None
+
         if person_preferences is None:
             person_preferences = self.data.get("person_preferences", {})
 

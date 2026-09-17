@@ -149,6 +149,31 @@ class TestCleaningSchedule(unittest.TestCase):
         self.assertEqual(time_str, "14:00")
         self.assertFalse(is_ovr)
 
+    def test_all_day_events_by_default(self):
+        """Verify events default to all-day events when time is omitted or None."""
+        # By default, default_cleaning_time should be None
+        self.assertIsNone(self.manager.data.get("default_cleaning_time"))
+
+        # Verify computed task schedule has time=None
+        week_0 = self.manager.data["weeks"][0]
+        person = week_0["assignments"]["Kitchen"]
+        date_str, time_str, _ = self.manager.compute_task_schedule(week_0, "Kitchen", person)
+        self.assertIsNone(time_str)
+
+        # Verify iCal event is an all-day event (date object, not datetime)
+        ical_bytes = self.manager.generate_ical_for_person(person)
+        cal = Calendar.from_ical(ical_bytes)
+        chore_events = [e for e in cal.walk('VEVENT') if "Put out" not in str(e.get('summary')) and "🏠" not in str(e.get('summary'))]
+        self.assertGreater(len(chore_events), 0)
+        first_chore = chore_events[0]
+        dtstart = first_chore.get('dtstart').dt
+        self.assertIsInstance(dtstart, datetime.date)
+        self.assertNotIsInstance(dtstart, datetime.datetime)
+
+        # Verify setting time to empty string in update_settings preserves/clears to None
+        self.manager.update_settings(default_cleaning_time="")
+        self.assertIsNone(self.manager.data.get("default_cleaning_time"))
+
     def test_roommate_preferences(self):
         """Verify per-roommate cleaning day and time preferences."""
         # Set Nancy to Friday (4) at 10:30
