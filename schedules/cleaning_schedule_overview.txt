@@ -2,63 +2,163 @@ CLEANING SCHEDULE OVERVIEW
 ================================================================================
 
 Start date: Monday, September 07, 2026
-Number of weeks: 8
+Number of weeks: 26
 
 Week   Date           Person          Task                                         
 --------------------------------------------------------------------------------
-1      2026-09-07 14:30 Nancy           Kitchen                                      
-1      2026-09-07 14:30 Natan           Bathroom                                     
-1      2026-09-07 14:30 Ellie           Hallway & Stairs                             
-1      2026-09-07 14:30 Lucia           Trash & Recycling [2026-09-07 8PM: Put out Residual Waste & Plastic (Lucia)]
-1      2026-09-12     Shlomo          Downstairs toilet                            
-1      2026-09-07 14:30 Brenda          Communal laundry                             
+1      2026-09-13 14:30 Nancy           Kitchen                                      
+1      2026-09-13 14:30 Natan           Bathroom                                     
+1      2026-09-13 14:30 Ellie           Hallway & Stairs                             
+1      2026-09-13 14:30 Lucia           Trash & Recycling [2026-09-07 8PM: Put out Residual Waste & Plastic (Lucia)]
+1      2026-09-13 14:30 Shlomo          Living Room                                  
 --------------------------------------------------------------------------------
-2      2026-09-14 14:30 Natan           Kitchen                                      
-2      2026-09-14 14:30 Ellie           Bathroom                                     
-2      2026-09-14 14:30 Lucia           Hallway & Stairs                             
-2      2026-09-19     Shlomo          Trash & Recycling [2026-09-14 8PM: Put out Organic Waste (Shlomo), 2026-09-17 8PM: Put out Paper & Cardboard (Shlomo)]
-2      2026-09-14 14:30 Brenda          Downstairs toilet                            
-2      2026-09-14 14:30 Nancy           Communal laundry                             
+2      2026-09-20 14:30 Natan           Kitchen                                      
+2      2026-09-20 14:30 Ellie           Bathroom                                     
+2      2026-09-20 14:30 Lucia           Hallway & Stairs                             
+2      2026-09-20 14:30 Shlomo          Trash & Recycling [2026-09-14 8PM: Put out Organic Waste (Shlomo), 2026-09-17 8PM: Put out Paper & Cardboard (Shlomo)]
+2      2026-09-20 14:30 Nancy           Living Room                                  
 --------------------------------------------------------------------------------
-3      2026-09-21 14:30 Ellie           Kitchen                                      
-3      2026-09-21 14:30 Lucia           Bathroom                                     
-3      2026-09-26     Shlomo          Hallway & Stairs                             
-3      2026-09-21 14:30 Brenda          Trash & Recycling [2026-09-21 8PM: Put out Residual Waste & Plastic (Brenda), 2026-09-23 8PM: Put out Chemical Waste (Brenda)]
-3      2026-09-21 14:30 Nancy           Downstairs toilet                            
-3      2026-09-21 14:30 Natan           Communal laundry                             
+3      2026-09-27 14:30 Ellie           Kitchen                                      
+3      2026-09-27 14:30 Lucia           Bathroom                                     
+3      2026-09-27 14:30 Shlomo          Hallway & Stairs                             
+3      2026-09-27 14:30 Nancy           Trash & Recycling [2026-09-21 8PM: Put out Residual Waste & Plastic (Nancy), 2026-09-23 8PM: Put out Chemical Waste (Nancy)]
+3      2026-09-27 14:30 Natan           Living Room                                  
 --------------------------------------------------------------------------------
-4      2026-09-28 14:30 Lucia           Kitchen                                      
-4      2026-10-03     Shlomo          Bathroom                                     
-4      2026-09-28 14:30 Brenda          Hallway & Stairs                             
-4      2026-09-28 14:30 Nancy           Trash & Recycling [2026-09-28 8PM: Put out Organic Waste (Nancy)]
-4      2026-09-28 14:30 Natan           Downstairs toilet                            
-4      2026-09-28 14:30 Ellie           Communal laundry                             
+4      2026-10-04 14:30 Lucia           Kitchen                                      
+4      2026-10-04 14:30 Shlomo          Bathroom                                     
+4      2026-10-04 14:30 Nancy           Hallway & Stairs                             
+4      2026-10-04 14:30 Natan           Trash & Recycling [2026-09-28 8PM: Put out Organic Waste (Natan)]
+4      2026-10-04 14:30 Ellie           Living Room                                  
 --------------------------------------------------------------------------------
-5      2026-10-10     Shlomo          Kitchen                                      
-5      2026-10-05 14:30 Brenda          Bathroom                                     
-5      2026-10-05 14:30 Nancy           Hallway & Stairs                             
-5      2026-10-05 14:30 Natan           Trash & Recycling [2026-10-05 8PM: Put out Residual Waste & Plastic (Natan)]
-5      2026-10-05 14:30 Ellie           Downstairs toilet                            
-5      2026-10-05 14:30 Lucia           Communal laundry                             
+5      2026-10-11 14:30 Shlomo          Kitchen                                      
+5      2026-10-11 14:30 Nancy           Bathroom                                     
+5      2026-10-11 14:30 Natan           Hallway & Stairs                             
+5      2026-10-11 14:30 Ellie           Trash & Recycling [2026-10-05 8PM: Put out Residual Waste & Plastic (Ellie)]
+5      2026-10-11 14:30 Lucia           Living Room                                  
 --------------------------------------------------------------------------------
-6      2026-10-12 14:30 Brenda          Kitchen                                      
-6      2026-10-12 14:30 Nancy           Bathroom                                     
-6      2026-10-12 14:30 Natan           Hallway & Stairs                             
-6      2026-10-12 14:30 Ellie           Trash & Recycling [2026-10-12 8PM: Put out Organic Waste (Ellie), 2026-10-15 8PM: Put out Paper & Cardboard (Ellie)]
-6      2026-10-12 14:30 Lucia           Downstairs toilet                            
-6      2026-10-17     Shlomo          Communal laundry                             
+6      2026-10-18 14:30 Nancy           Kitchen                                      
+6      2026-10-18 14:30 Natan           Bathroom                                     
+6      2026-10-18 14:30 Ellie           Hallway & Stairs                             
+6      2026-10-18 14:30 Lucia           Trash & Recycling [2026-10-12 8PM: Put out Organic Waste (Lucia), 2026-10-15 8PM: Put out Paper & Cardboard (Lucia)]
+6      2026-10-18 14:30 Shlomo          Living Room                                  
 --------------------------------------------------------------------------------
-7      2026-10-19 14:30 Nancy           Kitchen                                      
-7      2026-10-19 14:30 Natan           Bathroom                                     
-7      2026-10-19 14:30 Ellie           Hallway & Stairs                             
-7      2026-10-19 14:30 Lucia           Trash & Recycling [2026-10-19 8PM: Put out Residual Waste & Plastic (Lucia)]
-7      2026-10-24     Shlomo          Downstairs toilet                            
-7      2026-10-19 14:30 Brenda          Communal laundry                             
+7      2026-10-25 14:30 Natan           Kitchen                                      
+7      2026-10-25 14:30 Ellie           Bathroom                                     
+7      2026-10-25 14:30 Lucia           Hallway & Stairs                             
+7      2026-10-25 14:30 Shlomo          Trash & Recycling [2026-10-19 8PM: Put out Residual Waste & Plastic (Shlomo)]
+7      2026-10-25 14:30 Nancy           Living Room                                  
 --------------------------------------------------------------------------------
-8      2026-10-26 14:30 Natan           Kitchen                                      
-8      2026-10-26 14:30 Ellie           Bathroom                                     
-8      2026-10-26 14:30 Lucia           Hallway & Stairs                             
-8      2026-10-31     Shlomo          Trash & Recycling [2026-10-26 8PM: Put out Organic Waste (Shlomo), 2026-10-28 8PM: Put out Chemical Waste (Shlomo)]
-8      2026-10-26 14:30 Brenda          Downstairs toilet                            
-8      2026-10-26 14:30 Nancy           Communal laundry                             
+8      2026-11-01 14:30 Ellie           Kitchen                                      
+8      2026-11-01 14:30 Lucia           Bathroom                                     
+8      2026-11-01 14:30 Shlomo          Hallway & Stairs                             
+8      2026-11-01 14:30 Nancy           Trash & Recycling [2026-10-26 8PM: Put out Organic Waste (Nancy), 2026-10-28 8PM: Put out Chemical Waste (Nancy)]
+8      2026-11-01 14:30 Natan           Living Room                                  
+--------------------------------------------------------------------------------
+9      2026-11-08 14:30 Lucia           Kitchen                                      
+9      2026-11-08 14:30 Shlomo          Bathroom                                     
+9      2026-11-08 14:30 Nancy           Hallway & Stairs                             
+9      2026-11-08 14:30 Natan           Trash & Recycling [2026-11-02 8PM: Put out Residual Waste & Plastic (Natan)]
+9      2026-11-08 14:30 Ellie           Living Room                                  
+--------------------------------------------------------------------------------
+10     2026-11-15 14:30 Shlomo          Kitchen                                      
+10     2026-11-15 14:30 Nancy           Bathroom                                     
+10     2026-11-15 14:30 Natan           Hallway & Stairs                             
+10     2026-11-15 14:30 Ellie           Trash & Recycling [2026-11-09 8PM: Put out Organic Waste (Ellie)]
+10     2026-11-15 14:30 Lucia           Living Room                                  
+--------------------------------------------------------------------------------
+11     2026-11-22 14:30 Nancy           Kitchen                                      
+11     2026-11-22 14:30 Natan           Bathroom                                     
+11     2026-11-22 14:30 Ellie           Hallway & Stairs                             
+11     2026-11-22 14:30 Lucia           Trash & Recycling [2026-11-16 8PM: Put out Residual Waste & Plastic (Lucia), 2026-11-19 8PM: Put out Paper & Cardboard (Lucia)]
+11     2026-11-22 14:30 Shlomo          Living Room                                  
+--------------------------------------------------------------------------------
+12     2026-11-29 14:30 Natan           Kitchen                                      
+12     2026-11-29 14:30 Ellie           Bathroom                                     
+12     2026-11-29 14:30 Lucia           Hallway & Stairs                             
+12     2026-11-29 14:30 Shlomo          Trash & Recycling [2026-11-23 8PM: Put out Organic Waste (Shlomo)]
+12     2026-11-29 14:30 Nancy           Living Room                                  
+--------------------------------------------------------------------------------
+13     2026-12-06 14:30 Ellie           Kitchen                                      
+13     2026-12-06 14:30 Lucia           Bathroom                                     
+13     2026-12-06 14:30 Shlomo          Hallway & Stairs                             
+13     2026-12-06 14:30 Nancy           Trash & Recycling [2026-11-30 8PM: Put out Residual Waste & Plastic (Nancy), 2026-12-02 8PM: Put out Chemical Waste (Nancy)]
+13     2026-12-06 14:30 Natan           Living Room                                  
+--------------------------------------------------------------------------------
+14     2026-12-13 14:30 Lucia           Kitchen                                      
+14     2026-12-13 14:30 Shlomo          Bathroom                                     
+14     2026-12-13 14:30 Nancy           Hallway & Stairs                             
+14     2026-12-13 14:30 Natan           Trash & Recycling [2026-12-07 8PM: Put out Organic Waste (Natan)]
+14     2026-12-13 14:30 Ellie           Living Room                                  
+--------------------------------------------------------------------------------
+15     2026-12-20 14:30 Shlomo          Kitchen                                      
+15     2026-12-20 14:30 Nancy           Bathroom                                     
+15     2026-12-20 14:30 Natan           Hallway & Stairs                             
+15     2026-12-20 14:30 Ellie           Trash & Recycling [2026-12-14 8PM: Put out Residual Waste & Plastic (Ellie), 2026-12-17 8PM: Put out Paper & Cardboard (Ellie)]
+15     2026-12-20 14:30 Lucia           Living Room                                  
+--------------------------------------------------------------------------------
+16     2026-12-27 14:30 Nancy           Kitchen                                      
+16     2026-12-27 14:30 Natan           Bathroom                                     
+16     2026-12-27 14:30 Ellie           Hallway & Stairs                             
+16     2026-12-27 14:30 Lucia           Trash & Recycling [2026-12-21 8PM: Put out Organic Waste (Lucia)]
+16     2026-12-27 14:30 Shlomo          Living Room                                  
+--------------------------------------------------------------------------------
+17     2027-01-03 14:30 Natan           Kitchen                                      
+17     2027-01-03 14:30 Ellie           Bathroom                                     
+17     2027-01-03 14:30 Lucia           Hallway & Stairs                             
+17     2027-01-03 14:30 Shlomo          Trash & Recycling [2026-12-28 8PM: Put out Residual Waste & Plastic (Shlomo)]
+17     2027-01-03 14:30 Nancy           Living Room                                  
+--------------------------------------------------------------------------------
+18     2027-01-10 14:30 Ellie           Kitchen                                      
+18     2027-01-10 14:30 Lucia           Bathroom                                     
+18     2027-01-10 14:30 Shlomo          Hallway & Stairs                             
+18     2027-01-10 14:30 Nancy           Trash & Recycling                            
+18     2027-01-10 14:30 Natan           Living Room                                  
+--------------------------------------------------------------------------------
+19     2027-01-17 14:30 Lucia           Kitchen                                      
+19     2027-01-17 14:30 Shlomo          Bathroom                                     
+19     2027-01-17 14:30 Nancy           Hallway & Stairs                             
+19     2027-01-17 14:30 Natan           Trash & Recycling                            
+19     2027-01-17 14:30 Ellie           Living Room                                  
+--------------------------------------------------------------------------------
+20     2027-01-24 14:30 Shlomo          Kitchen                                      
+20     2027-01-24 14:30 Nancy           Bathroom                                     
+20     2027-01-24 14:30 Natan           Hallway & Stairs                             
+20     2027-01-24 14:30 Ellie           Trash & Recycling                            
+20     2027-01-24 14:30 Lucia           Living Room                                  
+--------------------------------------------------------------------------------
+21     2027-01-31 14:30 Nancy           Kitchen                                      
+21     2027-01-31 14:30 Natan           Bathroom                                     
+21     2027-01-31 14:30 Ellie           Hallway & Stairs                             
+21     2027-01-31 14:30 Lucia           Trash & Recycling                            
+21     2027-01-31 14:30 Shlomo          Living Room                                  
+--------------------------------------------------------------------------------
+22     2027-02-07 14:30 Natan           Kitchen                                      
+22     2027-02-07 14:30 Ellie           Bathroom                                     
+22     2027-02-07 14:30 Lucia           Hallway & Stairs                             
+22     2027-02-07 14:30 Shlomo          Trash & Recycling                            
+22     2027-02-07 14:30 Nancy           Living Room                                  
+--------------------------------------------------------------------------------
+23     2027-02-14 14:30 Ellie           Kitchen                                      
+23     2027-02-14 14:30 Lucia           Bathroom                                     
+23     2027-02-14 14:30 Shlomo          Hallway & Stairs                             
+23     2027-02-14 14:30 Nancy           Trash & Recycling                            
+23     2027-02-14 14:30 Natan           Living Room                                  
+--------------------------------------------------------------------------------
+24     2027-02-21 14:30 Lucia           Kitchen                                      
+24     2027-02-21 14:30 Shlomo          Bathroom                                     
+24     2027-02-21 14:30 Nancy           Hallway & Stairs                             
+24     2027-02-21 14:30 Natan           Trash & Recycling                            
+24     2027-02-21 14:30 Ellie           Living Room                                  
+--------------------------------------------------------------------------------
+25     2027-02-28 14:30 Shlomo          Kitchen                                      
+25     2027-02-28 14:30 Nancy           Bathroom                                     
+25     2027-02-28 14:30 Natan           Hallway & Stairs                             
+25     2027-02-28 14:30 Ellie           Trash & Recycling                            
+25     2027-02-28 14:30 Lucia           Living Room                                  
+--------------------------------------------------------------------------------
+26     2027-03-07 14:30 Nancy           Kitchen                                      
+26     2027-03-07 14:30 Natan           Bathroom                                     
+26     2027-03-07 14:30 Ellie           Hallway & Stairs                             
+26     2027-03-07 14:30 Lucia           Trash & Recycling                            
+26     2027-03-07 14:30 Shlomo          Living Room                                  
 --------------------------------------------------------------------------------

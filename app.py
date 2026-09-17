@@ -266,7 +266,9 @@ def publish_to_github():
         if status.stdout.strip():
             subprocess.run(["git", "commit", "-m", commit_msg], check=True)
             
-        # 3. Git push
+        # 3. Pull rebase and Git push
+        subprocess.run(["git", "pull", "--rebase", "origin", "main"], capture_output=True, text=True, timeout=20)
+        
         push_res = subprocess.run(
             ["git", "push", "origin", "main"], 
             capture_output=True, 
@@ -282,7 +284,7 @@ def publish_to_github():
             err_msg = (push_res.stderr or push_res.stdout or "Push error").strip()
             return jsonify({
                 "status": "warning",
-                "message": f"Saved and committed locally, but push failed ({err_msg}). Run 'git push' manually."
+                "message": f"Saved and committed locally, but push failed: {err_msg}."
             })
     except subprocess.TimeoutExpired:
         return jsonify({
