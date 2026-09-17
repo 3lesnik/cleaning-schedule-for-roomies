@@ -14,7 +14,7 @@ import datetime
 import uuid
 import zipfile
 import io
-from icalendar import Calendar, Event
+from icalendar import Calendar, Event, Alarm
 import trash_bins
 
 DATA_FILE = "schedule_data.json"
@@ -521,6 +521,14 @@ class ScheduleManager:
                     tev.add('dtend', end_dt)
                     tev['uid'] = str(uuid.uuid4())
                     tev.add('dtstamp', datetime.datetime.now())
+                    
+                    # Native calendar alarm alert (triggers at 8:00 PM)
+                    alarm = Alarm()
+                    alarm.add('action', 'DISPLAY')
+                    alarm.add('description', f"Reminder: Put out the {waste} bin tonight!")
+                    alarm.add('trigger', datetime.timedelta(0))
+                    tev.add_component(alarm)
+                    
                     events.append(tev)
 
         # 3. House Events

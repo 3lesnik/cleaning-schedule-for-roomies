@@ -134,6 +134,13 @@ class TestCleaningSchedule(unittest.TestCase):
         self.assertEqual(dtend.hour, 20)
         self.assertEqual(dtend.minute, 30)
 
+        # Verify embedded VALARM notification
+        alarms = [a for a in ev.walk('VALARM')]
+        self.assertGreater(len(alarms), 0)
+        alarm = alarms[0]
+        self.assertEqual(str(alarm.get('action')), 'DISPLAY')
+        self.assertIn("Put out", str(alarm.get('description')))
+
     def test_global_cleaning_day_and_time(self):
         """Verify updating global cleaning day and time."""
         self.manager.update_global_schedule_time(default_cleaning_day=6, default_cleaning_time="14:00")

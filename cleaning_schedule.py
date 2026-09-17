@@ -9,7 +9,7 @@ Each task is scheduled as a one-day event on Saturdays.
 
 import argparse
 import datetime
-from icalendar import Calendar, Event
+from icalendar import Calendar, Event, Alarm
 import uuid
 
 def create_cleaning_schedule(tasks, people, start_date, num_weeks, output_file, calendar_name="Cleaning Schedule", trash_schedule=None, weekly_assignments=None):
@@ -96,6 +96,14 @@ def create_cleaning_schedule(tasks, people, start_date, num_weeks, output_file, 
                     trash_event.add('dtend', end_dt)
                     trash_event['uid'] = str(uuid.uuid4())
                     trash_event.add('dtstamp', datetime.datetime.now())
+                    
+                    # Native calendar alarm alert (triggers at 8:00 PM)
+                    alarm = Alarm()
+                    alarm.add('action', 'DISPLAY')
+                    alarm.add('description', f"Reminder: Put out the {waste} bin tonight!")
+                    alarm.add('trigger', datetime.timedelta(0))
+                    trash_event.add_component(alarm)
+                    
                     if week_trash_person in person_events:
                         person_events[week_trash_person].append(trash_event)
                     else:
