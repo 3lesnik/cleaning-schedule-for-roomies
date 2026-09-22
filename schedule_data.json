@@ -1661,11 +1661,11 @@
   ],
   "house_events": [
     {
-      "id": "be2a1132",
-      "title": "Mexican Movie Night",
-      "date": "2026-09-18",
-      "time": "22:00",
-      "description": "",
+      "id": "bfa28521",
+      "title": "Romanian Movie Noght",
+      "date": "2026-09-22",
+      "time": "21:30",
+      "description": "Bring snacks!",
       "target_audience": "all"
     }
   ]
